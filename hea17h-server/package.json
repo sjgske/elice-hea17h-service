@@ -1,0 +1,23 @@
+{
+  "name": "hea17h",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon bin/www.js --exec babel-node"
+  },
+  "type": "module",
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "meme-api": "^1.0.0",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.16"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/node": "^7.18.6",
+    "@babel/preset-env": "^7.18.6"
+  }
+}
