@@ -9,6 +9,10 @@ export class UserModel {
         return await User.findOne({ id: userId });
     }
 
+    async findAll(){
+        return await User.find({});
+    }
+
     async create(userInfo){
         return await User.create(userInfo);
     }
@@ -20,6 +24,10 @@ export class UserModel {
     async deleteOneUser(userId){
         return await User.deleteOne({ id: userId });
     }
+    async updateOneUser(userInfo){
+        return await User.findOneAndUpdate({id:userInfo.id}, userInfo, {new:true})
+    }
+    
 }
 
 const userModel = new UserModel();
