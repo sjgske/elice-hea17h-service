@@ -1,2 +1,1 @@
-import foodRouter from './foodRouter';
-import userRouter from './userRouter';
+export * from './user-router.js';

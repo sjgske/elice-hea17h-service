@@ -14,5 +14,4 @@ db.on('error', (error)=>{
 })
 
 
-export * from './models/foodModel';
-export * from './models/userModel';
+export * from './models/userModel.js';
