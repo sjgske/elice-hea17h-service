@@ -1,4 +1,4 @@
-import { categoryModel } from '../db';
+import { categoryModel } from '../db/index.js';
 
 class CategoryService {
 

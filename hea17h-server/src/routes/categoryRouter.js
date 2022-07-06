@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import is from '@sindresorhus/is';
-import { loginRequired, asyncHandler } from '../middlewares';
-import { categoryService, foodService } from '../services';
+import { asyncHandler } from '../middlewares/index.js';
+import { categoryService } from '../services/index.js';
 
 const categoryRouter = Router();
 

@@ -1,6 +1,7 @@
-import { model } from 'mongoose';
-import { CategorySchema } from '../schemas/categorySchema';
+import mongoose from 'mongoose';
+import { CategorySchema } from '../schemas/categorySchema.js';
 
+const model = mongoose.model
 const Category = model('categories', CategorySchema);
 
 export class CategoryModel {
