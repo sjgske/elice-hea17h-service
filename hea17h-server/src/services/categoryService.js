@@ -38,6 +38,7 @@ class CategoryService {
 
   async getCategoryByName(name) {
     const category = await this.categoryModel.findByName(name);
+    
     return category;
   }
 

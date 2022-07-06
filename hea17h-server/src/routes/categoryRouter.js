@@ -56,7 +56,7 @@ categoryRouter.patch('/categories/:categoryId', asyncHandler(async (req, res) =>
 
   // 이름이 있을 경우 에러 발생
   const isExist = await categoryService.getCategoryByName(name);
-  if (isExist.name == name) {
+  if (isExist && isExist.name == name) {
       throw new Error('이 이름으로 생성된 카테고리가 있습니다. 다른 이름을 지어주세요.');
   }
 
