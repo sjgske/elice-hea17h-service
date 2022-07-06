@@ -1,2 +1,3 @@
-import foodService from './foodService';
-import userService from './userService';
+export * from './foodService';
+export * from './userService';
+export * from './categoryService';

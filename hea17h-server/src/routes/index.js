@@ -1,2 +1,3 @@
-import foodRouter from './foodRouter';
-import userRouter from './userRouter';
+export * from './foodRouter';
+export * from './userRouter';
+export * from './categoryRouter';

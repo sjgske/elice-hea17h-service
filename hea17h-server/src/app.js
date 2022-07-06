@@ -3,13 +3,16 @@ import express from 'express';
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import errorHandler from './middlewares/errorHandler.js'
-
+import { categoryRouter } from './routes';
 
 const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// app.use('/api', userRouter);
+app.use('/api', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
