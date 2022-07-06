@@ -7,15 +7,11 @@ const categoryRouter = Router();
 
 
 // 모든 카테고리 정보를 가져옴
-categoryRouter.get('/categories', async (req, res) => {
-  try {
-    const categories = await categoryService.getCategories();
-    res.status(200).json(categories);
-  } catch(err){
-    next(error)
-  }
+categoryRouter.get('/categories', asyncHandler(async (req, res) => {
 
-});
+  const categories = await categoryService.getCategories();
+  res.status(200).json(categories);
+}));
 
 // 카테고리 id로 검색 후 상세 정보 가져옴
 categoryRouter.get('/categories/:categoryId', asyncHandler(async (req, res) => {
