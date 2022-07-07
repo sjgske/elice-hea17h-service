@@ -7,14 +7,14 @@ const categoryRouter = Router();
 
 
 // 모든 카테고리 정보를 가져옴
-categoryRouter.get('/categories', asyncHandler(async (req, res) => {
+categoryRouter.get('/', asyncHandler(async (req, res) => {
 
   const categories = await categoryService.getCategories();
   res.status(200).json(categories);
 }));
 
 // 카테고리 id로 검색 후 상세 정보 가져옴
-categoryRouter.get('/categories/:categoryId', asyncHandler(async (req, res) => {
+categoryRouter.get('/:categoryId', asyncHandler(async (req, res) => {
 
   const { categoryId } = req.params;
   const category = await categoryService.getCategory(categoryId);
@@ -22,7 +22,7 @@ categoryRouter.get('/categories/:categoryId', asyncHandler(async (req, res) => {
 }));
 
 // 카테고리 추가
-categoryRouter.post('/categories', asyncHandler(async(req,res) => {
+categoryRouter.post('/', asyncHandler(async(req,res) => {
 
   // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
   if (is.emptyObject(req.body)) {
@@ -42,7 +42,7 @@ categoryRouter.post('/categories', asyncHandler(async(req,res) => {
 
 
 // 카테고리 정보 수정
-categoryRouter.patch('/categories/:categoryId', asyncHandler(async (req, res) => {
+categoryRouter.patch('/:categoryId', asyncHandler(async (req, res) => {
 
   // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
   if (is.emptyObject(req.body)) {
@@ -74,7 +74,7 @@ categoryRouter.patch('/categories/:categoryId', asyncHandler(async (req, res) =>
 }));
 
 //  카테고리 삭제
-categoryRouter.delete('/categories/:categoryId', asyncHandler(async (req, res) => {
+categoryRouter.delete('/:categoryId', asyncHandler(async (req, res) => {
 
   const { categoryId } = req.params;
 

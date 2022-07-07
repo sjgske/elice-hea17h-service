@@ -8,7 +8,7 @@ const foodRouter = Router();
 
 
 // 모든 음식 정보를 가져옴
-foodRouter.get('/foods', asyncHandler(async (req, res) => {
+foodRouter.get('/', asyncHandler(async (req, res) => {
 
   const { category } = req.query;
 
@@ -24,7 +24,7 @@ foodRouter.get('/foods', asyncHandler(async (req, res) => {
 }));
 
 // 음식 id로 검색 후 상세 정보 가져옴
-foodRouter.get('/foods/:foodId', asyncHandler(async (req, res) => {
+foodRouter.get('/:foodId', asyncHandler(async (req, res) => {
 
   const { foodId } = req.params;
   const food = await foodService.getFood(foodId);
@@ -32,7 +32,7 @@ foodRouter.get('/foods/:foodId', asyncHandler(async (req, res) => {
 }));
 
 // 음식 추가
-foodRouter.post('/foods', upload.single('image'), asyncHandler(async(req,res) => {
+foodRouter.post('/', upload.single('image'), asyncHandler(async(req,res) => {
 
   // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
   if (is.emptyObject(req.body)) {
@@ -62,7 +62,7 @@ foodRouter.post('/foods', upload.single('image'), asyncHandler(async(req,res) =>
 
 
 // 음식 정보 수정
-foodRouter.patch('/foods/:foodId', asyncHandler(async (req, res) => {
+foodRouter.patch('/:foodId', asyncHandler(async (req, res) => {
 
   // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
   if (is.emptyObject(req.body)) {
@@ -103,7 +103,7 @@ foodRouter.patch('/foods/:foodId', asyncHandler(async (req, res) => {
 }));
 
 //  음식 삭제
-foodRouter.delete('/foods/:foodId', asyncHandler(async (req, res) => {
+foodRouter.delete('/:foodId', asyncHandler(async (req, res) => {
 
   const { foodId } = req.params;
 
