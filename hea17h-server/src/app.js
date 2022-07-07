@@ -13,6 +13,7 @@ app.use(cookieParser());
 app.use('/users', userRouter);
 
 
+const foo = [ 1,2,3];
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
