@@ -12,10 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/users', userRouter);
 app.use('/categories', categoryRouter);
+app.use('/foods', foodsRouter);
 
-
-// app.use('/api', userRouter);
-app.use('/api', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
