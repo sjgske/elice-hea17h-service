@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import is from '@sindresorhus/is';
-import { loginRequired, asyncHandler } from '../middlewares/index.js';
+import { asyncHandler } from '../middlewares/index.js';
 import { foodService } from '../services/index.js';
 import { upload } from '../utils/index.js';
 
