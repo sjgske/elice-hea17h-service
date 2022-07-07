@@ -28,6 +28,10 @@ const userSchema = new Schema(
         },
         goalWeight:{
             type: Number,
+        },
+        role:{
+            type: String,
+            default: "user"
         }
     },
     {
