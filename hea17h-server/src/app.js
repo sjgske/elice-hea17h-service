@@ -15,6 +15,7 @@ app.use('/categories', categoryRouter);
 app.use('/foods', foodRouter);
 
 
+const foo = [ 1,2,3];
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
