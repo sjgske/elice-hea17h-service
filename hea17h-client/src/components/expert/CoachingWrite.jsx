@@ -49,7 +49,7 @@ function Coaching() {
 
 const PageContainer = styled.div`
     width: 85vw;
-    margin: 100px auto;
+    margin: 50px auto;
 `;
 
 const PageTitle = styled.h2`
