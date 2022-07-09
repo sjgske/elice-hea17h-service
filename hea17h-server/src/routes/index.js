@@ -1,1 +1,3 @@
-export * from './userRouter.js';
+import userRouter from './userRouter.js';
+
+export { userRouter };

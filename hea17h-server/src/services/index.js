@@ -1,1 +1,3 @@
-export * from './userService.js';
+import userService from './userService.js';
+
+export { userService };

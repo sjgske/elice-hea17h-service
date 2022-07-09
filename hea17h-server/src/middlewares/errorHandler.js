@@ -6,7 +6,8 @@ function errorHandler(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    console.log(err);
+    // eslint-disable-next-line no-console
+    // console.log(err);
     res.json(err);
 }
 

@@ -1,33 +1,44 @@
 import mongoose from 'mongoose';
-import {userSchema} from '../schemas/userSchema.js';
+import { userSchema } from '../schemas/index.js';
 
-const model = mongoose.model
+const { model } = mongoose;
 const User = model('users', userSchema);
 
 export class UserModel {
-    async findById(userId){
-        return await User.findOne({ id: userId });
+    constructor() {
+        this.User = User;
     }
 
-    async findAll(){
-        return await User.find({});
+    async findById(userId) {
+        const foundUser = await this.User.findOne({ id: userId });
+        return foundUser;
     }
 
-    async create(userInfo){
-        return await User.create(userInfo);
+    async findAll() {
+        const foundUsersArray = await this.User.find({});
+        return foundUsersArray;
     }
 
-    async update({ userId, update }){
-        return await User.findOneAndUpdate( {id: userId}, update, {returnOriginal: false});
+    async create(userInfo) {
+        const newUser = await this.User.create(userInfo);
+        return newUser;
     }
 
-    async deleteOneUser(userId){
-        return await User.deleteOne({ id: userId });
+    async deleteOneUser(userId) {
+        const deleteUserResult = await this.User.deleteOne({ id: userId });
+        return deleteUserResult;
     }
-    async updateOneUser(userInfo){
-        return await User.findOneAndUpdate({id:userInfo.id}, userInfo, {new:true})
+
+    async updateOneUser(userInfo) {
+        const updatedUserInfo = await this.User.findOneAndUpdate(
+            { id: userInfo.id },
+            userInfo,
+            {
+                new: true,
+            },
+        );
+        return updatedUserInfo;
     }
-    
 }
 
 const userModel = new UserModel();

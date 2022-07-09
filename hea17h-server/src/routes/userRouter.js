@@ -1,34 +1,25 @@
+/* eslint-disable no-console */
 import { Router } from 'express';
 import { userService } from '../services/index.js';
+import { isLoggedIn } from '../middlewares/index.js';
+
 const userRouter = Router();
 
-userRouter.get('/getUser', async function (req, res, next) {
+userRouter.get('/getUser', isLoggedIn, async (req, res, next) => {
     try {
-        const id = req.query.userId;
-        const foundUser = await userService.getUser(id);
-        console.log('불러오기 성공!' + foundUser.name);
+        const info = req.tokenInfo;
+        const foundUser = await userService.getUser(info);
+        console.log(`불러오기 성공!${foundUser.name}`);
         res.json(foundUser);
     } catch (err) {
         next(err);
     }
 });
 
-userRouter.patch('/modifyUser', async function (req, res, next) {
+userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
     try {
-        const { id, name, password, gender, height, weight, goalWeight } =
-            req.body;
-        const updateUserInfo = {
-            id,
-            name,
-            password,
-            gender,
-            height,
-            weight,
-            goalWeight,
-        };
-        const afterUpdateUserInfo = await userService.updateUser(
-            updateUserInfo,
-        );
+        const userInfo = req.body;
+        const afterUpdateUserInfo = await userService.updateUser(userInfo);
         console.log(afterUpdateUserInfo);
         res.json(afterUpdateUserInfo);
     } catch (err) {
@@ -36,10 +27,20 @@ userRouter.patch('/modifyUser', async function (req, res, next) {
     }
 });
 
-userRouter.post('/signIn', async function (req, res, next) {
+userRouter.post('/signIn', async (req, res, next) => {
     try {
-        const { id, name, password, gender, height, weight, goalWeight } =
-            req.body;
+        const {
+            id,
+            name,
+            password,
+            gender,
+            height,
+            weight,
+            goalWeight,
+            age,
+            goal,
+            activeLevel,
+        } = req.body;
         const newUser = await userService.addUser({
             id,
             name,
@@ -48,25 +49,37 @@ userRouter.post('/signIn', async function (req, res, next) {
             height,
             weight,
             goalWeight,
+            age,
+            goal,
+            activeLevel,
         });
-        console.log('삽입 성공!' + newUser.name + '가 회원가입되었습니다');
+        console.log(`삽입 성공! ${newUser.name} 가 회원가입되었습니다`);
         res.json(newUser);
     } catch (err) {
         next(err);
     }
 });
 
-userRouter.delete('/deleteUser', async function (req, res, next) {
+userRouter.post('/login', async (req, res, next) => {
     try {
-        const id = req.query.userId;
-        const result = await userService.deleteUser(id);
-        if (!result) {
-            throw new Error('삭제에 실패하였습니다. 다시한번 확인해주세요');
-        }
-        res.status(200).json({ message: '성공적으로 삭제되었습니다.' });
+        const { id, password } = req.body;
+        const loginInfo = { id, password };
+        const result = await userService.login(loginInfo);
+        res.status(result.statusCode).json(result);
     } catch (err) {
         next(err);
     }
 });
 
-export { userRouter };
+userRouter.delete('/deleteUser', isLoggedIn, async (req, res, next) => {
+    try {
+        const userInfo = req.tokenInfo;
+        const result = await userService.deleteUser(userInfo.id);
+        console.log(result);
+        res.status(result.statusCode).json(result);
+    } catch (err) {
+        next(err);
+    }
+});
+
+export default userRouter;
