@@ -1,181 +1,176 @@
 import React from 'react';
 import styled from 'styled-components';
+import Box from '../Box';
+import Badge from '../Badge';
+import Button from '../Button';
 
-function Coaching() {
+function CoachingWrite() {
     return (
-        <PageContainer>
-            <PageTitle>코칭</PageTitle>
-            <MainContainer>
-                <Diet>
-                    <DietInfo>
-                        <DietDate>2022.07.05</DietDate>
-                        <ContentTitle>
-                            헬스장 가기 전에 먹기 좋은 식단
-                        </ContentTitle>
-                        <DietCalorie>1850 kcal</DietCalorie>
-                    </DietInfo>
-                </Diet>
-                <DietDetailContainer>
-                    <DietDetail>
-                        <ContentTitle>아침</ContentTitle>
-                    </DietDetail>
-                    <DietDetail>
-                        <ContentTitle>점심</ContentTitle>
-                    </DietDetail>
-                    <DietDetail>
-                        <ContentTitle>저녁</ContentTitle>
-                    </DietDetail>
-                </DietDetailContainer>
-                <UserInfo>
-                    <ContentTitle>회원정보</ContentTitle>
-                    <InfoBox>
-                        <InfoName>키(cm)</InfoName>
-                        <InfoValue>180</InfoValue>
-                    </InfoBox>
-                    <InfoBox>
-                        <InfoName>몸무게(kg)</InfoName>
-                        <InfoValue>80</InfoValue>
-                    </InfoBox>
-                </UserInfo>
-                <Comment>
-                    <ContentTitle>코멘트 작성</ContentTitle>
-                    <CommentInputBox />
-                    <CommentWriteBtn>작성 완료</CommentWriteBtn>
-                </Comment>
-            </MainContainer>
-        </PageContainer>
+        <MainContainer>
+            <h2>코칭</h2>
+            <Box width="100%" color="white">
+                <Container>
+                    <Box width="75%" height="8rem" color="#faf3e3">
+                        <DietInfo>
+                            <Badge width="6rem">2022.07.05</Badge>
+                            <h3>헬스장 가기 전에 먹기 좋은 식단</h3>
+                            <p>1850 kcal</p>
+                        </DietInfo>
+                    </Box>
+                    <Box width="75%" color="#F5F5F5">
+                        <h4 style={{ margin: '50px 0', textAlign: 'center' }}>
+                            아침 점심 저녁
+                        </h4>
+                        <DietContainer>
+                            <div>
+                                <Category>
+                                    <h3>고기</h3>
+                                    <Badge width="16rem">
+                                        닭가슴살(100)g X 1 = 165.9 kcal
+                                    </Badge>
+                                </Category>
+                                <Category>
+                                    <h3>채소</h3>
+                                    <Badge width="17rem">
+                                        방울토마토(100g) X 3 = 0.018 kcal
+                                    </Badge>
+                                </Category>
+                                <Category>
+                                    <h3>견과</h3>
+                                    <Badge width="13.5rem">
+                                        아몬드(1알) X 10 = 70 kcal
+                                    </Badge>
+                                </Category>
+                                <TotalCalorie>
+                                    <h3>총합</h3>
+                                    <Badge width="6.5rem">371.08 kcal</Badge>
+                                </TotalCalorie>
+                            </div>
+                            <div>
+                                <Category>
+                                    <h3>고기</h3>
+                                    <Badge width="16rem">
+                                        닭가슴살(100)g X 1 = 165.9 kcal
+                                    </Badge>
+                                </Category>
+                                <Category>
+                                    <h3>채소</h3>
+                                    <Badge width="17rem">
+                                        방울토마토(100g) X 3 = 0.018 kcal
+                                    </Badge>
+                                </Category>
+                                <Category>
+                                    <h3>견과</h3>
+                                    <Badge width="13.5rem">
+                                        아몬드(1알) X 10 = 70 kcal
+                                    </Badge>
+                                </Category>
+                                <TotalCalorie>
+                                    <h3>총합</h3>
+                                    <Badge width="6.5rem">371.08 kcal</Badge>
+                                </TotalCalorie>
+                            </div>
+                            <div>
+                                <Category>
+                                    <h3>고기</h3>
+                                    <Badge width="16rem">
+                                        닭가슴살(100)g X 1 = 165.9 kcal
+                                    </Badge>
+                                </Category>
+                                <Category>
+                                    <h3>채소</h3>
+                                    <Badge width="17rem">
+                                        방울토마토(100g) X 3 = 0.018 kcal
+                                    </Badge>
+                                </Category>
+                                <Category>
+                                    <h3>견과</h3>
+                                    <Badge width="13.5rem">
+                                        아몬드(1알) X 10 = 70 kcal
+                                    </Badge>
+                                </Category>
+                                <TotalCalorie>
+                                    <h3>총합</h3>
+                                    <Badge width="6.5rem">371.08 kcal</Badge>
+                                </TotalCalorie>
+                            </div>
+                        </DietContainer>
+                    </Box>
+                    <Comment>
+                        <h3>코멘트 작성</h3>
+                        <textarea />
+                        <div>
+                            <Button width="10rem" color="#51CF66">
+                                작성 완료
+                            </Button>
+                        </div>
+                    </Comment>
+                </Container>
+            </Box>
+        </MainContainer>
     );
 }
 
-const PageContainer = styled.div`
-    width: 85vw;
-    margin: 50px auto;
-`;
-
-const PageTitle = styled.h2`
-    font-size: 24px;
-`;
-
 const MainContainer = styled.div`
-    background-color: white;
-    padding: 50px 0;
+    width: 85vw;
+    margin: 50px auto 0;
+`;
+
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-const Diet = styled.div`
-    width: 75%;
-    height: 8rem;
-    background-color: #faf3e3;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-    margin-bottom: 30px;
-    border-radius: 5px;
+    gap: 30px;
+    padding: 50px 0;
 `;
 
 const DietInfo = styled.div`
+    height: 8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
-`;
+    gap: 7px;
+    margin-left: 30px;
 
-const DietDate = styled.div`
-    font-size: 1rem;
-    font-weight: bold;
-    width: 6rem;
-    height: 1.5rem;
-    background-color: white;
-    text-align: center;
-    border-radius: 5px;
-`;
-
-const ContentTitle = styled.p`
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0 0 15px 0;
-`;
-
-const DietCalorie = styled.p`
-    font-size: 16px;
-    font-weight: bold;
-    color: #999999;
-    margin: 0;
-`;
-
-const CommentWriteBtn = styled.button`
-    background-color: #51cf66;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    border: 0;
-    border-radius: 5px;
-    width: 10rem;
-    height: 2rem;
-    :hover {
-        cursor: pointer;
+    & > p {
+        font-weight: bold;
+        color: #999999;
     }
-    margin: 0 auto;
 `;
 
-const DietDetailContainer = styled.div`
-    background-color: #f5f5f5;
-    width: 75%;
-    height: 8rem;
+const DietContainer = styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-    border-radius: 5px;
+    justify-content: space-evenly;
+    margin-bottom: 50px;
 `;
 
-const DietDetail = styled.div`
-    font-size: 1.2rem;
-    font-weight: bold;
+const Category = styled.div`
+    margin: 20px 0;
 `;
 
-const UserInfo = styled.div`
-    width: 75%;
+const TotalCalorie = styled.div`
     display: flex;
-    flex-direction: column;
-    padding: 0 30px;
-    margin: 30px 0;
-`;
-
-const InfoBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 10px;
-`;
-const InfoName = styled.p`
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 0;
-`;
-
-const InfoValue = styled.p`
-    font-size: 1rem;
-    margin: 0;
+    gap: 10px;
+    margin-top: 40px;
 `;
 
 const Comment = styled.div`
+    width: 75%;
     display: flex;
     flex-direction: column;
-    width: 75%;
+    gap: 10px;
+
+    & > textarea {
+        width: 100%;
+        height: 200px;
+        resize: none;
+        outline: none;
+        border: 1px solid #d9d9d9;
+    }
+
+    & > div {
+        margin: 0 auto;
+    }
 `;
 
-const CommentInputBox = styled.textarea`
-    resize: none;
-    width: 100%;
-    height: 10rem;
-    padding: 10px;
-    margin-bottom: 25px;
-    border: 1px solid #d9d9d9;
-    outline: none;
-`;
-
-export default Coaching;
+export default CoachingWrite;
