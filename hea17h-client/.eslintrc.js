@@ -11,7 +11,6 @@ module.exports = {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
     },
-    parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
             jsx: true,
@@ -19,7 +18,7 @@ module.exports = {
         ecmaVersion: 6,
         sourceType: 'module',
     },
-    plugins: ['react', '@typescript-eslint'],
+    plugins: ['react'],
     rules: {
         'no-unused-vars': 'error', // 사용하지않는 변수 error처리 하겠다.
         'no-console': 'off', // 콘솔로그를 사용하수 있게 꺼놓겠다.
@@ -28,5 +27,6 @@ module.exports = {
         'space-unary-ops': 2,
         'react/react-in-jsx-scope': 'off',
         'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+        'react/prop-types': 'off',
     },
 };
