@@ -19,6 +19,10 @@ const Div = styled.div`
     font-weight: bold;
     line-height: 2.5rem;
     text-align: center;
+
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 export default Button;
