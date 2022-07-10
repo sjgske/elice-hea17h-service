@@ -1,12 +1,12 @@
 import './App.css';
-import Coaching from './components/expert/Coaching';
 import Nav from './components/common/Nav';
+import Router from './Routes';
 
 function App() {
     return (
         <div className="App">
             <Nav />
-            <Coaching />
+            <Router />
         </div>
     );
 }

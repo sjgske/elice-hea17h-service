@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Box from '../Box';
-import Badge from '../Badge';
-import Button from '../Button';
+import Box from '../../components/Box';
+import Badge from '../../components/Badge';
+import Button from '../../components/Button';
 
 function CoachingWrite() {
     return (
