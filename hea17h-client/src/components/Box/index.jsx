@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Box({ width, height, color, borderColor, children }) {
+function Box({ width, height, color, borderColor, className, children }) {
     return (
         <Div
             width={width}
             height={height}
             color={color}
             borderColor={borderColor}
+            className={className}
         >
             {children}
         </Div>
