@@ -18,10 +18,12 @@ const Background = styled.div`
     background-color: rgba(26, 26, 26, 0.5);
 `;
 
-function Modal({ width, height }) {
+function Modal({ width, height, children }) {
     return (
         <>
-            <Div width={width} height={height} />
+            <Div width={width} height={height}>
+                {children}
+            </Div>
             <Background />
         </>
     );
