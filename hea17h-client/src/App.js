@@ -1,7 +1,15 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import DietList from './pages/diet/DietList';
+import Certify from './pages/certify/Certify';
 
-function App() {
-    return <div className="App">hello</div>;
+export default function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/diet/list" element={<DietList />} />
+                <Route path="/certify" element={<Certify />} />
+            </Routes>
+        </Router>
+    );
 }
-
-export default App;
