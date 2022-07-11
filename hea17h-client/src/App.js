@@ -4,6 +4,8 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import SignupComplete from './pages/Signup/SignupComplete';
 import SignupDetail from './pages/Signup/SignupDetail';
+import Profile from './pages/Profile/Profile';
+import ProfileUpdate from './pages/Profile/ProfileUpdate';
 
 function App() {
     return (
@@ -14,6 +16,8 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/signup/complete" element={<SignupComplete />} />
                     <Route path="/signup/detail" element={<SignupDetail />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/update" element={<ProfileUpdate />} />
                 </Routes>
             </BrowserRouter>
         </div>
