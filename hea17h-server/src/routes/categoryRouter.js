@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import is from '@sindresorhus/is';
 import { asyncHandler } from '../middlewares/index.js';
-import { categoryService } from '../services/index.js';
+import { categoryService, foodService } from '../services/index.js';
 
 const categoryRouter = Router();
 
@@ -47,7 +47,7 @@ categoryRouter.post(
 
 // 카테고리 정보 수정
 categoryRouter.patch(
-    '/categories/:categoryId',
+    '/:categoryId',
     asyncHandler(async (req, res) => {
         // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
         if (is.emptyObject(req.body)) {
@@ -86,14 +86,16 @@ categoryRouter.patch(
 
 //  카테고리 삭제
 categoryRouter.delete(
-    '/categories/:categoryId',
+    '/:categoryId',
     asyncHandler(async (req, res) => {
         const { categoryId } = req.params;
 
-        // const isExistInProducts = await foodService.isExist(categoryId);
-        // if (isExistInProducts.length >= 1) {
-        //   throw new Error('해당 카테고리에 속해 있는 음식이 있어 삭제 할 수 없습니다.');
-        // }
+        const isExistInFoods = await foodService.isExist(categoryId);
+        if (isExistInFoods.length >= 1) {
+            throw new Error(
+                '해당 카테고리에 속해 있는 음식이 있어 삭제 할 수 없습니다.',
+            );
+        }
 
         const del = await categoryService.deleteCategory(categoryId);
         res.status(200).json(del);

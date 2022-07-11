@@ -1,6 +1,7 @@
-import { model } from 'mongoose';
-import { FoodSchema } from '../schemas/foodSchema';
+import mongoose from 'mongoose';
+import { FoodSchema } from '../schemas/foodSchema.js';
 
+const model = mongoose.model;
 const Food = model('food', FoodSchema);
 
 export class FoodModel {
@@ -15,17 +16,23 @@ export class FoodModel {
     }
 
     async findByName(foodName) {
-        const food = await Food.findOne({ name: foodName });
+        const food = await Food.findOne({ name: foodName }).populate(
+            'category',
+            'name',
+        );
         return food;
     }
 
     async findByNameEng(foodNameEng) {
-        const food = await Food.findOne({ nameEng: foodNameEng });
+        const food = await Food.findOne({ nameEng: foodNameEng }).populate(
+            'category',
+            'name',
+        );
         return food;
     }
 
     async findByCategory(categoryId) {
-        const foods = await Food.find({ category_id: categoryId });
+        const foods = await Food.find({ category: categoryId });
         return foods;
     }
 

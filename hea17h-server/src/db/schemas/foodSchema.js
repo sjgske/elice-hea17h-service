@@ -15,30 +15,14 @@ const FoodSchema = new Schema(
             type: String,
             required: true,
         },
-        category_id: {
+        category: {
             type: Schema.Types.ObjectId,
             ref: 'categories',
             required: true,
         },
-        info: {
-            type: [
-                new Schema(
-                    {
-                        unitName: {
-                            type: String,
-                            required: false,
-                        },
-                        grams: {
-                            type: Number,
-                            required: false,
-                        },
-                    },
-                    {
-                        _id: false,
-                    },
-                ),
-            ],
-            requred: false,
+        desc: {
+            type: String,
+            required: false,
         },
     },
     {
