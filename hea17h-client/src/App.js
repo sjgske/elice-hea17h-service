@@ -4,7 +4,8 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import SignupComplete from './pages/Signup/SignupComplete';
 import SignupDetail from './pages/Signup/SignupDetail';
-import DietSearch from './pages/Diet/DietSearch';
+// import Diet from './pages/Diet/Diet';
+// import DietSearch from './pages/Diet/DietSearch';
 
 function App() {
     return (
@@ -18,7 +19,8 @@ function App() {
                         element={<SignupComplete />}
                     />
                     <Route path="/signup/detail" element={<SignupDetail />} />
-                    <Route path="/diet/search" element={<DietSearch />} />
+                    <Route path="/diet" element={<Diet />} />
+                    {/* <Route path="/diet/search" element={<DietSearch />} /> */}
                 </Routes>
             </BrowserRouter>
         </div>

@@ -1,8 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.root`
+function DietSearch() {
+    return(
+        <Container>
+            <Section>
+                <SearchSection>
+                    <SearchContainer>
+                        <InputText>돋보기</InputText>
+                        <InputItem placeholder="검색할 내용을 입력하세요 예)100g 닭가슴살"/>
+                    </SearchContainer>
+                    <LatestSearchContainer>
+                        <LatestSearchText>최근 검색어</LatestSearchText>
+                        <LatestSearchList>100g 닭가슴살</LatestSearchList>
+                        <LatestSearchList>200g 토마토 100g 시저 샐러드</LatestSearchList>
+                        <LatestSearchList>10g 아몬드</LatestSearchList>
+                    </LatestSearchContainer>
+                </SearchSection>
+            </Section>
+        </Container>
+    );
+};
+
+const Container = styled.div`
     background: #F7F7F9;
+    width: 100%;
+    height 100%;
 `;
 
 const Section = styled.section`
@@ -41,26 +64,5 @@ const LatestSearchList = styled.input`
     font-size: 30px;
     color: #999999;
 `;
-
-function DietSearch() {
-    return(
-        <Container>
-            <Section>
-                <SearchSection>
-                    <SearchContainer>
-                        <InputText>돋보기</InputText>
-                        <InputItem placeholder="검색할 내용을 입력하세요 예)100g 닭가슴살"/>
-                    </SearchContainer>
-                    <LatestSearchContainer>
-                        <LatestSearchText>최근 검색어</LatestSearchText>
-                        <LatestSearchList>100g 닭가슴살</LatestSearchList>
-                        <LatestSearchList>200g 토마토 100g 시저 샐러드</LatestSearchList>
-                        <LatestSearchList>10g 아몬드</LatestSearchList>
-                    </LatestSearchContainer>
-                </SearchSection>
-            </Section>
-        </Container>
-    );
-};
 
 export default DietSearch;
