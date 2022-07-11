@@ -6,8 +6,6 @@ import SignupComplete from './pages/Signup/SignupComplete';
 import SignupDetail from './pages/Signup/SignupDetail';
 // import Diet from './pages/Diet/Diet';
 // import DietSearch from './pages/Diet/DietSearch';
-import Nav from './components/common/Nav';
-import Router from './Routes';
 import Profile from './pages/Profile/Profile';
 import ProfileUpdate from './pages/Profile/ProfileUpdate';
 
@@ -29,8 +27,6 @@ function App() {
                     <Route path="/profile/update" element={<ProfileUpdate />} />
                 </Routes>
             </BrowserRouter>
-            <Nav />
-            <Router />
         </div>
     );
 }
