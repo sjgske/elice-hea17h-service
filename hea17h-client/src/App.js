@@ -8,6 +8,8 @@ import SignupDetail from './pages/Signup/SignupDetail';
 // import DietSearch from './pages/Diet/DietSearch';
 import Nav from './components/common/Nav';
 import Router from './Routes';
+import Profile from './pages/Profile/Profile';
+import ProfileUpdate from './pages/Profile/ProfileUpdate';
 
 function App() {
     return (
@@ -23,6 +25,8 @@ function App() {
                     <Route path="/signup/detail" element={<SignupDetail />} />
                     {/* <Route path="/diet" element={<Diet />} /> */}
                     {/* <Route path="/diet/search" element={<DietSearch />} /> */}
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/update" element={<ProfileUpdate />} />
                 </Routes>
             </BrowserRouter>
             <Nav />
