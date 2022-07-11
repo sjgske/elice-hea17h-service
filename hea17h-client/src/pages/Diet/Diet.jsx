@@ -34,18 +34,18 @@ function Diet() {
                     <MeatContainer>
                         <MeatTitle>고기</MeatTitle>
                         <MeatCal>164.9 kcal</MeatCal>
-                        <MeatInfo>닭가슴살(100g) X 1 = 164.9 kcal </MeatInfo>
+                        <MeatInfo>닭가슴살(100g) X 1 = 164.9 kcal</MeatInfo>
                     </MeatContainer>
                     <VegeContainer>
                         <VegeTitle>채소</VegeTitle>
                         <VegeCal>136.18 kcal</VegeCal>
-                        <VegeInfo>방울토마토(100g) X 3 = 0.018 kcal </VegeInfo>
-                        <VegeInfo>양상추 샐러드(100g) X 2 = 136 cal </VegeInfo>
+                        <VegeInfo>방울토마토(100g) X 3 = 0.018 kcal</VegeInfo>
+                        <VegeInfo>양상추 샐러드(100g) X 2 = 136 cal</VegeInfo>
                     </VegeContainer>
                     <MeatContainer>
                         <MeatTitle>견과</MeatTitle>
                         <MeatCal>70 kcal</MeatCal>
-                        <MeatInfo>아몬드(1알) X 10 = 70 kcal </MeatInfo>
+                        <MeatInfo>아몬드(1알) X 10 = 70 kcal</MeatInfo>
                     </MeatContainer>
                     <TotalContainer>
                         <TotalTitle>총합</TotalTitle>

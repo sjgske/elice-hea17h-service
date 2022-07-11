@@ -6,6 +6,8 @@ import SignupComplete from './pages/Signup/SignupComplete';
 import SignupDetail from './pages/Signup/SignupDetail';
 // import Diet from './pages/Diet/Diet';
 // import DietSearch from './pages/Diet/DietSearch';
+import Nav from './components/common/Nav';
+import Router from './Routes';
 
 function App() {
     return (
@@ -19,10 +21,12 @@ function App() {
                         element={<SignupComplete />}
                     />
                     <Route path="/signup/detail" element={<SignupDetail />} />
-                    <Route path="/diet" element={<Diet />} />
+                    {/* <Route path="/diet" element={<Diet />} /> */}
                     {/* <Route path="/diet/search" element={<DietSearch />} /> */}
                 </Routes>
             </BrowserRouter>
+            <Nav />
+            <Router />
         </div>
     );
 }
