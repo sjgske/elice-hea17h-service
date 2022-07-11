@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Box from '../../components/Box';
 import Badge from '../../components/Badge';
 import Button from '../../components/Button';
+import DietTheme from '../../components/DietInfo/DietTheme';
 
 function CoachingWrite() {
     return (
@@ -10,13 +11,11 @@ function CoachingWrite() {
             <h2>코칭</h2>
             <Box width="100%" color="white">
                 <Container>
-                    <Box width="75%" height="8rem" color="#faf3e3">
-                        <DietInfo>
-                            <Badge width="6rem">2022.07.05</Badge>
-                            <h3>헬스장 가기 전에 먹기 좋은 식단</h3>
-                            <p>1850 kcal</p>
-                        </DietInfo>
-                    </Box>
+                    <DietTheme
+                        date="2022.07.05"
+                        theme="다이어트 최고, 지중해식 식단"
+                        calorie="1850"
+                    />
                     <Box width="75%" color="#F5F5F5">
                         <h4 style={{ margin: '50px 0', textAlign: 'center' }}>
                             아침 점심 저녁
@@ -209,20 +208,6 @@ const Container = styled.div`
     align-items: center;
     gap: 30px;
     padding: 50px 0;
-`;
-
-const DietInfo = styled.div`
-    height: 8rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 7px;
-    margin-left: 30px;
-
-    & > p {
-        font-weight: bold;
-        color: #999999;
-    }
 `;
 
 const DietContainer = styled.div`
