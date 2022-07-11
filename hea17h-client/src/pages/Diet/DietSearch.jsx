@@ -1,26 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
+import Nav from '../../components/common/Nav';
 
 function DietSearch() {
     return(
-        <Container>
-            <Section>
-                <SearchSection>
-                    <SearchContainer>
-                        <InputText>돋보기</InputText>
-                        <InputItem placeholder="검색할 내용을 입력하세요 예)100g 닭가슴살"/>
-                    </SearchContainer>
-                    <LatestSearchContainer>
-                        <LatestSearchText>최근 검색어</LatestSearchText>
-                        <LatestSearchList>100g 닭가슴살</LatestSearchList>
-                        <LatestSearchList>200g 토마토 100g 시저 샐러드</LatestSearchList>
-                        <LatestSearchList>10g 아몬드</LatestSearchList>
-                    </LatestSearchContainer>
-                </SearchSection>
-            </Section>
-        </Container>
+        <>
+            <Nav />
+            <SearchInfo>Search<GreenDot>.</GreenDot><br />
+                닭가슴살 100g<OrangeDot>.</OrangeDot> 방울토마토 20개<OrangeDot>.</OrangeDot>
+            </SearchInfo>
+            <Container>
+                <Section>
+                    <SearchSection>
+                        <SearchContainer>
+                            <InputText>돋보기</InputText>
+                            <InputItem/>
+                        </SearchContainer>
+                        <LatestSearchContainer>
+                            <LatestSearchText>최근 검색어</LatestSearchText>
+                            <LatestSearchList>닭가슴살 100g </LatestSearchList>
+                            <LatestSearchList>토마토 200g 시저 샐러드 100g</LatestSearchList>
+                            <LatestSearchList>아몬드 10g</LatestSearchList>
+                        </LatestSearchContainer>
+                    </SearchSection>
+                </Section>
+            </Container>
+        </>
     );
 };
+
+const SearchInfo = styled.h2`
+`;
+
+const GreenDot = styled.span`
+    color: #51CF66;
+`;
+
+const OrangeDot = styled.span`
+    color: #FD7E14;
+`;
 
 const Container = styled.div`
     background: #F7F7F9;
@@ -38,16 +56,15 @@ const SearchSection = styled.section`
     margin-right: 100px;
 `;
 
-const SearchContainer = styled.container`
+const SearchContainer = styled.div`
     border-botton: soild 3px #51CF66;
 `;
 
-const InputText = styled.h2`
+const InputText = styled.span`
     color: #51CF66;
 `;
 
 const InputItem = styled.input`
-    color: black;
 `;
 
 const LatestSearchContainer = styled.div`
@@ -59,10 +76,8 @@ const LatestSearchText = styled.h2`
     font-size: 36px;
 `;
 
-const LatestSearchList = styled.input`
-    font-weight: 700;
-    font-size: 30px;
-    color: #999999;
+const LatestSearchList = styled.h2`
+    color: #999999
 `;
 
 export default DietSearch;
