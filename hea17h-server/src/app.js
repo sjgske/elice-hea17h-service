@@ -1,16 +1,9 @@
 import createError from 'http-errors';
 import express from 'express';
-<<<<<<< HEAD
-import cookieParser from 'cookie-parser'
-import logger from 'morgan'
-import errorHandler from './middlewares/errorHandler.js'
-import { userRouter, categoryRouter, foodRouter } from './routes/index.js';
-=======
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import errorHandler from './middlewares/errorHandler.js';
-import { userRouter } from './routes/index.js';
->>>>>>> feature-be-user
+import { userRouter, categoryRouter, foodRouter } from './routes/index.js';
 
 const app = express();
 app.use(logger('dev'));

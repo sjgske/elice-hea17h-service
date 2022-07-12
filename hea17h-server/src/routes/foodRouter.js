@@ -155,4 +155,4 @@ foodRouter.delete(
     }),
 );
 
-export { foodRouter };
+export default foodRouter;

@@ -142,7 +142,7 @@ class FoodService {
 
     // 음식 삭제
     async deleteFood(foodId) {
-        let food = await this.foodModel.findById(foodId);
+        const food = await this.foodModel.findById(foodId);
 
         if (!food) {
             throw new Error(
@@ -157,4 +157,4 @@ class FoodService {
 
 const foodService = new FoodService(foodModel, categoryModel);
 
-export { foodService };
+export default foodService;

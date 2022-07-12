@@ -102,4 +102,4 @@ categoryRouter.delete(
     }),
 );
 
-export { categoryRouter };
+export default categoryRouter;

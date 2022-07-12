@@ -34,4 +34,4 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 }, // 용량 제한
 });
 
-export { upload };
+export default upload;
