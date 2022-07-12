@@ -20,10 +20,16 @@ const DietThemeBox = styled(Box)`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
+    padding: 10px 30px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        min-height: 9rem;
+    }
 `;
 
 const DietInfo = styled.div`
+    width: 100%;
     height: 8rem;
     display: flex;
     flex-direction: column;
@@ -33,6 +39,11 @@ const DietInfo = styled.div`
     & > p {
         font-weight: bold;
         color: #999999;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
     }
 `;
 

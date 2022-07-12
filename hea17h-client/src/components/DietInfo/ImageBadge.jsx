@@ -10,6 +10,11 @@ const Div = styled.div`
     height: 5rem;
     border-radius: 50%;
     background-color: white;
+
+    @media (max-width: 768px) {
+        width: 3rem;
+        height: 3rem;
+    }
 `;
 
 export default ImageBadge;

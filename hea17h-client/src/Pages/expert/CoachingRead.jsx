@@ -35,8 +35,16 @@ function CoachingWrite() {
                         <DietContainer>
                             <div>
                                 <Category>
-                                    <h3>고기</h3>
-                                    <Badge width="16rem" fontColor="#999999">
+                                    <div>
+                                        <h3>고기</h3>
+                                        <Badge
+                                            width="6.5rem"
+                                            fontColor="#999999"
+                                        >
+                                            164.9 kcal
+                                        </Badge>
+                                    </div>
+                                    <Badge width="15.5rem" fontColor="#999999">
                                         닭가슴살(100)g X 1 = 165.9 kcal
                                     </Badge>
                                 </Category>
@@ -48,7 +56,7 @@ function CoachingWrite() {
                                 </Category>
                                 <Category>
                                     <h3>견과</h3>
-                                    <Badge width="13.5rem" fontColor="#999999">
+                                    <Badge width="13rem" fontColor="#999999">
                                         아몬드(1알) X 10 = 70 kcal
                                     </Badge>
                                 </Category>
@@ -61,8 +69,16 @@ function CoachingWrite() {
                             </div>
                             <div>
                                 <Category>
-                                    <h3>고기</h3>
-                                    <Badge width="16rem" fontColor="#999999">
+                                    <div>
+                                        <h3>고기</h3>
+                                        <Badge
+                                            width="6.5rem"
+                                            fontColor="#999999"
+                                        >
+                                            164.9 kcal
+                                        </Badge>
+                                    </div>
+                                    <Badge width="15.5rem" fontColor="#999999">
                                         닭가슴살(100)g X 1 = 165.9 kcal
                                     </Badge>
                                 </Category>
@@ -74,7 +90,7 @@ function CoachingWrite() {
                                 </Category>
                                 <Category>
                                     <h3>견과</h3>
-                                    <Badge width="13.5rem" fontColor="#999999">
+                                    <Badge width="13rem" fontColor="#999999">
                                         아몬드(1알) X 10 = 70 kcal
                                     </Badge>
                                 </Category>
@@ -87,8 +103,16 @@ function CoachingWrite() {
                             </div>
                             <div>
                                 <Category>
-                                    <h3>고기</h3>
-                                    <Badge width="16rem" fontColor="#999999">
+                                    <div>
+                                        <h3>고기</h3>
+                                        <Badge
+                                            width="6.5rem"
+                                            fontColor="#999999"
+                                        >
+                                            164.9 kcal
+                                        </Badge>
+                                    </div>
+                                    <Badge width="15.5rem" fontColor="#999999">
                                         닭가슴살(100)g X 1 = 165.9 kcal
                                     </Badge>
                                 </Category>
@@ -100,7 +124,7 @@ function CoachingWrite() {
                                 </Category>
                                 <Category>
                                     <h3>견과</h3>
-                                    <Badge width="13.5rem" fontColor="#999999">
+                                    <Badge width="13rem" fontColor="#999999">
                                         아몬드(1알) X 10 = 70 kcal
                                     </Badge>
                                 </Category>
@@ -229,7 +253,7 @@ const Container = styled.div`
 const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin: 30px 0;
+    margin-top: 30px;
     gap: 30px;
 
     & > div {
@@ -239,22 +263,43 @@ const ImageContainer = styled.div`
             font-weight: bold;
         }
     }
+
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+    }
 `;
 
 const DietContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 50px;
+    gap: 10px;
+    margin: 40px 20px;
 `;
 
 const Category = styled.div`
     margin: 20px 0;
+
+    & > div {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.7rem;
+    }
 `;
 
 const TotalCalorie = styled.div`
     display: flex;
     gap: 10px;
     margin-top: 40px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        font-size: 0.7rem;
+        gap: 0;
+    }
 `;
 
 const UserInfo = styled.div`

@@ -16,7 +16,7 @@ function Coaching() {
                         theme="헬스장 가기 전에 먹기 좋은 식단"
                         calorie="1850"
                     >
-                        <Link to="/coachingWrite">
+                        <Link to="/coachingWrite/1">
                             <Button width="10rem" color="#FD7E14">
                                 코멘트 작성
                             </Button>
@@ -27,7 +27,7 @@ function Coaching() {
                         theme="다이어트 최고, 지중해식 식단"
                         calorie="1850"
                     >
-                        <Link to="/coachingRead">
+                        <Link to="/coachingRead/2">
                             <Button width="10rem" color="#51CF66">
                                 코멘트 보기
                             </Button>
