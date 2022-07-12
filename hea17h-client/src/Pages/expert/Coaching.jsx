@@ -42,6 +42,10 @@ function Coaching() {
 const MainContainer = styled.div`
     width: 85vw;
     margin: 50px auto 0;
+
+    & > h2 {
+        margin-bottom: 20px;
+    }
 `;
 
 const Container = styled.div`

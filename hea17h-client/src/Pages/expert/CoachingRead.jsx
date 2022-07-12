@@ -4,6 +4,7 @@ import Box from '../../components/Box';
 import Badge from '../../components/Badge';
 import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
+import ImageBadge from '../../components/DietInfo/ImageBadge';
 
 function CoachingWrite() {
     return (
@@ -17,9 +18,20 @@ function CoachingWrite() {
                         calorie="1850"
                     />
                     <Box width="75%" color="#F5F5F5">
-                        <h4 style={{ margin: '50px 0', textAlign: 'center' }}>
-                            아침 점심 저녁
-                        </h4>
+                        <ImageContainer>
+                            <div>
+                                <ImageBadge />
+                                <p>아침</p>
+                            </div>
+                            <div>
+                                <ImageBadge />
+                                <p>점심</p>
+                            </div>
+                            <div>
+                                <ImageBadge />
+                                <p>저녁</p>
+                            </div>
+                        </ImageContainer>
                         <DietContainer>
                             <div>
                                 <Category>
@@ -200,6 +212,10 @@ function CoachingWrite() {
 const MainContainer = styled.div`
     width: 85vw;
     margin: 50px auto 0;
+
+    & > h2 {
+        margin-bottom: 20px;
+    }
 `;
 
 const Container = styled.div`
@@ -208,6 +224,21 @@ const Container = styled.div`
     align-items: center;
     gap: 30px;
     padding: 50px 0;
+`;
+
+const ImageContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    gap: 30px;
+
+    & > div {
+        text-align: center;
+
+        & > p {
+            font-weight: bold;
+        }
+    }
 `;
 
 const DietContainer = styled.div`
