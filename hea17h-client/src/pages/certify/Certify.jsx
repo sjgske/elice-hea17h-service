@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-    width: 40vw;
+    width: 42vw;
     height: 100%;
     padding: 0 4rem;
     background-color: #fff;
@@ -20,7 +20,7 @@ const Main = styled.div`
 
 const H1 = styled.h1`
     font-weight: 700;
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     margin-bottom: 0.5rem;
     letter-spacing: -0.05rem;
 `;
@@ -72,6 +72,7 @@ const Circle = styled.div`
 
 const SubmitBox = styled(Box)`
     cursor: pointer;
+    margin-bottom: 1.5rem;
 `;
 
 function Certify() {
@@ -123,7 +124,7 @@ function Certify() {
                     width="95%"
                     height="12rem"
                     color="#F5F5F5"
-                    className="flex center margin-bottom"
+                    className="flex center"
                 >
                     <Circle>
                         <FontAwesomeIcon icon={faPlus} />

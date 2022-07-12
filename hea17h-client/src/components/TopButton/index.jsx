@@ -9,8 +9,6 @@ const useScroll = initialValue => {
     const listener = () =>
         window.pageYOffset > 30 ? setIsActive(true) : setIsActive(false);
 
-    // useEffect 안에서 setState를 부르면 무한 실행.. X
-    // useEffect 안에서 함수를 리턴하면 unmount 시점에 실행됨
     useEffect(() => {
         window.addEventListener('scroll', listener);
         return () => {
@@ -42,7 +40,7 @@ const Button = styled.button`
 
     &:hover,
     &:active {
-        background-color: #000;
+        background-color: #3cb371;
     }
 
     &.active {

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Badge from '../../components/Badge';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
+import TopButton from '../../components/TopButton';
 
 const Container = styled.div`
     display: flex;
@@ -114,7 +115,7 @@ function Comment() {
                         </H2>
                     </MarginDiv>
 
-                    <Link to="/diet" className="flex-column">
+                    <Link to="/diet" className="flex-column-align-items">
                         <Circle>
                             <FontAwesomeIcon icon={faArrowRight} />
                         </Circle>
@@ -148,6 +149,7 @@ function Comment() {
                     </Button>
                 </MainBox>
             </Main>
+            <TopButton />
         </Container>
     );
 }

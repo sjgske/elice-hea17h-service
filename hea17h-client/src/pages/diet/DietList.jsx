@@ -39,7 +39,7 @@ const InputGroup = styled.div`
     position: relative;
 
     input {
-        width: 8rem;
+        width: 9rem;
         height: 2.5rem;
         margin-right: 12px;
         padding: 8px 14px;
@@ -50,8 +50,12 @@ const InputGroup = styled.div`
 
     input[type='date']::-webkit-inner-spin-button,
     input[type='date']::-webkit-calendar-picker-indicator {
-        display: none;
-        -webkit-appearance: none;
+        position: absolute;
+        top: 12px;
+        left: 14px;
+        width: 15px;
+        z-index: 10;
+        opacity: 0;
     }
 
     span {
@@ -67,19 +71,24 @@ const InputGroup = styled.div`
 
 const Div = styled.div``;
 
-const MarginDiv = styled.div`
-    margin-bottom: 2rem;
-`;
-
-const SpaceDiv = styled.div`
-    *:not(last-child) {
+const SpaceBottom = styled.div`
+    * {
         margin-bottom: 0.5rem;
+    }
+
+    *:last-child {
+        margin: 0;
     }
 `;
 
-const FlexBox = styled.div`
-    display: flex;
-    align-items: center;
+const SpaceRight = styled.div`
+    * {
+        margin-right: 1.2rem;
+    }
+
+    *:last-child {
+        margin: 0;
+    }
 `;
 
 const H1 = styled.h1`
@@ -130,6 +139,14 @@ const CircleButton = styled.button`
     &:last-child {
         margin-right: 0;
     }
+
+    span {
+        font-weight: 700;
+    }
+
+    &:hover div {
+        transform: scale(1.1);
+    }
 `;
 
 const Circle = styled.div`
@@ -139,6 +156,7 @@ const Circle = styled.div`
     margin-bottom: 0.5rem;
     background-color: #fff;
     border-radius: 50%;
+    transition: all 200ms ease-in;
 `;
 
 const CircleImage = styled.img`
@@ -146,18 +164,7 @@ const CircleImage = styled.img`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-`;
-
-const ButtonGroup = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    *:not(last-child) {
-        margin-right: 1.5rem;
-    }
+    width: 70px;
 `;
 
 const IconButton = styled.button`
@@ -200,29 +207,38 @@ function DietList() {
                     </Search>
 
                     <MainBox width="55vw" color="#faf3e3">
-                        <SpaceDiv>
+                        <SpaceBottom>
                             <Badge>2022.07.05</Badge>
                             <H3>헬스장 가기 전에 먹기 좋은 식단</H3>
                             <Calorie>
                                 <strong>1,443</strong> kcal
                             </Calorie>
-                        </SpaceDiv>
+                        </SpaceBottom>
                         <Div>
                             <CircleButton>
                                 <Circle>
-                                    <CircleImage src="" alt="아침" />
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/food1.png`}
+                                        alt="아침"
+                                    />
                                 </Circle>
                                 <span>아침</span>
                             </CircleButton>
                             <CircleButton>
                                 <Circle>
-                                    <CircleImage src="" alt="점심" />
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/food2.png`}
+                                        alt="점심"
+                                    />
                                 </Circle>
                                 <span>점심</span>
                             </CircleButton>
                             <CircleButton>
                                 <Circle>
-                                    <CircleImage src="" alt="저녁" />
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/food3.png`}
+                                        alt="저녁"
+                                    />
                                 </Circle>
                                 <span>저녁</span>
                             </CircleButton>
@@ -230,20 +246,20 @@ function DietList() {
                     </MainBox>
 
                     <DetailBox width="55vw" color="#F5F5F5">
-                        <MarginDiv>
+                        <Div className="margin-bottom">
                             <H3>아침</H3>
-                        </MarginDiv>
+                        </Div>
 
-                        <MarginDiv>
-                            <SpaceDiv>
-                                <FlexBox>
+                        <Div className="margin-bottom">
+                            <SpaceBottom>
+                                <Div className="flex-align-items">
                                     <H3>고기</H3>
                                     <Badge>
                                         <Calorie>
                                             <strong>164.9</strong> kcal
                                         </Calorie>
                                     </Badge>
-                                </FlexBox>
+                                </Div>
                                 <Badge>
                                     <Calorie>
                                         <strong>닭가슴살(100g)</strong> X{' '}
@@ -251,19 +267,19 @@ function DietList() {
                                         <strong>164.9</strong> kcal
                                     </Calorie>{' '}
                                 </Badge>
-                            </SpaceDiv>
-                        </MarginDiv>
+                            </SpaceBottom>
+                        </Div>
 
-                        <MarginDiv>
-                            <SpaceDiv>
-                                <FlexBox>
+                        <Div className="margin-bottom">
+                            <SpaceBottom>
+                                <Div className="flex-align-items">
                                     <H3>채소</H3>
                                     <Badge>
                                         <Calorie>
                                             <strong>136.18</strong> kcal
                                         </Calorie>
                                     </Badge>
-                                </FlexBox>
+                                </Div>
                                 <Badge>
                                     <Calorie>
                                         <strong>방울토마토(100g)</strong> X{' '}
@@ -278,54 +294,63 @@ function DietList() {
                                         <strong>136</strong> kcal
                                     </Calorie>{' '}
                                 </Badge>
-                            </SpaceDiv>
-                        </MarginDiv>
+                            </SpaceBottom>
+                        </Div>
 
-                        <MarginDiv>
-                            <FlexBox>
+                        <Div className="margin-bottom">
+                            <Div className="flex-align-items">
                                 <H3>총합</H3>
                                 <Badge>
                                     <Calorie>
                                         <strong>371.08</strong> kcal
                                     </Calorie>
                                 </Badge>
-                            </FlexBox>
-                        </MarginDiv>
+                            </Div>
+                        </Div>
 
-                        <ButtonGroup>
+                        <SpaceRight className="flex">
                             <Button width="120px" color="#51CF66">
                                 코멘트 보기
                             </Button>
                             <Button width="120px" color="#FD7E14">
                                 삭제하기
                             </Button>
-                        </ButtonGroup>
+                        </SpaceRight>
                     </DetailBox>
 
                     <MainBox width="55vw" color="#faf3e3">
-                        <SpaceDiv>
+                        <SpaceBottom>
                             <Badge>2022.07.06</Badge>
                             <H3>다이어트 최고, 지중해식 식단</H3>
                             <Calorie>
                                 <strong>1,329</strong> kcal
                             </Calorie>
-                        </SpaceDiv>
+                        </SpaceBottom>
                         <Div>
                             <CircleButton>
                                 <Circle>
-                                    <CircleImage src="" alt="아침" />
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/food1.png`}
+                                        alt="아침"
+                                    />
                                 </Circle>
                                 <span>아침</span>
                             </CircleButton>
                             <CircleButton>
                                 <Circle>
-                                    <CircleImage src="" alt="점심" />
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/food2.png`}
+                                        alt="점심"
+                                    />
                                 </Circle>
                                 <span>점심</span>
                             </CircleButton>
                             <CircleButton>
                                 <Circle>
-                                    <CircleImage src="" alt="저녁" />
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/food3.png`}
+                                        alt="저녁"
+                                    />
                                 </Circle>
                                 <span>저녁</span>
                             </CircleButton>
@@ -335,16 +360,16 @@ function DietList() {
             </Container>
 
             <Modal width="25rem" height="25rem" className="hidden">
-                <MarginDiv>
-                    <SpaceDiv>
+                <Div className="margin-bottom">
+                    <SpaceBottom>
                         <H3>코멘트</H3>
                         <Grey>
                             생활스포츠지도사2급
                             <br />
                             전문가의 코멘트입니다.
                         </Grey>
-                    </SpaceDiv>
-                </MarginDiv>
+                    </SpaceBottom>
+                </Div>
                 <CommentBox width="100%" height="10rem" borderColor="#D9D9D9">
                     ...
                 </CommentBox>
