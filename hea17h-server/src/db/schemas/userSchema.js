@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema
+
+const { Schema } = mongoose;
 const userSchema = new Schema(
     {
-        id:{
+        id: {
             type: String,
             required: true,
         },
-        name:{
+        name: {
             type: String,
             required: true,
         },
@@ -26,13 +27,26 @@ const userSchema = new Schema(
             type: Number,
             required: true,
         },
-        goalWeight:{
+        age: {
             type: Number,
-        }
+            required: true,
+        },
+        goal: {
+            type: Number,
+            default: 0,
+        },
+        activeLevel: {
+            type: Number,
+            default: 0,
+        },
+        role: {
+            type: String,
+            default: 'user',
+        },
     },
     {
         timestamps: true,
-    }
+    },
 );
 
-export { userSchema };
+export default userSchema;
