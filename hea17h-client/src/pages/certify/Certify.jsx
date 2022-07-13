@@ -129,6 +129,7 @@ function Certify() {
                     <Circle>
                         <FontAwesomeIcon icon={faPlus} />
                     </Circle>
+                    <input type="file" className="hidden" />
                 </SubmitBox>
 
                 <Button width="10rem" color="#51cf66">

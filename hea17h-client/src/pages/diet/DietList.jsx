@@ -16,7 +16,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: #f7f7f9;
-    padding: 15vw 10vw;
+    padding: 12vw 10vw;
 `;
 
 const Main = styled.div`
@@ -103,6 +103,18 @@ const H3 = styled.h3`
     margin-right: 1rem;
 `;
 
+const DietTitle = styled(H3)`
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+const H4 = styled.h4`
+    font-size: 1.3rem;
+    margin-right: 1rem;
+`;
+
 const Calorie = styled.span`
     font-weight: 600;
     strong {
@@ -119,13 +131,21 @@ const Grey = styled.p`
 const MainBox = styled(Box)`
     display: flex;
     justify-content: space-between;
-    padding: 35px 45px;
+    padding: 2rem 2.5rem;
     margin: 0 auto 30px;
+
+    @media screen and (max-width: 1024px) {
+        width: 100%;
+    }
 `;
 
 const DetailBox = styled(Box)`
-    padding: 35px 45px;
+    padding: 2rem 2.5rem;
     margin: 0 auto 30px;
+
+    @media screen and (max-width: 1024px) {
+        width: 100%;
+    }
 `;
 
 const CommentBox = styled(Box)`
@@ -181,7 +201,7 @@ function DietList() {
                 <H1>식단 목록</H1>
                 <Main>
                     <Search>
-                        <H3>검색 기간</H3>
+                        <H4>검색 기간</H4>
                         <InputGroup>
                             <input
                                 type="date"
@@ -206,10 +226,12 @@ function DietList() {
                         </Button>
                     </Search>
 
-                    <MainBox width="55vw" color="#faf3e3">
+                    <MainBox width="60vw" color="#faf3e3">
                         <SpaceBottom>
                             <Badge>2022.07.05</Badge>
-                            <H3>헬스장 가기 전에 먹기 좋은 식단</H3>
+                            <DietTitle>
+                                헬스장 가기 전에 먹기 좋은 식단
+                            </DietTitle>
                             <Calorie>
                                 <strong>1,443</strong> kcal
                             </Calorie>
@@ -245,7 +267,7 @@ function DietList() {
                         </Div>
                     </MainBox>
 
-                    <DetailBox width="55vw" color="#F5F5F5">
+                    <DetailBox width="60vw" color="#F5F5F5">
                         <Div className="margin-bottom">
                             <H3>아침</H3>
                         </Div>
@@ -253,7 +275,7 @@ function DietList() {
                         <Div className="margin-bottom">
                             <SpaceBottom>
                                 <Div className="flex-align-items">
-                                    <H3>고기</H3>
+                                    <H4>고기</H4>
                                     <Badge>
                                         <Calorie>
                                             <strong>164.9</strong> kcal
@@ -273,7 +295,7 @@ function DietList() {
                         <Div className="margin-bottom">
                             <SpaceBottom>
                                 <Div className="flex-align-items">
-                                    <H3>채소</H3>
+                                    <H4>채소</H4>
                                     <Badge>
                                         <Calorie>
                                             <strong>136.18</strong> kcal
@@ -299,7 +321,7 @@ function DietList() {
 
                         <Div className="margin-bottom">
                             <Div className="flex-align-items">
-                                <H3>총합</H3>
+                                <H4>총합</H4>
                                 <Badge>
                                     <Calorie>
                                         <strong>371.08</strong> kcal
@@ -318,10 +340,10 @@ function DietList() {
                         </SpaceRight>
                     </DetailBox>
 
-                    <MainBox width="55vw" color="#faf3e3">
+                    <MainBox width="60vw" color="#faf3e3">
                         <SpaceBottom>
                             <Badge>2022.07.06</Badge>
-                            <H3>다이어트 최고, 지중해식 식단</H3>
+                            <DietTitle>다이어트 최고, 지중해식 식단</DietTitle>
                             <Calorie>
                                 <strong>1,329</strong> kcal
                             </Calorie>

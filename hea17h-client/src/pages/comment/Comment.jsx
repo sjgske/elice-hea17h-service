@@ -12,7 +12,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: #f7f7f9;
-    padding: 15vw 10vw;
+    padding: 12vw 10vw;
 `;
 
 const Main = styled.div`
@@ -21,12 +21,10 @@ const Main = styled.div`
 `;
 
 const Header = styled.div`
-    margin-bottom: 4rem;
+    margin-bottom: 6rem;
 `;
 
-const MarginDiv = styled.div`
-    margin-bottom: 2rem;
-`;
+const Div = styled.div``;
 
 const SpaceDiv = styled.div`
     *:not(last-child) {
@@ -35,7 +33,7 @@ const SpaceDiv = styled.div`
 `;
 
 const H1 = styled.h1`
-    font-size: 36px;
+    font-size: 2.2rem;
     line-height: 44px;
     margin-bottom: 40px;
 `;
@@ -80,8 +78,8 @@ const MainBox = styled(Box)`
 
 const Circle = styled.div`
     position: relative;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     margin-bottom: 0.5rem;
     background-color: #e9ecef;
     border-radius: 50%;
@@ -91,7 +89,7 @@ const Circle = styled.div`
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: 3rem;
+        font-size: 2.5rem;
         color: #fd7e14;
     }
 `;
@@ -102,7 +100,7 @@ function Comment() {
             <H1>코멘트</H1>
             <Main>
                 <Header>
-                    <MarginDiv>
+                    <Div className="margin-bottom">
                         <H2>
                             전문가의
                             <br /> 식단 코멘트를 받을 수 있습니다
@@ -113,7 +111,7 @@ function Comment() {
                             <br /> 다이어트 식단을
                             <br /> 먼저 계산해보세요<Orange>.</Orange>
                         </H2>
-                    </MarginDiv>
+                    </Div>
 
                     <Link to="/diet" className="flex-column-align-items">
                         <Circle>
