@@ -6,9 +6,11 @@ function DietSearch() {
     return(
         <>
             <Nav />
-            <SearchInfo>Search<GreenDot>.</GreenDot><br />
-                닭가슴살 100g<OrangeDot>.</OrangeDot> 방울토마토 20개<OrangeDot>.</OrangeDot>
-            </SearchInfo>
+            <SearchTitle>
+                <SearchInfo>Search<GreenDot>.</GreenDot><br />
+                    닭가슴살 100g<OrangeDot>.</OrangeDot> 방울토마토 20개<OrangeDot>.</OrangeDot>
+                </SearchInfo>
+            </SearchTitle>
             <Container>
                 <Section>
                     <SearchSection>
@@ -29,6 +31,10 @@ function DietSearch() {
     );
 };
 
+const SearchTitle = styled.div`
+    margin-left: 3rem;
+`;
+
 const SearchInfo = styled.h2`
 `;
 
@@ -42,26 +48,24 @@ const OrangeDot = styled.span`
 
 const Container = styled.div`
     background: #F7F7F9;
-    width: 100%;
-    height 100%;
 `;
 
-const Section = styled.section`
+const Section = styled.div`
     background: #FFFFFF;
-    margin-top: 200px;
 `;
 
 const SearchSection = styled.section`
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 3rem;
+    margin-right: 3rem;
 `;
 
 const SearchContainer = styled.div`
-    border-botton: soild 3px #51CF66;
+    padding-top: 2rem;
 `;
 
 const InputText = styled.span`
     color: #51CF66;
+    margin-right: 0.5rem;
 `;
 
 const InputItem = styled.input`
@@ -69,6 +73,7 @@ const InputItem = styled.input`
 
 const LatestSearchContainer = styled.div`
     color: black;
+    padding-bottom: 3rem;
 `;
 
 const LatestSearchText = styled.h2`
@@ -76,7 +81,7 @@ const LatestSearchText = styled.h2`
     font-size: 36px;
 `;
 
-const LatestSearchList = styled.h2`
+const LatestSearchList = styled.h3`
     color: #999999
 `;
 
