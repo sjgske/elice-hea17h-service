@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
