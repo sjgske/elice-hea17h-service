@@ -100,7 +100,7 @@ class CategoryService {
 
     // 카테고리 삭제
     async deleteCategory(categoryId) {
-        let category = await this.categoryModel.findById(categoryId);
+        const category = await this.categoryModel.findById(categoryId);
 
         if (!category) {
             throw new Error(
@@ -115,4 +115,4 @@ class CategoryService {
 
 const categoryService = new CategoryService(categoryModel);
 
-export { categoryService };
+export default categoryService;

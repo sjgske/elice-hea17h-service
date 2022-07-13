@@ -23,6 +23,11 @@ const Div = styled.div`
     &:hover {
         cursor: pointer;
     }
+
+    @media (max-width: 768px) {
+        width: 7rem;
+        font-size: 0.8rem;
+    }
 `;
 
 export default Button;

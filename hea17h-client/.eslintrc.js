@@ -25,7 +25,6 @@ module.exports = {
         'no-else-return': ['error', { allowElseIf: false }], // if문에 else 문을 사용하지 규칙을 정의한다.
         semi: [1, 'always'],
         'space-unary-ops': 2,
-        'react/react-in-jsx-scope': 'off',
         'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
         'react/prop-types': 'off',
     },
