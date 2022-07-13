@@ -175,4 +175,4 @@ const UpdateButton = styled.button`
     border-radius: 5px;
 `;
 
-export default Profile;
+export default ProfileUpdate;
