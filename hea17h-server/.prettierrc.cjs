@@ -1,5 +1,3 @@
-// .prettierrc.js
-
 module.exports = {
     // 문자열은 홀따옴표(')로 formatting
     singleQuote: true,

@@ -1,17 +1,15 @@
+import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import DietList from './pages/diet/DietList';
-import Comment from './pages/comment/Comment';
-import Certify from './pages/certify/Certify';
+import Nav from './components/common/Nav';
+import Router from './Routes';
 
-export default function App() {
+function App() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/diet/list" element={<DietList />} />
-                <Route path="/comment" element={<Comment />} />
-                <Route path="/certify" element={<Certify />} />
-            </Routes>
-        </Router>
+        <div className="App">
+            <Nav />
+            <Router />
+        </div>
     );
 }
+
+export default App;
