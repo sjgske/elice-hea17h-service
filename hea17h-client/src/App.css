@@ -1,24 +1,94 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Inter';
 }
 
 body {
-  background-color: #efefef;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin: 0;
+    background-color: #efefef;
 }
 
 a {
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 a:visited {
-  color: inherit;
+    color: inherit;
+}
+
+button,
+input,
+textarea {
+    font-family: 'Inter';
+}
+
+button {
+    border: none;
+    outline: none;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+button:focus,
+button:active,
+input:focus,
+input:active,
+textarea:focus,
+textarea:active {
+    outline: none;
+    box-shadow: none;
+}
+
+ul,
+ol,
+li {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/* class */
+
+.hidden {
+    display: none;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+.margin-bottom {
+    margin-bottom: 2rem;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-justify-content {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-align-items {
+    display: flex;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column-align-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+}
