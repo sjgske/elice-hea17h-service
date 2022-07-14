@@ -1,7 +1,7 @@
 import { foodModel, categoryModel } from '../db/index.js';
 
 class FoodService {
-    constructor(foodModel, categoryModel) {
+    constructor() {
         this.foodModel = foodModel;
         this.categoryModel = categoryModel;
     }
@@ -155,6 +155,6 @@ class FoodService {
     }
 }
 
-const foodService = new FoodService(foodModel, categoryModel);
+const foodService = new FoodService();
 
 export default foodService;

@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { userSchema } from '../schemas/index.js';
+import UserSchema from '../schemas/userSchema.js';
 
 const { model } = mongoose;
-const User = model('users', userSchema);
+const User = model('users', UserSchema);
 
-export class UserModel {
+class UserModel {
     constructor() {
         this.User = User;
     }
@@ -43,4 +43,4 @@ export class UserModel {
 
 const userModel = new UserModel();
 
-export { userModel };
+export default userModel;

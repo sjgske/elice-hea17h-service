@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const FoodSchema = new Schema(
     {
@@ -31,4 +32,4 @@ const FoodSchema = new Schema(
     },
 );
 
-export { FoodSchema };
+export default FoodSchema;
