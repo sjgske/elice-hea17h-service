@@ -5,7 +5,7 @@ function Login() {
     return (
         <Container>
             <LoginContainer>
-                <h1>로그인</h1>
+                <h1 style={{ marginTop: '20px' }}>로그인</h1>
                 <InputForm>
                     <InputText>아이디</InputText>
                     <InputItem />
@@ -61,9 +61,9 @@ const LoginContainer = styled.div`
 `;
 
 const InputForm = styled.form`
-    margin: 0 auto;
+    margin: 10px auto;
     width: 400px;
-    height: 50px;
+    height: 80px;
 
     font-size: medium;
     display: block;
@@ -78,20 +78,20 @@ const InputText = styled.h4`
 
 const InputItem = styled.input`
     width: 300px;
-    height: 30px;
+    height: 40px;
 `;
 
 const SocialLoginButton = styled.div`
-    margin: 50px auto ;
+    margin: 40px auto ;
 `;
 
 const GoogleButton = styled.button`
     margin: 5px 0;
-    width: 310px;
+    width: 300px;
     height: 40px;
 
     background-color: white;
-    border-color: gray;
+    border: 1px solid gray;
 
     font-weight: 600;
     font-size: 14px;
@@ -101,7 +101,7 @@ const GoogleButton = styled.button`
 
 const KakaoButton = styled.button`
     margin: 5px 0;
-    width: 310px;
+    width: 300px;
     height: 40px;
 
     background-color: #F7E600;
@@ -115,7 +115,7 @@ const KakaoButton = styled.button`
 
 const NaverButton = styled.button`
     margin: 5px 0;
-    width: 310px;
+    width: 300px;
     height: 40px;
 
     background-color: white;
@@ -131,13 +131,12 @@ const NaverButton = styled.button`
 const LoginButton = styled.button`
     width: 130px;
     height: 50px;
-    margin: 10px 180px;
+    margin: 0 180px;
 
     color: white;
     background-color: #51cf66;
     border: 1px solid transparent;
     font-size: medium;
-    font-weight: 800;
 
     border-radius: 5px;
 `;

@@ -5,7 +5,7 @@ function Signup() {
     return (
         <Container>
             <SignupContainer>
-                <h1>회원가입</h1>
+                <h1 style={{ marginTop: '20px' }}>회원가입</h1>
                 <InputForm>
                     <InputText>아이디</InputText>
                     <InputItem placeholder='아이디' />
@@ -87,7 +87,6 @@ const SignupButton = styled.button`
     background-color: #FD7E14;
     border: 1px solid transparent;
     font-size: medium;
-    font-weight: 800;
 
     border-radius: 5px;
 `;

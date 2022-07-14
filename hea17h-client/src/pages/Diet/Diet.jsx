@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from '../../components/common/Nav';
+import Nav from '../../components/Nav/index';
 
 function Diet() {
     return(
@@ -11,7 +11,7 @@ function Diet() {
                 <Section>
                     <TitleContainer>
                         <Info>원하는 식단을 검색하고<br />내 식단 목록에 추가해 보세요<GreenDot>.</GreenDot></Info>
-                        <Icon>검색하기</Icon>
+                        <Icon />
                     </TitleContainer>
                     <DietContainer>
                         <AddBtnContainer>
@@ -173,10 +173,11 @@ const BtnContainer = styled.div`
     display: flex;
     text-align: center;
     margin-top: 3rem;
+    justify-content: center;
+    align-items: center;
 `;
 
 const CalculateBtn = styled.button`
-    display: flex;  
     justify-content: center;
     align-items: center;
     color: #FFFFFF;
