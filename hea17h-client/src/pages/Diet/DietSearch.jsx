@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Foods from './Search';
+import Food from './Food';
 // import Nav from '../../components/common/Nav';
 
 function DietSearch() {
@@ -18,7 +18,7 @@ function DietSearch() {
                         <SearchContainer>
                             <InputText>검색</InputText>
                             <InputItem/>
-                            <Foods />
+                            <Food />
                         </SearchContainer>
                         <LatestSearchContainer>
                             <LatestSearchText>최근 검색어</LatestSearchText>
