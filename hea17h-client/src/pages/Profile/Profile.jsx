@@ -123,7 +123,7 @@ const InputText = styled.h4`
 `;
 
 const InputItem = styled.input`
-    margin-left: -80px;
+    margin-left: -100px;
     width: 300px;
     height: 35px;
 
@@ -138,25 +138,16 @@ const SelectGender = styled.div`
 `;
 
 const RadioButton = styled.input`
-
+    margin: 0 5px;
 `;
 
 const SelectBox = styled.select`
-    margin-left: -80px;
-    width: 315px;
+    margin-left: -100px;
+    width: 300px;
     height: 35px;
     color: gray;
 
     border: 1px solid #dbdbdb;
-
-    option {
-        color: black;
-        background: white;
-        display: flex;
-        white-space: pre;
-        min-height: 20px;
-        padding: 0px 2px 1px;
-    }
 `;
 
 const Buttons = styled.div`
@@ -171,7 +162,6 @@ const UpdateButton = styled.button`
     background-color: #3CB371;
     border: 1px solid transparent;
     font-size: medium;
-    font-weight: 800;
 
     border-radius: 5px;
     margin: 0 2%;
@@ -185,7 +175,6 @@ const ResignButton = styled.button`
     background-color: #FD7E14;
     border: 1px solid transparent;
     font-size: medium;
-    font-weight: 800;
 
     border-radius: 5px;
     margin: 0 2%;

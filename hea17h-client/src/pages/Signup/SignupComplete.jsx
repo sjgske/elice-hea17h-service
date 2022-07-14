@@ -5,7 +5,7 @@ function SignupComplete() {
     return (
         <Container>
             <SignupCompleteContainer>
-                <h2 style={{margin: 30}}>🎉회원가입이 완료되었습니다🎉</h2>
+                <h2 style={{ marginTop: '20px' }}>🎉회원가입이 완료되었습니다🎉</h2>
                 <InputForm>
                     <InputText>아이디</InputText>
                     <InputItem placeholder='아이디' />
@@ -79,7 +79,6 @@ const Info = styled.h3`
     align-items: center;
     justify-content: center;
 
-    font-weight: 800;
     font-size: 20px;
 `;
 
@@ -91,7 +90,6 @@ const LaterButton = styled.button`
     background-color: #E9ECEF;
     border: 1px solid transparent;
     font-size: 13px;
-    font-weight: 800;
 
     border-radius: 5px;
 `;
@@ -105,7 +103,6 @@ const GoToDetailButton = styled.button`
     background-color: #FD7E14;
     border: 1px solid transparent;
     font-size: 13px;
-    font-weight: 800;
 
     border-radius: 5px;
 `;

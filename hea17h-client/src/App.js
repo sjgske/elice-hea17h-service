@@ -15,12 +15,14 @@ import ProfileUpdate from './pages/Profile/ProfileUpdate';
 import Coaching from './pages/Expert/Coaching';
 import CoachingWrite from './pages/Expert/CoachingWrite';
 import CoachingRead from './pages/Expert/CoachingRead';
+import Home from './pages/Home/Home';
 
 function App() {
     return (
         <div className="App">
             <BrowserRouter>
                 <Routes>
+                    <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route
