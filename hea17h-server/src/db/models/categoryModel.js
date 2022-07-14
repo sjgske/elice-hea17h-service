@@ -1,32 +1,37 @@
 import mongoose from 'mongoose';
-import { CategorySchema } from '../schemas/categorySchema.js';
+import CategorySchema from '../schemas/categorySchema.js';
 
-const model = mongoose.model;
+const { model } = mongoose;
+
 const Category = model('categories', CategorySchema);
 
 export class CategoryModel {
+    constructor() {
+        this.category = Category;
+    }
+
     async findAll() {
-        const categories = await Category.find({});
+        const categories = await this.category.find({});
         return categories;
     }
 
     async findById(categoryId) {
-        const category = await Category.findById({ _id: categoryId });
+        const category = await this.category.findById({ _id: categoryId });
         return category;
     }
 
     async findByName(categoryName) {
-        const category = await Category.findOne({ name: categoryName });
+        const category = await this.category.findOne({ name: categoryName });
         return category;
     }
 
     async countCategories() {
-        const counts = await Category.countDocuments({});
+        const counts = await this.category.countDocuments({});
         return counts;
     }
 
     async create(categoryId) {
-        const createdNew = await Category.create(categoryId);
+        const createdNew = await this.category.create(categoryId);
         return createdNew;
     }
 
@@ -34,7 +39,7 @@ export class CategoryModel {
         const filter = { _id: categoryId };
         const option = { returnOriginal: false };
 
-        const updatedCategory = await Category.findOneAndUpdate(
+        const updatedCategory = await this.category.findOneAndUpdate(
             filter,
             update,
             option,
@@ -43,11 +48,11 @@ export class CategoryModel {
     }
 
     async delete(categoryId) {
-        const del = await Category.findOneAndDelete({ _id: categoryId });
+        const del = await this.category.findOneAndDelete({ _id: categoryId });
         return del;
     }
 }
 
 const categoryModel = new CategoryModel();
 
-export { categoryModel };
+export default categoryModel;

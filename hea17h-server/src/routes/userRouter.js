@@ -8,6 +8,7 @@ const userRouter = Router();
 userRouter.get('/getUser', isLoggedIn, async (req, res, next) => {
     try {
         const info = req.tokenInfo;
+        console.log(info);
         const foundUser = await userService.getUser(info);
         console.log(`불러오기 성공!${foundUser.name}`);
         res.json(foundUser);
