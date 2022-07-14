@@ -137,7 +137,6 @@ class UserService {
             };
         }
         const result = await this.certificateModel.findById(user._id);
-        const payload = { user, certificate: result };
         if (!result) {
             return {
                 status: 'error',
@@ -145,7 +144,7 @@ class UserService {
                 message: '해당 유저에 대한 자격증을 찾을 수 없습니다!',
             };
         }
-        return { status: 'success', statusCode: 200, payload };
+        return { status: 'success', statusCode: 200, payload: result };
     }
 }
 

@@ -12,11 +12,21 @@ const DietSchema = new Schema(
             type: String,
             required: true,
         },
-        category: {
-            type: String,
-        },
         totalCalories: {
             type: Number,
+            default: 0,
+        },
+        totalCarb: {
+            type: Number,
+            default: 0,
+        },
+        totalProtein: {
+            type: Number,
+            default: 0,
+        },
+        totalFat: {
+            type: Number,
+            default: 0,
         },
         dietFoods: [
             {
@@ -35,6 +45,9 @@ const DietSchema = new Schema(
                         name: {
                             type: String,
                             required: true,
+                        },
+                        category: {
+                            type: String,
                         },
                         count: {
                             type: Number,
@@ -73,6 +86,18 @@ const DietSchema = new Schema(
                 mealFat: {
                     type: Number,
                     default: 0,
+                },
+            },
+        ],
+        comment: [
+            {
+                expert: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'certificates',
+                },
+                content: {
+                    type: String,
+                    default: '',
                 },
             },
         ],

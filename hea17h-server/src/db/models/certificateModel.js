@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import CertificateSchema from '../schemas/certificateSchema.js';
 
 const { model } = mongoose;
-const Certificate = model('certificate', CertificateSchema);
+const Certificate = model('certificates', CertificateSchema);
 
 class CertificateModel {
     constructor() {
@@ -10,18 +10,18 @@ class CertificateModel {
     }
 
     async findById(userId) {
-        const result = this.certificate
-            .find({ user: userId })
+        const result = await this.certificate
+            .findOne({ user: userId })
             .populate('user', 'name');
         return result;
     }
 
     async addCertificate(userId, info) {
-        const result = this.certificate.create({
-            user: userId,
-            name: info.name,
-            image: info.image,
-        });
+        const result = await this.certificate.findOneAndUpdate(
+            { user: userId },
+            { $push: { certificate: { ...info } } },
+            { upsert: true, new: true },
+        );
         return result;
     }
 }

@@ -7,14 +7,18 @@ const CertificateSchema = new Schema({
         ref: 'users',
         required: true,
     },
-    name: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
+    certificate: [
+        {
+            name: {
+                type: String,
+                required: true,
+            },
+            image: {
+                type: String,
+                required: true,
+            },
+        },
+    ],
 });
 
 export default CertificateSchema;
