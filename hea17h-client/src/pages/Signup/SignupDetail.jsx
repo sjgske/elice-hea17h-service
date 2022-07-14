@@ -5,7 +5,7 @@ function SignupDetail() {
     return (
         <Container>
             <SignupDetailContainer>
-                <h2>상세정보</h2>
+                <h2 style={{ marginTop: '20px' }}>상세정보</h2>
                 <InputForm>
                     <InputText>키(cm)</InputText>
                     <InputItem placeholder='키'/>
@@ -68,25 +68,23 @@ const SignupDetailContainer = styled.div`
 `;
 
 const InputForm = styled.form`
-    margin: 0 auto;
-    margin-top: 40px;
+    margin: 10px auto;
     width: 400px;
-    height: 50px;
+    height: 600px;
 
+    font-size: medium;
     display: block;
 `; 
 
 const InputText = styled.h5`
-    margin-left: 45px;
+    margin: 10px auto;
+    margin-left: 50px;
     text-align: left;
-
-    margin-bottom: 7px;
-    line-height: 12px;
 `;
 
 const InputItem = styled.input`
     width: 300px;
-    height: 35px;
+    height: 40px;
 
     border: 1px solid #dbdbdb;
 
@@ -100,12 +98,12 @@ const SelectGender = styled.div`
 `;
 
 const RadioButton = styled.input`
-
+    margin: 0 5px;
 `;
 
 const SelectBox = styled.select`
     margin: 0 auto;
-    width: 315px;
+    width: 300px;
     height: 35px;
     color: gray;
 
@@ -130,7 +128,6 @@ const CompleteButton = styled.button`
     background-color: #FD7E14;
     border: 1px solid transparent;
     font-size: medium;
-    font-weight: 800;
 
     border-radius: 5px;
 `;
