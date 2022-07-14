@@ -12,7 +12,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: #f7f7f9;
-    padding: 12vw 10vw;
+    padding: 8vw 10vw;
 `;
 
 const Main = styled.div`

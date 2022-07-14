@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 function Button({ width, color, fontColor, children }) {
     return (
@@ -19,9 +20,11 @@ const Div = styled.div`
     font-weight: bold;
     line-height: 2.5rem;
     text-align: center;
+    transition: background-color 200ms ease;
 
     &:hover {
         cursor: pointer;
+        background-color: ${({ color }) => darken(0.1, color)};
     }
 
     @media (max-width: 768px) {
