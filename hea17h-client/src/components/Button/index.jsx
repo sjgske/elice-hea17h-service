@@ -2,9 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
 
-function Button({ width, color, fontColor, children }) {
+function Button({ width, color, fontColor, children, onClick }) {
     return (
-        <Div width={width} color={color} fontColor={fontColor}>
+        <Div
+            width={width}
+            color={color}
+            fontColor={fontColor}
+            onClick={onClick}
+        >
             {children}
         </Div>
     );
