@@ -12,7 +12,7 @@ function Badge({ width, fontColor, className, children }) {
 const Div = styled.div`
     background-color: white;
     padding: 0 5px;
-    max-width: ${({ width }) => width};
+    max-width: ${({ width }) => width || 'fit-content'};
     min-height: 1.5rem;
     border-radius: 5px;
     font-size: 1rem;
