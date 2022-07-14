@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from '../../components/common/Nav';
+import Foods from './Search';
+// import Nav from '../../components/common/Nav';
 
 function DietSearch() {
     return(
         <>
-            <Nav />
+            {/* <Nav /> */}
             <SearchTitle>
                 <SearchInfo>Search<GreenDot>.</GreenDot><br />
                     닭가슴살 100g<OrangeDot>.</OrangeDot> 방울토마토 20개<OrangeDot>.</OrangeDot>
@@ -15,8 +16,9 @@ function DietSearch() {
                 <Section>
                     <SearchSection>
                         <SearchContainer>
-                            <InputText>돋보기</InputText>
+                            <InputText>검색</InputText>
                             <InputItem/>
+                            <Foods />
                         </SearchContainer>
                         <LatestSearchContainer>
                             <LatestSearchText>최근 검색어</LatestSearchText>
