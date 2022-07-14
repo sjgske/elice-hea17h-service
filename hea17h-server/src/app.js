@@ -2,6 +2,7 @@ import createError from 'http-errors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors';
 import errorHandler from './middlewares/errorHandler.js';
 import {
     userRouter,
@@ -15,6 +16,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 app.use('/users', userRouter);
 app.use('/categories', categoryRouter);
 app.use('/foods', foodRouter);
