@@ -18,7 +18,7 @@ userRouter.get('/getUser', isLoggedIn, async (req, res, next) => {
     }
 });
 
-userRouter.get('/getCertificate', isLoggedIn, async (req, res, next) => {
+userRouter.get('/getExpertInfo', isLoggedIn, async (req, res, next) => {
     try {
         const userInfo = req.tokenInfo;
         const result = await userService.getCertificate(userInfo);
