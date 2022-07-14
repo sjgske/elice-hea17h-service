@@ -29,7 +29,7 @@ class UserModel {
         return deleteUserResult;
     }
 
-    async updateOneUser(userInfo) {
+    async updateUser(userInfo) {
         const updatedUserInfo = await this.User.findOneAndUpdate(
             { id: userInfo.id },
             userInfo,
@@ -38,6 +38,17 @@ class UserModel {
             },
         );
         return updatedUserInfo;
+    }
+
+    async addExpert(userInfo) {
+        const updatedInfo = await this.User.findOneAndUpdate(
+            { id: userInfo.id },
+            { role: 'expert' },
+            {
+                new: true,
+            },
+        );
+        return updatedInfo;
     }
 }
 

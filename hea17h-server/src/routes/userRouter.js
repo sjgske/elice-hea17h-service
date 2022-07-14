@@ -1,17 +1,28 @@
 /* eslint-disable no-console */
 import { Router } from 'express';
+import is from '@sindresorhus/is';
 import { userService } from '../services/index.js';
 import { isLoggedIn } from '../middlewares/index.js';
+import { uploadExpert } from '../utils/index.js';
 
 const userRouter = Router();
 
 userRouter.get('/getUser', isLoggedIn, async (req, res, next) => {
     try {
-        const info = req.tokenInfo;
-        console.log(info);
-        const foundUser = await userService.getUser(info);
+        const userInfo = req.tokenInfo;
+        const foundUser = await userService.getUser(userInfo);
         console.log(`불러오기 성공!${foundUser.name}`);
         res.json(foundUser);
+    } catch (err) {
+        next(err);
+    }
+});
+
+userRouter.get('/getCertificate', isLoggedIn, async (req, res, next) => {
+    try {
+        const userInfo = req.tokenInfo;
+        const result = await userService.getCertificate(userInfo);
+        res.status(result.statusCode).json(result);
     } catch (err) {
         next(err);
     }
@@ -71,6 +82,32 @@ userRouter.post('/login', async (req, res, next) => {
         next(err);
     }
 });
+
+userRouter.post(
+    '/registerExpert',
+    isLoggedIn,
+    uploadExpert.single('image'),
+    async (req, res, next) => {
+        try {
+            if (is.emptyObject(req.body)) {
+                res.status(400).json(
+                    'header의 ContentType을 multipart/formdata 로 설정해주세요',
+                );
+            }
+            const userInfo = req.tokenInfo;
+            const image = req.file.location;
+            const { name } = req.body;
+            const certificateInfo = { name, image };
+            const result = await userService.addExpert(
+                userInfo,
+                certificateInfo,
+            );
+            res.status(result.statusCode).json(result);
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 userRouter.delete('/deleteUser', isLoggedIn, async (req, res, next) => {
     try {

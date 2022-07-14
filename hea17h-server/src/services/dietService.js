@@ -1,4 +1,4 @@
-import { dietModel, userModel } from '../db/index.js';
+import { dietModel } from '../db/index.js';
 
 class DietService {
     constructor() {
