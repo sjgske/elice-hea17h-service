@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { userSchema } from '../schemas/index.js';
+import UserSchema from '../schemas/userSchema.js';
 
 const { model } = mongoose;
-const User = model('users', userSchema);
+const User = model('users', UserSchema);
 
-export class UserModel {
+class UserModel {
     constructor() {
         this.User = User;
     }
@@ -29,7 +29,7 @@ export class UserModel {
         return deleteUserResult;
     }
 
-    async updateOneUser(userInfo) {
+    async updateUser(userInfo) {
         const updatedUserInfo = await this.User.findOneAndUpdate(
             { id: userInfo.id },
             userInfo,
@@ -39,8 +39,19 @@ export class UserModel {
         );
         return updatedUserInfo;
     }
+
+    async addExpert(userInfo) {
+        const updatedInfo = await this.User.findOneAndUpdate(
+            { id: userInfo.id },
+            { role: 'expert' },
+            {
+                new: true,
+            },
+        );
+        return updatedInfo;
+    }
 }
 
 const userModel = new UserModel();
 
-export { userModel };
+export default userModel;

@@ -5,7 +5,7 @@ import {
     faCalculator,
     faList,
     faComment,
-    faChalkboardUser
+    faChalkboardUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
@@ -13,28 +13,53 @@ function Nav() {
     return (
         <Container>
             <LeftSide>
-                <NavLink to="/">
-                    <Logo>
-                        HEA<span style={{ color: '#FD7E14' }}>17</span>H.
-                    </Logo>
-                </NavLink>
+                <LogoLink to="/">
+                    {/* HEA<span style={{ color: '#FD7E14' }}>17</span>H. */}
+                    <Logo
+                        src={`${process.env.PUBLIC_URL}/assets/logo.png`}
+                        alt="logo"
+                    />
+                </LogoLink>
                 <Menu>
-                    <NavLink to="/diet"><StyledFontAwesomeIcon icon={faCalculator} size='xl' /><SubMenu>식단계산</SubMenu></NavLink>
-                    <NavLink to="/diet/list"><StyledFontAwesomeIcon icon={faList} size='xl' /><SubMenu>식단 목록</SubMenu></NavLink>
-                    <NavLink to="/comment"><StyledFontAwesomeIcon icon={faComment} size='xl' /><SubMenu>코멘트</SubMenu></NavLink>
-                    <NavLink to="/coaching"><StyledFontAwesomeIcon icon={faChalkboardUser} size='xl' /><SubMenu>코칭</SubMenu></NavLink>
+                    <NavLink to="/diet">
+                        <StyledFontAwesomeIcon icon={faCalculator} size="xl" />
+                        <SubMenu>식단계산</SubMenu>
+                    </NavLink>
+                    <NavLink to="/diet/list">
+                        <StyledFontAwesomeIcon icon={faList} size="xl" />
+                        <SubMenu>식단 목록</SubMenu>
+                    </NavLink>
+                    <NavLink to="/comment">
+                        <StyledFontAwesomeIcon icon={faComment} size="xl" />
+                        <SubMenu>코멘트</SubMenu>
+                    </NavLink>
+                    <NavLink to="/coaching">
+                        <StyledFontAwesomeIcon
+                            icon={faChalkboardUser}
+                            size="xl"
+                        />
+                        <SubMenu>코칭</SubMenu>
+                    </NavLink>
                 </Menu>
             </LeftSide>
             <RightSide>
                 <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
-                <LoginButton><NavLink to="/login">로그인</NavLink></LoginButton>
-                <SignupButton><NavLink to="/signup">회원가입</NavLink></SignupButton>
+                <LoginButton>
+                    <NavLink to="/login">로그인</NavLink>
+                </LoginButton>
+                <SignupButton>
+                    <NavLink to="/signup">회원가입</NavLink>
+                </SignupButton>
             </RightSide>
         </Container>
     );
 }
 
 const Container = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
     margin: 0 auto;
     width: 100%;
     height: 80px;
@@ -50,14 +75,14 @@ const LeftSide = styled.div`
     display: flex;
 `;
 
-const Logo = styled.div`
+const LogoLink = styled(NavLink)`
+    display: flex;
+    align-items: center;
     margin: 0 20px;
+`;
 
-    line-height: 80px;
-
-    color: #3cb371;
-    font-weight: 700;
-    font-size: 30px;
+const Logo = styled.img`
+    width: 120px;
 `;
 
 const Menu = styled.div`

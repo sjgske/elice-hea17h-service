@@ -7,12 +7,13 @@ import Badge from '../../components/Badge';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 import TopButton from '../../components/TopButton';
+import Nav from '../../components/Nav';
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: #f7f7f9;
-    padding: 12vw 10vw;
+    padding: 8vw 10vw;
 `;
 
 const Main = styled.div`
@@ -76,6 +77,14 @@ const MainBox = styled(Box)`
     margin: 0 auto 30px;
 `;
 
+const CircleLink = styled(Link)`
+    transition: all 400ms ease;
+
+    &:hover {
+        transform: translateX(20px);
+    }
+`;
+
 const Circle = styled.div`
     position: relative;
     width: 60px;
@@ -96,59 +105,65 @@ const Circle = styled.div`
 
 function Comment() {
     return (
-        <Container>
-            <H1>코멘트</H1>
-            <Main>
-                <Header>
-                    <Div className="margin-bottom">
-                        <H2>
-                            전문가의
-                            <br /> 식단 코멘트를 받을 수 있습니다
-                            <Green>.</Green>
-                        </H2>
-                        <H2>
-                            목록이 없는 경우
-                            <br /> 다이어트 식단을
-                            <br /> 먼저 계산해보세요<Orange>.</Orange>
-                        </H2>
-                    </Div>
+        <>
+            <Nav />
+            <Container>
+                <H1>코멘트</H1>
+                <Main>
+                    <Header>
+                        <Div className="margin-bottom">
+                            <H2>
+                                전문가의
+                                <br /> 식단 코멘트를 받을 수 있습니다
+                                <Green>.</Green>
+                            </H2>
+                            <H2>
+                                목록이 없는 경우
+                                <br /> 다이어트 식단을
+                                <br /> 먼저 계산해보세요<Orange>.</Orange>
+                            </H2>
+                        </Div>
 
-                    <Link to="/diet" className="flex-column-align-items">
-                        <Circle>
-                            <FontAwesomeIcon icon={faArrowRight} />
-                        </Circle>
-                        <Orange>계산해보기</Orange>
-                    </Link>
-                </Header>
+                        <CircleLink
+                            to="/diet"
+                            className="flex-column-align-items"
+                        >
+                            <Circle>
+                                <FontAwesomeIcon icon={faArrowRight} />
+                            </Circle>
+                            <Orange>계산해보기</Orange>
+                        </CircleLink>
+                    </Header>
 
-                <MainBox width="100%" color="#faf3e3">
-                    <SpaceDiv>
-                        <Badge>2022.07.05</Badge>
-                        <H3>헬스장 가기 전에 먹기 좋은 식단</H3>
-                        <Calorie>
-                            <strong>1,443</strong> kcal
-                        </Calorie>
-                    </SpaceDiv>
-                    <Button width="10rem" color="#FD7E14">
-                        등록 취소
-                    </Button>
-                </MainBox>
+                    <MainBox width="100%" color="#faf3e3">
+                        <SpaceDiv>
+                            <Badge>2022.07.05</Badge>
+                            <H3>헬스장 가기 전에 먹기 좋은 식단</H3>
+                            <Calorie>
+                                <strong>1,443</strong> kcal
+                            </Calorie>
+                        </SpaceDiv>
+                        <Button width="10rem" color="#FD7E14">
+                            등록 취소
+                        </Button>
+                    </MainBox>
 
-                <MainBox width="100%" color="#faf3e3">
-                    <SpaceDiv>
-                        <Badge>2022.07.06</Badge>
-                        <H3>다이어트 최고, 지중해식 식단</H3>
-                        <Calorie>
-                            <strong>1,326</strong> kcal
-                        </Calorie>
-                    </SpaceDiv>
-                    <Button width="10rem" color="#51cf66">
-                        코멘트 받기
-                    </Button>
-                </MainBox>
-            </Main>
-            <TopButton />
-        </Container>
+                    <MainBox width="100%" color="#faf3e3">
+                        <SpaceDiv>
+                            <Badge>2022.07.06</Badge>
+                            <H3>다이어트 최고, 지중해식 식단</H3>
+                            <Calorie>
+                                <strong>1,326</strong> kcal
+                            </Calorie>
+                        </SpaceDiv>
+                        <Button width="10rem" color="#51cf66">
+                            코멘트 받기
+                        </Button>
+                    </MainBox>
+                </Main>
+                <TopButton />
+            </Container>
+        </>
     );
 }
 
