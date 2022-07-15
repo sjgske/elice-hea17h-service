@@ -1,6 +1,7 @@
-import { model } from 'mongoose';
+import mongoose from 'mongoose';
 import CertificateSchema from '../schemas/certificateSchema.js';
 
+const { model } = mongoose;
 const Certificate = model('certificates', CertificateSchema);
 
 class CertificateModel {

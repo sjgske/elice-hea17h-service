@@ -44,7 +44,11 @@ dietRouter.post(
         const dietInfo = req.body;
         const user = await userService.getUser(userInfo);
         const result = await dietService.addDiet(user._id, dietInfo);
-        res.status(201).json(result);
+        res.status(201).json({
+            status: 'success',
+            statusCode: 201,
+            payload: result,
+        });
     }),
 );
 
