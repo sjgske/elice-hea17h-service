@@ -1,3 +1,3 @@
-const convertDate = string => string.split('T')[0].replace(/-/g, '.');
+const convertDate = string => (string || '').split('T')[0].replace(/-/g, '.');
 
 export default convertDate;

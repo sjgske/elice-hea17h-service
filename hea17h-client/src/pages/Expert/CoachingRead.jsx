@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Box from '../../components/Box';
@@ -6,25 +7,46 @@ import Badge from '../../components/Badge';
 import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
 import ImageBadge from '../../components/DietInfo/ImageBadge';
+import convertDate from '../../utils';
 
 function CoachingWrite() {
-    useEffect(() => {
+    const [dietInfo, setDietInfo] = useState([]);
+    const [myInfo, setMyInfo] = useState({});
+    const { dietId } = useParams();
+
+    const getDiet = async () => {
         const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTgxNTN9.KOiwAB25YjYdVTyi8h4sOlFwRsw0I1Ve9fFxsquCV1A';
-
-        const fetchData = async () => {
-            const { data } = await axios.get(
-                'http://localhost:5000/diets/getDiet',
-                {
-                    headers: {
-                        userToken: token,
-                    },
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
+        const { data } = await axios.get(
+            'http://localhost:5000/diets/getAllDiet',
+            {
+                headers: {
+                    userToken: token,
                 },
-            );
-            console.log(data.payLoad.myDiet);
-        };
+            },
+        );
+        const obj = data.payload.payload.find(diet => diet._id === dietId);
+        setDietInfo(obj);
+    };
 
-        fetchData();
+    const getMyInfo = async () => {
+        const token =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
+        const { data } = await axios.get(
+            'http://localhost:5000/users/getUser',
+            {
+                headers: {
+                    userToken: token,
+                },
+            },
+        );
+
+        setMyInfo(data);
+    };
+
+    useEffect(() => {
+        getDiet();
+        getMyInfo();
     }, []);
 
     return (
@@ -33,9 +55,10 @@ function CoachingWrite() {
             <Box width="100%" color="white">
                 <Container>
                     <DietTheme
-                        date="2022.07.05"
-                        theme="다이어트 최고, 지중해식 식단"
-                        calorie="1850"
+                        key={dietInfo._id}
+                        date={convertDate(dietInfo.createdAt)}
+                        name={dietInfo.name}
+                        totalCalories={dietInfo.totalCalories}
                     />
                     <Box width="75%" color="#F5F5F5">
                         <ImageContainer>
@@ -228,24 +251,41 @@ function CoachingWrite() {
                     </UserInfo>
                     <Comment>
                         <h3>코멘트</h3>
-                        <Box
-                            width="100%"
-                            height="8rem"
-                            color="white"
-                            borderColor="#D9D9D9"
-                        >
-                            ㅇㅇ님, 안녕하세요
-                            <br />
-                            ...
-                        </Box>
-                        <div>
-                            <Button width="10rem" color="#51CF66">
-                                수정
-                            </Button>
-                            <Button width="10rem" color="#FD7E14">
-                                삭제
-                            </Button>
-                        </div>
+                        {dietInfo.comment &&
+                            dietInfo.comment.map(({ content, expert }) => (
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                    }}
+                                >
+                                    <Box
+                                        width="100%"
+                                        height="8rem"
+                                        color="white"
+                                        borderColor="#D9D9D9"
+                                    >
+                                        {content}
+                                    </Box>
+                                    {expert.user === myInfo._id && (
+                                        <div>
+                                            <Button
+                                                width="10rem"
+                                                color="#51CF66"
+                                            >
+                                                수정
+                                            </Button>
+                                            <Button
+                                                width="10rem"
+                                                color="#FD7E14"
+                                            >
+                                                삭제
+                                            </Button>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                     </Comment>
                 </Container>
             </Box>

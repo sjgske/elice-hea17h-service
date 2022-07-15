@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Box from '../../components/Box';
 import Badge from '../../components/Badge';
 import Button from '../../components/Button';
@@ -10,10 +10,26 @@ import ImageBadge from '../../components/DietInfo/ImageBadge';
 import convertDate from '../../utils';
 
 function CoachingWrite() {
-    const diet = useLocation().state;
+    const navigate = useNavigate();
+    const [dietInfo, setDietInfo] = useState([]);
+    const { dietId } = useParams();
     const [comment, setComment] = useState('');
 
-    // console.log(diet);
+    const getData = async () => {
+        const token =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
+        const { data } = await axios.get(
+            'http://localhost:5000/diets/getAllDiet',
+            {
+                headers: {
+                    userToken: token,
+                },
+            },
+        );
+
+        const obj = data.payload.payload.find(diet => diet._id === dietId);
+        setDietInfo(obj);
+    };
 
     const inputComment = e => {
         setComment(e.target.value);
@@ -23,85 +39,105 @@ function CoachingWrite() {
         const token =
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
 
-        const res = await axios.post('http://localhost:5000/diets/addComment', {
-            dietId: diet._id,
-            comment,
-            headers: {
-                userToken: token,
+        const res = await axios.post(
+            'http://localhost:5000/diets/addComment',
+            {
+                dietId: dietInfo._id,
+                comment,
             },
-        });
+            {
+                headers: {
+                    userToken: token,
+                },
+            },
+        );
 
-        console.log(res);
+        if (res.status === 200) {
+            navigate(`/coachingRead/${dietInfo._id}`);
+        } else {
+            // 나중에 에러 처리
+            console.log('ERROR');
+        }
     };
 
-    console.log(comment);
+    useEffect(() => {
+        getData();
+    }, []);
+
     return (
         <MainContainer>
             <h2>코칭</h2>
             <Box width="100%" color="white">
                 <Container>
                     <DietTheme
-                        key={diet._id}
-                        date={convertDate(diet.createdAt)}
-                        name={diet.name}
-                        totalCalories={diet.totalCalories}
+                        key={dietInfo._id}
+                        date={convertDate(dietInfo.createdAt)}
+                        name={dietInfo.name}
+                        totalCalories={dietInfo.totalCalories}
                     />
                     <Box width="75%" color="#F5F5F5">
-                        {diet.dietFoods.map((meal, index) => (
-                            <DietContainer key={meal._id}>
-                                <ImageBadge
-                                    imgUrl={diet.dietFoods[index].mainImg}
-                                />
-                                <p>{meal.mealType}</p>
-                                <div>
-                                    <Category>
-                                        <div>
-                                            <h3>고기</h3>
+                        {dietInfo.dietFoods &&
+                            dietInfo.dietFoods.map((meal, index) => (
+                                <DietContainer key={meal._id}>
+                                    <ImageBadge
+                                        imgUrl={
+                                            dietInfo.dietFoods[index].mainImg
+                                        }
+                                    />
+                                    <p>{meal.mealType}</p>
+                                    <div>
+                                        <Category>
+                                            <div>
+                                                <h3>고기</h3>
+                                                <Badge
+                                                    width="6.5rem"
+                                                    fontColor="#999999"
+                                                >
+                                                    164.9 kcal
+                                                </Badge>
+                                            </div>
+                                            <Badge
+                                                width="15.5rem"
+                                                fontColor="#999999"
+                                            >
+                                                닭가슴살(100)g X 1 = 165.9 kcal
+                                            </Badge>
+                                        </Category>
+                                        <Category>
+                                            <h3>채소</h3>
+                                            <Badge
+                                                width="17rem"
+                                                fontColor="#999999"
+                                            >
+                                                방울토마토(100g) X 3 = 0.018
+                                                kcal
+                                            </Badge>
+                                        </Category>
+                                        <Category>
+                                            <h3>견과</h3>
+                                            <Badge
+                                                width="13rem"
+                                                fontColor="#999999"
+                                            >
+                                                아몬드(1알) X 10 = 70 kcal
+                                            </Badge>
+                                        </Category>
+                                        <TotalCalorie>
+                                            <h3>총합</h3>
                                             <Badge
                                                 width="6.5rem"
                                                 fontColor="#999999"
                                             >
-                                                164.9 kcal
+                                                {
+                                                    dietInfo.dietFoods[index]
+                                                        .mealCalories
+                                                }{' '}
+                                                kcal
                                             </Badge>
-                                        </div>
-                                        <Badge
-                                            width="15.5rem"
-                                            fontColor="#999999"
-                                        >
-                                            닭가슴살(100)g X 1 = 165.9 kcal
-                                        </Badge>
-                                    </Category>
-                                    <Category>
-                                        <h3>채소</h3>
-                                        <Badge
-                                            width="17rem"
-                                            fontColor="#999999"
-                                        >
-                                            방울토마토(100g) X 3 = 0.018 kcal
-                                        </Badge>
-                                    </Category>
-                                    <Category>
-                                        <h3>견과</h3>
-                                        <Badge
-                                            width="13rem"
-                                            fontColor="#999999"
-                                        >
-                                            아몬드(1알) X 10 = 70 kcal
-                                        </Badge>
-                                    </Category>
-                                    <TotalCalorie>
-                                        <h3>총합</h3>
-                                        <Badge
-                                            width="6.5rem"
-                                            fontColor="#999999"
-                                        >
-                                            {diet.dietFoods[index].mealCalories}
-                                            kcal
-                                        </Badge>
-                                    </TotalCalorie>
-                                </div>
-                            </DietContainer>
-                        ))}
+                                        </TotalCalorie>
+                                    </div>
+                                </DietContainer>
+                            ))}
                     </Box>
                     <UserInfo>
                         <h3>회원정보</h3>

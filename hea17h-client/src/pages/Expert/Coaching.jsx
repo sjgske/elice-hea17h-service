@@ -22,14 +22,13 @@ function Coaching() {
             },
         );
 
-        setDietList(data.payload);
+        setDietList(data.payload.payload);
     };
 
     useEffect(() => {
         getData();
     }, []);
 
-    console.log(dietList);
     return (
         <MainContainer>
             <h2>코칭</h2>
@@ -43,16 +42,13 @@ function Coaching() {
                             totalCalories={diet.totalCalories}
                         >
                             {diet.comment.length > 0 ? (
-                                <Link to="/coachingRead/2">
+                                <Link to={`/coachingRead/${diet._id}`}>
                                     <Button width="10rem" color="#51CF66">
                                         코멘트 보기
                                     </Button>
                                 </Link>
                             ) : (
-                                <Link
-                                    to={`/coachingWrite/${diet._id}`}
-                                    state={diet}
-                                >
+                                <Link to={`/coachingWrite/${diet._id}`}>
                                     <Button width="10rem" color="#FD7E14">
                                         코멘트 작성
                                     </Button>
