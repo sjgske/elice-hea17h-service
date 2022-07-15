@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Nav from '../../components/Nav/index';
+import AxiosGet from './AxiosGet';
 
 function DietSearch() {
     return(
@@ -17,6 +18,7 @@ function DietSearch() {
                         <SearchContainer>
                             <InputText>돋보기</InputText>
                             <InputItem/>
+                            <AxiosGet />
                         </SearchContainer>
                         <LatestSearchContainer>
                             <LatestSearchText>최근 검색어</LatestSearchText>
