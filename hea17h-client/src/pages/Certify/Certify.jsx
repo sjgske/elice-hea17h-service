@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import Box from '../../components/Box';
+import Form from 'react-bootstrap/Form';
 import Button from '../../components/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Container = styled.div`
     width: 100%;
@@ -28,6 +27,7 @@ const H1 = styled.h1`
 const P = styled.p`
     color: #999999;
     font-size: 0.9rem;
+    margin: 0;
 `;
 
 const Span = styled.span`
@@ -52,27 +52,12 @@ const Img = styled.img`
     margin: 0 0 0.5rem;
 `;
 
-const Circle = styled.div`
-    position: relative;
-    width: 50px;
-    height: 50px;
-    margin-bottom: 0.5rem;
-    background-color: #fff;
-    border-radius: 50%;
-
-    svg {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 2rem;
-        color: #51cf66;
-    }
-`;
-
-const SubmitBox = styled(Box)`
-    cursor: pointer;
+const FormBox = styled.form`
+    width: 95%;
+    padding: 1.2rem 0;
     margin-bottom: 1.5rem;
+    background-color: #f5f5f5;
+    border-radius: 5px;
 `;
 
 function Certify() {
@@ -120,21 +105,30 @@ function Certify() {
                     </Div>
                 </SpaceRight>
 
-                <SubmitBox
-                    width="95%"
-                    height="12rem"
-                    color="#F5F5F5"
-                    className="flex center"
-                >
-                    <Circle>
-                        <FontAwesomeIcon icon={faPlus} />
-                    </Circle>
-                    <input type="file" className="hidden" />
-                </SubmitBox>
-
-                <Button width="10rem" color="#51cf66">
-                    제출하기
-                </Button>
+                <FormBox className="flex-column center">
+                    <Form.Group
+                        className="mb-3"
+                        controlId="exampleForm.ControlInput1"
+                        style={{ width: '20rem' }}
+                    >
+                        <Form.Label>자격증 이름</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="생활스포츠지도사 2급"
+                        />
+                    </Form.Group>
+                    <Form.Group
+                        controlId="formFile"
+                        className="mb-4"
+                        style={{ width: '20rem' }}
+                    >
+                        <Form.Label>자격증 파일</Form.Label>
+                        <Form.Control type="file" />
+                    </Form.Group>
+                    <Button type="submit" width="10rem" color="#51cf66">
+                        제출하기
+                    </Button>
+                </FormBox>
             </Main>
         </Container>
     );
