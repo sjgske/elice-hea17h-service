@@ -1,38 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
+import convertDate from '../../utils';
 
 function Coaching() {
+    const [dietList, setDietList] = useState([]);
+
+    const getData = async () => {
+        const token =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
+        const { data } = await axios.get(
+            'http://localhost:5000/diets/getAllDiet',
+            {
+                headers: {
+                    userToken: token,
+                },
+            },
+        );
+
+        setDietList(data.payload);
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    console.log(dietList);
     return (
         <MainContainer>
             <h2>코칭</h2>
             <Box width="100%" color="white">
                 <Container>
-                    <DietTheme
-                        date="2022.07.05"
-                        theme="헬스장 가기 전에 먹기 좋은 식단"
-                        calorie="1850"
-                    >
-                        <Link to="/coachingWrite/1">
-                            <Button width="10rem" color="#FD7E14">
-                                코멘트 작성
-                            </Button>
-                        </Link>
-                    </DietTheme>
-                    <DietTheme
-                        date="2022.07.05"
-                        theme="다이어트 최고, 지중해식 식단"
-                        calorie="1850"
-                    >
-                        <Link to="/coachingRead/2">
-                            <Button width="10rem" color="#51CF66">
-                                코멘트 보기
-                            </Button>
-                        </Link>
-                    </DietTheme>
+                    {dietList.map(diet => (
+                        <DietTheme
+                            key={diet._id}
+                            date={convertDate(diet.createdAt)}
+                            name={diet.name}
+                            totalCalories={diet.totalCalories}
+                        >
+                            {diet.comment.length > 0 ? (
+                                <Link to="/coachingRead/2">
+                                    <Button width="10rem" color="#51CF66">
+                                        코멘트 보기
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <Link
+                                    to={`/coachingWrite/${diet._id}`}
+                                    state={diet}
+                                >
+                                    <Button width="10rem" color="#FD7E14">
+                                        코멘트 작성
+                                    </Button>
+                                </Link>
+                            )}
+                        </DietTheme>
+                    ))}
                 </Container>
             </Box>
         </MainContainer>

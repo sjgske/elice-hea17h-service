@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import Box from '../Box';
 import Badge from '../Badge';
 
-function DietTheme({ date, theme, calorie, children }) {
+function DietTheme({ date, name, totalCalories, children }) {
     return (
         <DietThemeBox width="75%" height="8rem" color="#faf3e3">
             <DietInfo>
                 <Badge width="6rem">{date}</Badge>
-                <h3>{theme}</h3>
-                <p>{calorie} kcal</p>
+                <h3>{name}</h3>
+                <p>{totalCalories} kcal</p>
             </DietInfo>
             {children}
         </DietThemeBox>

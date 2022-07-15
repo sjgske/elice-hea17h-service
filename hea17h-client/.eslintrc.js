@@ -15,7 +15,7 @@ module.exports = {
         ecmaFeatures: {
             jsx: true,
         },
-        ecmaVersion: 6,
+        ecmaVersion: 8,
         sourceType: 'module',
     },
     plugins: ['react'],
@@ -27,5 +27,6 @@ module.exports = {
         'space-unary-ops': 2,
         'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
         'react/prop-types': 'off',
+        'no-underscore-dangle': 'off',
     },
 };

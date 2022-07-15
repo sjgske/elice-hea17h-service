@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import Box from '../../components/Box';
 import Badge from '../../components/Badge';
@@ -7,6 +8,25 @@ import DietTheme from '../../components/DietInfo/DietTheme';
 import ImageBadge from '../../components/DietInfo/ImageBadge';
 
 function CoachingWrite() {
+    useEffect(() => {
+        const token =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTgxNTN9.KOiwAB25YjYdVTyi8h4sOlFwRsw0I1Ve9fFxsquCV1A';
+
+        const fetchData = async () => {
+            const { data } = await axios.get(
+                'http://localhost:5000/diets/getDiet',
+                {
+                    headers: {
+                        userToken: token,
+                    },
+                },
+            );
+            console.log(data.payLoad.myDiet);
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <MainContainer>
             <h2>코칭</h2>
