@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
+import { model } from 'mongoose';
 import DietSchema from '../schemas/dietSchema.js';
 
-const { model } = mongoose;
 const Diet = model('diets', DietSchema);
 
 class DietModel {

@@ -1,6 +1,5 @@
-import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-const { Schema } = mongoose;
 const DietSchema = new Schema(
     {
         user: {

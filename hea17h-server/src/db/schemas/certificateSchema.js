@@ -1,6 +1,5 @@
-import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-const { Schema } = mongoose;
 const CertificateSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
