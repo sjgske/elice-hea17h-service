@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 
-const AxiosGet = () => {
+function AxiosGet() {
   const [data, setData] = useState([]);
   
   useEffect( () => {
@@ -22,19 +22,17 @@ const AxiosGet = () => {
 
   return (
     <div>
-      {data.map((v,i) => {
-          return(
-            <div key={i}>
+      {data.map((v) => (
+            <div>
               <h2>{v.name}</h2>
               <Imgs src={v.image}/>
               <div>{v.category}</div>
             </div>
-          );
-        })
+          ))
       }
     </div>
   );
-};
+}
 const Imgs = styled.img`
   width: 200px;
   height: 400px;
