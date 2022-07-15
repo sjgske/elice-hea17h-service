@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt';
 import { handleJWT } from '../utils/index.js';
-import { userModel } from '../db/index.js';
+import { userModel, certificateModel } from '../db/index.js';
 
 class UserService {
     constructor() {
         this.userModel = userModel;
+        this.certificateModel = certificateModel;
     }
 
     async addUser(userInfo) {
@@ -68,7 +69,7 @@ class UserService {
 
     async updateUser(userInfo) {
         const hashedPassword = await bcrypt.hash(userInfo.password, 10);
-        const updatedUser = await this.userModel.updateOneUser({
+        const updatedUser = await this.userModel.updateUser({
             ...userInfo,
             password: hashedPassword,
         });
@@ -103,6 +104,47 @@ class UserService {
             token: userToken,
         };
         return loginSuccess;
+    }
+
+    async addExpert(userInfo, certificateInfo) {
+        const updatedExpert = await this.userModel.addExpert(userInfo);
+        const addCertificate = await this.certificateModel.addCertificate(
+            updatedExpert,
+            certificateInfo,
+        );
+        if (!updatedExpert && !addCertificate) {
+            return {
+                status: 'error',
+                statusCode: 400,
+                message: '전문가 등록 과정에서 에러가 발생했습니다',
+            };
+        }
+        const result = {
+            status: 'success',
+            statusCode: 200,
+            payload: { user: updatedExpert, certificate: certificateInfo },
+        };
+        return result;
+    }
+
+    async getCertificate(userInfo) {
+        const user = await this.userModel.findById(userInfo.id);
+        if (user.role !== 'expert') {
+            return {
+                status: 'error',
+                statusCode: 400,
+                message: '해당 유저는 전문가가 아닙니다!',
+            };
+        }
+        const result = await this.certificateModel.findById(user._id);
+        if (!result) {
+            return {
+                status: 'error',
+                statusCode: 404,
+                message: '해당 유저에 대한 자격증을 찾을 수 없습니다!',
+            };
+        }
+        return { status: 'success', statusCode: 200, payload: result };
     }
 }
 

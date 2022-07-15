@@ -11,7 +11,10 @@ class DietModel {
 
     // 전문가 전용 모든 식단 보기
     async getAllDiet() {
-        const allDiet = await this.diet.find({}).populate('user', 'name');
+        const allDiet = await this.diet
+            .find({})
+            .populate('user', 'name gender height weight age goal activeLevel')
+            .populate('comment.expert');
         return allDiet;
     }
 
@@ -19,13 +22,28 @@ class DietModel {
     async findByUser(userId) {
         const userDiet = await this.diet
             .find({ user: userId })
-            .populate('user', 'name');
+            .populate('user', 'name gender height weight age goal activeLevel')
+            .populate('comment.expert');
         return userDiet;
     }
 
+    // 식단 추가하기
     async addDiet(userId, dietInfo) {
         const newDiet = await this.diet.create({ ...dietInfo, user: userId });
         return newDiet;
+    }
+
+    //
+    async addComment(comment, expertId, dietId) {
+        const result = await this.diet
+            .findOneAndUpdate(
+                { _id: dietId },
+                { $push: { comment: { expert: expertId, content: comment } } },
+                { new: true },
+            )
+            .populate('user', 'name gender height weight age goal activeLevel')
+            .populate('comment.expert');
+        return result;
     }
 }
 
