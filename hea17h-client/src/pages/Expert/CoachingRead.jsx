@@ -4,18 +4,17 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Box from '../../components/Box';
 import Badge from '../../components/Badge';
-import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
 import ImageBadge from '../../components/DietInfo/ImageBadge';
 import LabelWithInfo from '../../components/UserInfo/LabelWithInfo';
+import Comment from '../../components/Comment/Comment';
 import convertDate from '../../utils';
 
 function CoachingWrite() {
     const [dietInfo, setDietInfo] = useState({});
-    const [myInfo, setMyInfo] = useState({});
     const { dietId } = useParams();
 
-    const getDiet = async () => {
+    const getData = async () => {
         const token =
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
         const { data } = await axios.get(
@@ -30,24 +29,8 @@ function CoachingWrite() {
         setDietInfo(obj);
     };
 
-    const getMyInfo = async () => {
-        const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
-        const { data } = await axios.get(
-            'http://localhost:5000/users/getUser',
-            {
-                headers: {
-                    userToken: token,
-                },
-            },
-        );
-
-        setMyInfo(data);
-    };
-
     useEffect(() => {
-        getDiet();
-        getMyInfo();
+        getData();
     }, []);
 
     return (
@@ -260,47 +243,18 @@ function CoachingWrite() {
                                 }
                             />
                         </UserInfo>
-                        <Comment>
+                        <CommentContainer>
                             <h3>코멘트</h3>
-                            {dietInfo.comment &&
-                                dietInfo.comment.map(
-                                    ({ content, expert, _id }) => (
-                                        <div
-                                            key={_id}
-                                            style={{
-                                                width: '100%',
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                            }}
-                                        >
-                                            <Box
-                                                width="100%"
-                                                height="8rem"
-                                                color="white"
-                                                borderColor="#D9D9D9"
-                                            >
-                                                {content}
-                                            </Box>
-                                            {expert.user === myInfo._id && (
-                                                <div>
-                                                    <Button
-                                                        width="10rem"
-                                                        color="#51CF66"
-                                                    >
-                                                        수정
-                                                    </Button>
-                                                    <Button
-                                                        width="10rem"
-                                                        color="#FD7E14"
-                                                    >
-                                                        삭제
-                                                    </Button>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ),
-                                )}
-                        </Comment>
+                            {dietInfo.comment.map(
+                                ({ content, expert, _id }) => (
+                                    <Comment
+                                        key={_id}
+                                        content={content}
+                                        expert={expert}
+                                    />
+                                ),
+                            )}
+                        </CommentContainer>
                     </Container>
                 </Box>
             )}
@@ -387,7 +341,7 @@ const UserInfo = styled.div`
     }
 `;
 
-const Comment = styled.div`
+const CommentContainer = styled.div`
     width: 75%;
     display: flex;
     flex-direction: column;

@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Box from '../../components/Box';
 import Badge from '../../components/Badge';
-import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
 import ImageBadge from '../../components/DietInfo/ImageBadge';
 import LabelWithInfo from '../../components/UserInfo/LabelWithInfo';
+import CommentInput from '../../components/Comment/CommentInput';
 import convertDate from '../../utils';
 
 function CoachingWrite() {
-    const navigate = useNavigate();
     const [dietInfo, setDietInfo] = useState([]);
     const { dietId } = useParams();
-    const [comment, setComment] = useState('');
 
     const getData = async () => {
         const token =
@@ -30,35 +28,6 @@ function CoachingWrite() {
 
         const obj = data.payload.payload.find(diet => diet._id === dietId);
         setDietInfo(obj);
-    };
-
-    const inputComment = e => {
-        setComment(e.target.value);
-    };
-
-    const addComment = async () => {
-        const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
-
-        const res = await axios.post(
-            'http://localhost:5000/diets/addComment',
-            {
-                dietId: dietInfo._id,
-                comment,
-            },
-            {
-                headers: {
-                    userToken: token,
-                },
-            },
-        );
-
-        if (res.status === 200) {
-            navigate(`/coachingRead/${dietInfo._id}`);
-        } else {
-            // 나중에 에러 처리
-            console.log('ERROR');
-        }
     };
 
     useEffect(() => {
@@ -184,16 +153,7 @@ function CoachingWrite() {
                         </UserInfo>
                         <Comment>
                             <h3>코멘트 작성</h3>
-                            <textarea onChange={inputComment} />
-                            <div>
-                                <Button
-                                    width="10rem"
-                                    color="#51CF66"
-                                    onClick={addComment}
-                                >
-                                    작성 완료
-                                </Button>
-                            </div>
+                            <CommentInput dietId={dietInfo._id} />
                         </Comment>
                     </Container>
                 </Box>
@@ -263,21 +223,7 @@ const UserInfo = styled.div`
 
 const Comment = styled.div`
     width: 75%;
-    display: flex;
-    flex-direction: column;
     gap: 10px;
-
-    & > textarea {
-        width: 100%;
-        height: 200px;
-        resize: none;
-        outline: none;
-        border: 1px solid #d9d9d9;
-    }
-
-    & > div {
-        margin: 0 auto;
-    }
 `;
 
 export default CoachingWrite;
