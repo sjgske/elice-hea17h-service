@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Form from 'react-bootstrap/Form';
 import Button from '../../components/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,10 +10,14 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-    width: 42vw;
+    width: 600px;
     height: 100%;
     padding: 0 4rem;
     background-color: #fff;
+
+    @media screen and (max-width: 768px) {
+        width: 80vw;
+    }
 `;
 
 const H1 = styled.h1`
@@ -58,6 +61,31 @@ const FormBox = styled.form`
     margin-bottom: 1.5rem;
     background-color: #f5f5f5;
     border-radius: 5px;
+`;
+
+const Label = styled.label`
+    margin-bottom: 0.5rem;
+    display: inline-block;
+`;
+
+const Input = styled.input`
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    &.file {
+        overflow: hidden;
+    }
 `;
 
 function Certify() {
@@ -106,25 +134,14 @@ function Certify() {
                 </SpaceRight>
 
                 <FormBox className="flex-column center">
-                    <Form.Group
-                        className="mb-3"
-                        controlId="exampleForm.ControlInput1"
-                        style={{ width: '20rem' }}
-                    >
-                        <Form.Label>자격증 이름</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="생활스포츠지도사 2급"
-                        />
-                    </Form.Group>
-                    <Form.Group
-                        controlId="formFile"
-                        className="mb-4"
-                        style={{ width: '20rem' }}
-                    >
-                        <Form.Label>자격증 파일</Form.Label>
-                        <Form.Control type="file" />
-                    </Form.Group>
+                    <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
+                        <Label>자격증 이름</Label>
+                        <Input type="text" placeholder="생활스포츠지도사 2급" />
+                    </Div>
+                    <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
+                        <Label>자격증 파일</Label>
+                        <Input type="file" />
+                    </Div>
                     <Button type="submit" width="10rem" color="#51cf66">
                         제출하기
                     </Button>
