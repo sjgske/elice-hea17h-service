@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 
@@ -87,6 +88,40 @@ const Input = styled.input`
     }
 `;
 
+async function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const name = formData.get('name');
+    const image = formData.get('image');
+
+    if (!name || !image.name) {
+        alert('정보를 모두 기입해 주세요.');
+        return;
+    }
+
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data',
+            userToken:
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY',
+        },
+    };
+
+    await axios
+        .post('http://localhost:5000/users/registerExpert', formData, config)
+        .then(res => {
+            console.log(res);
+
+            alert('자격증 등록이 완료되었습니다.');
+            window.location.href = '/';
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
 function Certify() {
     return (
         <Container>
@@ -132,14 +167,22 @@ function Certify() {
                     </Div>
                 </SpaceRight>
 
-                <FormBox className="flex-column center">
+                <FormBox onSubmit={handleSubmit} className="flex-column center">
                     <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
-                        <Label>자격증 이름</Label>
-                        <Input type="text" placeholder="생활스포츠지도사 2급" />
+                        <Label htmlFor="name">자격증 이름</Label>
+                        <Input
+                            type="text"
+                            name="name"
+                            placeholder="생활스포츠지도사 2급"
+                        />
                     </Div>
                     <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
-                        <Label>자격증 파일</Label>
-                        <Input type="file" />
+                        <Label htmlFor="image">자격증 파일</Label>
+                        <Input
+                            type="file"
+                            name="image"
+                            accept=".png, .jpeg, .jpg"
+                        />
                     </Div>
                     <Button type="submit" width="10rem" color="#51cf66">
                         제출하기

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function Home() {
     return (
@@ -27,12 +28,14 @@ function Home() {
                     <br />
                     받아보세요.
                 </h2>
-                <ButtonContainer color="#fd7e14">
-                    <button type="button">
-                        <img src="left-arrow.png" alt="left-arrow" />
-                    </button>
-                    <p>솔루션 받기 </p>
-                </ButtonContainer>
+                <Link to="/comment">
+                    <ButtonContainer color="#fd7e14">
+                        <button type="button">
+                            <img src="left-arrow.png" alt="left-arrow" />
+                        </button>
+                        <p>솔루션 받기 </p>
+                    </ButtonContainer>
+                </Link>
             </div>
             <div>
                 <h2>
@@ -42,12 +45,14 @@ function Home() {
                     <br />
                     전문가를 찾고 있습니다.
                 </h2>
-                <ButtonContainer color="#51CF66">
-                    <button type="button">
-                        <img src="plus.png" alt="plus" />
-                    </button>
-                    <p>전문가 지원하기</p>
-                </ButtonContainer>
+                <Link to="/certify">
+                    <ButtonContainer color="#51CF66">
+                        <button type="button">
+                            <img src="plus.png" alt="plus" />
+                        </button>
+                        <p>전문가 지원하기</p>
+                    </ButtonContainer>
+                </Link>
             </div>
         </MainContainer>
     );
