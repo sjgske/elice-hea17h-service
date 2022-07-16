@@ -42,27 +42,27 @@ foodRouter.get(
         // CalorieNinjas 외부 API에 정보 요청
         request.get(
             {
-                url:
-                    'https://api.calorieninjas.com/v1/nutrition?query=' +
-                    convertedInfo,
+                url: `https://api.calorieninjas.com/v1/nutrition?query=${convertedInfo}`,
                 headers: {
                     'X-Api-Key': API_KEY,
                 },
             },
-            async function (error, response, body) {
+            async (error, response, body) => {
                 if (error) {
-                    return console.error('Request failed:', error);
-                } else if (response.statusCode != 200) {
-                    return console.error(
-                        'Error:',
-                        response.statusCode,
-                        body.toString('utf8'),
-                    );
-                } else {
-                    // 돌아온 정보를 다시 한글로 변환하여 프론트로 전달
-                    const foodInfo = await foodService.formatFoodInfo(body);
-                    res.status(200).json(foodInfo);
+                    res.status(400).json({
+                        status: 'Request failed:',
+                        message: error,
+                    });
+                } else if (response.statusCode !== 200) {
+                    res.status(404).json({
+                        status: 'Error:',
+                        statusCode: response.statusCode,
+                        message: body.toString('utf8'),
+                    });
                 }
+                // 돌아온 정보를 다시 한글로 변환하여 프론트로 전달
+                const foodInfo = await foodService.formatFoodInfo(body);
+                res.status(200).json(foodInfo);
             },
         );
     }),
@@ -121,7 +121,7 @@ foodRouter.patch(
 
         // 이름이 있을 경우 에러 발생
         const isExist = await foodService.checkByName(name);
-        if (isExist && isExist.name == name) {
+        if (isExist && isExist.name === name) {
             throw new Error(
                 '해당 이름으로 생성된 음식이 있습니다. 다른 이름을 지어주세요.',
             );

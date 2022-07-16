@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Container = styled.div`
     width: 100%;
