@@ -46,7 +46,6 @@ class FoodService {
                 '해당 음식에 대한 정보가 없습니다. 다시 한 번 확인해 주세요.',
             );
         }
-
         return food;
     }
 
@@ -59,7 +58,6 @@ class FoodService {
                 '해당 음식에 대한 정보가 없습니다. 다시 한 번 확인해 주세요.',
             );
         }
-
         return food;
     }
 
