@@ -1,7 +1,7 @@
 import { categoryModel } from '../db/index.js';
 
 class CategoryService {
-    constructor(categoryModel) {
+    constructor() {
         this.categoryModel = categoryModel;
     }
 
@@ -113,6 +113,6 @@ class CategoryService {
     }
 }
 
-const categoryService = new CategoryService(categoryModel);
+const categoryService = new CategoryService();
 
 export default categoryService;
