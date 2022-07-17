@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
 import convertDate from '../../utils';
+import * as Api from '../../api';
 
 function Coaching() {
     const [dietList, setDietList] = useState([]);
 
     const getData = async () => {
-        const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
-        const { data } = await axios.get(
-            'http://localhost:5000/diets/getAllDiet',
-            {
-                headers: {
-                    userToken: token,
-                },
-            },
-        );
+        const { data } = await Api.get('/diets/getAllDiet');
 
         setDietList(data.payload.payload);
     };

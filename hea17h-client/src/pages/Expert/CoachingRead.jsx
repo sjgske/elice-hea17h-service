@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import styled from 'styled-components';
 import Box from '../../components/Box';
 import Badge from '../../components/Badge';
@@ -9,23 +8,16 @@ import ImageBadge from '../../components/DietInfo/ImageBadge';
 import LabelWithInfo from '../../components/UserInfo/LabelWithInfo';
 import Comment from '../../components/Comment/Comment';
 import convertDate from '../../utils';
+import * as Api from '../../api';
 
-function CoachingWrite() {
+function CoachingRead() {
     const [dietInfo, setDietInfo] = useState({});
     const { dietId } = useParams();
 
     const getData = async () => {
-        const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
-        const { data } = await axios.get(
-            'http://localhost:5000/diets/getAllDiet',
-            {
-                headers: {
-                    userToken: token,
-                },
-            },
-        );
+        const { data } = await Api.get('/diets/getAllDiet');
         const obj = data.payload.payload.find(diet => diet._id === dietId);
+
         setDietInfo(obj);
     };
 
@@ -354,4 +346,4 @@ const CommentContainer = styled.div`
     }
 `;
 
-export default CoachingWrite;
+export default CoachingRead;

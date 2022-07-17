@@ -1,42 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import * as Api from '../../api';
 import Box from '../Box';
 import Button from '../Button';
 
 function Comment({ content, expert }) {
     const [myInfo, setMyInfo] = useState({});
+    // 전문가 정보 가져오기
+    // const [expertInfo, setExpertInfo] = useState({});
 
     const getMyInfo = async () => {
-        const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
-        const { data } = await axios.get(
-            'http://localhost:5000/users/getUser',
-            {
-                headers: {
-                    userToken: token,
-                },
-            },
-        );
+        const { data } = await Api.get('/users/getUser');
 
         setMyInfo(data);
     };
 
+    // const getExpertInfo = async () => {
+    //     const { data } = await Api.get('/users/getExpertInfo');
+
+    //     setExpertInfo(data);
+    // };
+
     useEffect(() => {
         getMyInfo();
+        // getExpertInfo();
     }, []);
 
     return (
-        <div
-            style={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
-            <Box width="100%" height="8rem" color="white" borderColor="#D9D9D9">
+        <Root>
+            <CommentBox width="100%" color="white" borderColor="#D9D9D9">
                 {content}
-            </Box>
+            </CommentBox>
             {expert.user === myInfo._id && (
                 <ButtonContainer>
                     <Button width="10rem" color="#51CF66">
@@ -47,9 +41,17 @@ function Comment({ content, expert }) {
                     </Button>
                 </ButtonContainer>
             )}
-        </div>
+        </Root>
     );
 }
+
+const Root = styled.div`
+    width: 100%;
+`;
+
+const CommentBox = styled(Box)`
+    padding: 10px;
+`;
 
 const ButtonContainer = styled.div`
     display: flex;

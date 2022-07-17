@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import * as Api from '../../api';
 import Button from '../Button';
 
 function CommentInput({ dietId }) {
@@ -13,30 +13,16 @@ function CommentInput({ dietId }) {
     };
 
     const addComment = async () => {
-        const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY';
-
-        const res = await axios.post(
-            'http://localhost:5000/diets/addComment',
-            {
-                dietId,
-                comment,
-            },
-            {
-                headers: {
-                    userToken: token,
-                },
-            },
-        );
+        const res = await Api.post('/diets/addComment', {
+            dietId,
+            comment,
+        });
 
         if (res.status === 200) {
             navigate(`/coachingRead/${dietId}`);
-        } else {
-            // 나중에 에러 처리
-            console.log('ERROR');
         }
     };
-    console.log(dietId);
+
     return (
         <Root>
             <textarea onChange={inputComment} />
@@ -51,6 +37,7 @@ function CommentInput({ dietId }) {
 
 const Root = styled.div`
     & > textarea {
+        padding: 10px;
         width: 100%;
         height: 200px;
         resize: none;
