@@ -1,7 +1,7 @@
 import { foodModel, categoryModel } from '../db/index.js';
 
 class FoodService {
-    constructor(foodModel, categoryModel) {
+    constructor() {
         this.foodModel = foodModel;
         this.categoryModel = categoryModel;
     }
@@ -25,6 +25,7 @@ class FoodService {
                 '해당 카테고리 내역이 없습니다. 다시 한 번 확인해 주세요.',
             );
         }
+        // eslint-disable-next-line no-underscore-dangle
         const categoryId = categoryInfo._id;
 
         const foods = await this.foodModel.findByCategory(categoryId);
@@ -46,7 +47,6 @@ class FoodService {
                 '해당 음식에 대한 정보가 없습니다. 다시 한 번 확인해 주세요.',
             );
         }
-
         return food;
     }
 
@@ -59,7 +59,6 @@ class FoodService {
                 '해당 음식에 대한 정보가 없습니다. 다시 한 번 확인해 주세요.',
             );
         }
-
         return food;
     }
 
@@ -73,12 +72,13 @@ class FoodService {
     async getFoodNameEng(foodInfo) {
         let result = '';
 
-        for (let i = 0; i < foodInfo.length; i++) {
-            let food = await this.foodModel.findByName(foodInfo[i]);
+        for (let i = 0; i < foodInfo.length; i += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const food = await this.foodModel.findByName(foodInfo[i]);
             if (!food) {
-                result += foodInfo[i] + ' ';
+                result += `${foodInfo[i]} `;
             } else {
-                result += food.nameEng + ' ';
+                result += `${food.nameEng} `;
             }
         }
         return result;
@@ -89,8 +89,11 @@ class FoodService {
         const conversion = JSON.parse(foodInfo);
         const initialInfo = conversion.items;
 
-        for (let i = 0; i < initialInfo.length; i++) {
-            let food = await this.foodModel.findByNameEng(initialInfo[i].name);
+        for (let i = 0; i < initialInfo.length; i += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const food = await this.foodModel.findByNameEng(
+                initialInfo[i].name,
+            );
             initialInfo[i].name = food.name;
             initialInfo[i].category = food.category.name;
             initialInfo[i].image = food.image;
@@ -155,6 +158,6 @@ class FoodService {
     }
 }
 
-const foodService = new FoodService(foodModel, categoryModel);
+const foodService = new FoodService();
 
 export default foodService;

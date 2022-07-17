@@ -1,7 +1,7 @@
 import { categoryModel } from '../db/index.js';
 
 class CategoryService {
-    constructor(categoryModel) {
+    constructor() {
         this.categoryModel = categoryModel;
     }
 
@@ -44,6 +44,7 @@ class CategoryService {
             );
         }
 
+        // eslint-disable-next-line no-underscore-dangle
         const categoryId = category._id;
         return categoryId;
     }
@@ -113,6 +114,6 @@ class CategoryService {
     }
 }
 
-const categoryService = new CategoryService(categoryModel);
+const categoryService = new CategoryService();
 
 export default categoryService;

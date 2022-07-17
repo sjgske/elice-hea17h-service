@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
-const userSchema = new Schema(
+const UserSchema = new Schema(
     {
         id: {
             type: String,
@@ -49,4 +49,4 @@ const userSchema = new Schema(
     },
 );
 
-export default userSchema;
+export default UserSchema;
