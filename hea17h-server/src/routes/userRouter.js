@@ -39,7 +39,7 @@ userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
     }
 });
 
-userRouter.post('/signIn', async (req, res, next) => {
+userRouter.post('/signUp', async (req, res, next) => {
     try {
         const {
             id,
