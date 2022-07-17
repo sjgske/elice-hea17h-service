@@ -77,6 +77,12 @@ const DietDetailBox = styled(Box)`
     justify-content: space-evenly;
     gap: 10px;
     padding: 20px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
 `;
 
 const UserInfo = styled.div`

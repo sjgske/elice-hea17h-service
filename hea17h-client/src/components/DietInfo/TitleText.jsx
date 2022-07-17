@@ -9,6 +9,10 @@ const Text = styled.p`
     font-size: 1.2rem;
     font-weight: bold;
     margin: 0;
+
+    @media (max-width: 768px) {
+        font-size: 1rem;
+    }
 `;
 
 export default TitleText;

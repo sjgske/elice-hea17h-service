@@ -51,6 +51,10 @@ const Root = styled.div`
 
 const CommentBox = styled(Box)`
     padding: 10px;
+
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+    }
 `;
 
 const ButtonContainer = styled.div`

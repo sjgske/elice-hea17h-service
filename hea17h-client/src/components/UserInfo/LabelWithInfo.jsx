@@ -19,6 +19,10 @@ const Root = styled.div`
     & > p {
         margin-bottom: 5px;
     }
+
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+    }
 `;
 
 const InfoBox = styled(Box)`

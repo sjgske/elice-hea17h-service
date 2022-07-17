@@ -43,6 +43,10 @@ const Root = styled.div`
         resize: none;
         outline: none;
         border: 1px solid #d9d9d9;
+
+        @media (max-width: 768px) {
+            font-size: 0.8rem;
+        }
     }
 
     & > div {

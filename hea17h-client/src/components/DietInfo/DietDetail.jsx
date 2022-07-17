@@ -58,6 +58,7 @@ const Category = styled.div`
 
     & > div {
         display: flex;
+        align-items: center;
         gap: 10px;
         margin-bottom: 5px;
     }
@@ -65,14 +66,9 @@ const Category = styled.div`
 
 const TotalCalorie = styled.div`
     display: flex;
+    align-items: center;
     gap: 10px;
     margin-top: 40px;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-        font-size: 0.7rem;
-        gap: 0;
-    }
 `;
 
 export default DietDetail;
