@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+// import Nav from '../../components/Nav';
 import Box from '../../components/Box';
 import Badge from '../../components/Badge';
 import DietTheme from '../../components/DietInfo/DietTheme';
 import ImageBadge from '../../components/DietInfo/ImageBadge';
 import LabelWithInfo from '../../components/UserInfo/LabelWithInfo';
 import Comment from '../../components/Comment/Comment';
+import TitleText from '../../components/DietInfo/TitleText';
 import convertDate from '../../utils';
 import * as Api from '../../api';
 
@@ -26,37 +28,33 @@ function CoachingRead() {
     }, []);
 
     return (
-        <MainContainer>
-            <h2>코칭</h2>
-            {Object.keys(dietInfo).length > 0 && (
-                <Box width="100%" color="white">
-                    <Container>
+        <div>
+            {/* <Nav /> */}
+            <MainContainer>
+                <h2>코칭</h2>
+                {Object.keys(dietInfo).length > 0 && (
+                    <Container width="100%" color="white">
                         <DietTheme
                             key={dietInfo._id}
                             date={convertDate(dietInfo.createdAt)}
                             name={dietInfo.name}
                             totalCalories={dietInfo.totalCalories}
                         />
-                        <Box width="75%" color="#F5F5F5">
-                            <ImageContainer>
-                                <div>
-                                    <ImageBadge />
-                                    <p>아침</p>
-                                </div>
-                                <div>
-                                    <ImageBadge />
-                                    <p>점심</p>
-                                </div>
-                                <div>
-                                    <ImageBadge />
-                                    <p>저녁</p>
-                                </div>
-                            </ImageContainer>
-                            <DietContainer>
-                                <div>
+                        <DietDetailBox width="75%" color="#F5F5F5">
+                            {dietInfo.dietFoods.map((meal, index) => (
+                                <DietContainer key={meal._id}>
+                                    <BadgeContainer>
+                                        <ImageBadge
+                                            imgUrl={
+                                                dietInfo.dietFoods[index]
+                                                    .mainImg
+                                            }
+                                        />
+                                        <p>{meal.mealType}</p>
+                                    </BadgeContainer>
                                     <Category>
                                         <div>
-                                            <h3>고기</h3>
+                                            <TitleText>고기</TitleText>
                                             <Badge
                                                 width="6.5rem"
                                                 fontColor="#999999"
@@ -72,7 +70,7 @@ function CoachingRead() {
                                         </Badge>
                                     </Category>
                                     <Category>
-                                        <h3>채소</h3>
+                                        <TitleText>채소</TitleText>
                                         <Badge
                                             width="17rem"
                                             fontColor="#999999"
@@ -81,7 +79,7 @@ function CoachingRead() {
                                         </Badge>
                                     </Category>
                                     <Category>
-                                        <h3>견과</h3>
+                                        <TitleText>견과</TitleText>
                                         <Badge
                                             width="13rem"
                                             fontColor="#999999"
@@ -90,111 +88,23 @@ function CoachingRead() {
                                         </Badge>
                                     </Category>
                                     <TotalCalorie>
-                                        <h3>총합</h3>
+                                        <TitleText>총합</TitleText>
                                         <Badge
                                             width="6.5rem"
                                             fontColor="#999999"
                                         >
-                                            371.08 kcal
+                                            {
+                                                dietInfo.dietFoods[index]
+                                                    .mealCalories
+                                            }{' '}
+                                            kcal
                                         </Badge>
                                     </TotalCalorie>
-                                </div>
-                                <div>
-                                    <Category>
-                                        <div>
-                                            <h3>고기</h3>
-                                            <Badge
-                                                width="6.5rem"
-                                                fontColor="#999999"
-                                            >
-                                                164.9 kcal
-                                            </Badge>
-                                        </div>
-                                        <Badge
-                                            width="15.5rem"
-                                            fontColor="#999999"
-                                        >
-                                            닭가슴살(100)g X 1 = 165.9 kcal
-                                        </Badge>
-                                    </Category>
-                                    <Category>
-                                        <h3>채소</h3>
-                                        <Badge
-                                            width="17rem"
-                                            fontColor="#999999"
-                                        >
-                                            방울토마토(100g) X 3 = 0.018 kcal
-                                        </Badge>
-                                    </Category>
-                                    <Category>
-                                        <h3>견과</h3>
-                                        <Badge
-                                            width="13rem"
-                                            fontColor="#999999"
-                                        >
-                                            아몬드(1알) X 10 = 70 kcal
-                                        </Badge>
-                                    </Category>
-                                    <TotalCalorie>
-                                        <h3>총합</h3>
-                                        <Badge
-                                            width="6.5rem"
-                                            fontColor="#999999"
-                                        >
-                                            371.08 kcal
-                                        </Badge>
-                                    </TotalCalorie>
-                                </div>
-                                <div>
-                                    <Category>
-                                        <div>
-                                            <h3>고기</h3>
-                                            <Badge
-                                                width="6.5rem"
-                                                fontColor="#999999"
-                                            >
-                                                164.9 kcal
-                                            </Badge>
-                                        </div>
-                                        <Badge
-                                            width="15.5rem"
-                                            fontColor="#999999"
-                                        >
-                                            닭가슴살(100)g X 1 = 165.9 kcal
-                                        </Badge>
-                                    </Category>
-                                    <Category>
-                                        <h3>채소</h3>
-                                        <Badge
-                                            width="17rem"
-                                            fontColor="#999999"
-                                        >
-                                            방울토마토(100g) X 3 = 0.018 kcal
-                                        </Badge>
-                                    </Category>
-                                    <Category>
-                                        <h3>견과</h3>
-                                        <Badge
-                                            width="13rem"
-                                            fontColor="#999999"
-                                        >
-                                            아몬드(1알) X 10 = 70 kcal
-                                        </Badge>
-                                    </Category>
-                                    <TotalCalorie>
-                                        <h3>총합</h3>
-                                        <Badge
-                                            width="6.5rem"
-                                            fontColor="#999999"
-                                        >
-                                            371.08 kcal
-                                        </Badge>
-                                    </TotalCalorie>
-                                </div>
-                            </DietContainer>
-                        </Box>
+                                </DietContainer>
+                            ))}
+                        </DietDetailBox>
                         <UserInfo>
-                            <h3>회원정보</h3>
+                            <TitleText>회원정보</TitleText>
                             <LabelWithInfo
                                 label="키(cm)"
                                 info={dietInfo.user.height}
@@ -236,7 +146,7 @@ function CoachingRead() {
                             />
                         </UserInfo>
                         <CommentContainer>
-                            <h3>코멘트</h3>
+                            <TitleText>코멘트</TitleText>
                             {dietInfo.comment.map(
                                 ({ content, expert, _id }) => (
                                     <Comment
@@ -248,9 +158,9 @@ function CoachingRead() {
                             )}
                         </CommentContainer>
                     </Container>
-                </Box>
-            )}
-        </MainContainer>
+                )}
+            </MainContainer>
+        </div>
     );
 }
 
@@ -263,7 +173,7 @@ const MainContainer = styled.div`
     }
 `;
 
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -271,30 +181,21 @@ const Container = styled.div`
     padding: 50px 0;
 `;
 
-const ImageContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    gap: 30px;
-
-    & > div {
-        text-align: center;
-
-        & > p {
-            font-weight: bold;
-        }
-    }
-
-    @media (max-width: 768px) {
-        font-size: 0.8rem;
-    }
-`;
-
 const DietContainer = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     gap: 10px;
     margin: 40px 20px;
+`;
+
+const BadgeContainer = styled.div``;
+
+const DietDetailBox = styled(Box)`
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    padding: 20px;
 `;
 
 const Category = styled.div`
@@ -302,17 +203,15 @@ const Category = styled.div`
 
     & > div {
         display: flex;
+        align-items: center;
         gap: 10px;
         margin-bottom: 5px;
-    }
-
-    @media (max-width: 768px) {
-        font-size: 0.7rem;
     }
 `;
 
 const TotalCalorie = styled.div`
     display: flex;
+    align-items: center;
     gap: 10px;
     margin-top: 40px;
 
@@ -327,10 +226,6 @@ const UserInfo = styled.div`
     display: flex;
     flex-direction: column;
     width: 75%;
-
-    & > h3 {
-        margin-bottom: 15px;
-    }
 `;
 
 const CommentContainer = styled.div`

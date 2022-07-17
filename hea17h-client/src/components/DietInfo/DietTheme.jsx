@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Box from '../Box';
 import Badge from '../Badge';
+import TitleText from './TitleText';
 
 function DietTheme({ date, name, totalCalories, children }) {
     return (
         <DietThemeBox width="75%" height="8rem" color="#faf3e3">
             <DietInfo>
-                <Badge width="6rem">{date}</Badge>
-                <h3>{name}</h3>
+                <Badge>{date}</Badge>
+                <TitleText>{name}</TitleText>
                 <p>{totalCalories} kcal</p>
             </DietInfo>
             {children}
@@ -36,14 +37,14 @@ const DietInfo = styled.div`
     justify-content: center;
     gap: 7px;
 
-    & > p {
+    & > p:last-child {
         font-weight: bold;
         color: #999999;
+        margin: 0;
     }
 
     @media (max-width: 768px) {
         font-size: 0.7rem;
-        margin-bottom: 10px;
     }
 `;
 

@@ -14,7 +14,11 @@ function LabelWithInfo({ label, info }) {
 }
 
 const Root = styled.div`
-    margin-bottom: 7px;
+    margin-top: 10px;
+
+    & > p {
+        margin-bottom: 5px;
+    }
 `;
 
 const InfoBox = styled(Box)`
