@@ -16,7 +16,7 @@ function DietSearch() {
                 <Section>
                     <SearchSection>
                         <SearchContainer>
-                            <InputText>돋보기</InputText>
+                            <InputText>검색</InputText>
                             <InputItem/>
                             <AxiosGet />
                         </SearchContainer>
