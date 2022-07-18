@@ -16,8 +16,8 @@ function CoachingWrite() {
 
     const getData = async () => {
         const { data } = await Api.get('/diets/getAllDiet');
-
         const obj = data.payload.payload.find(diet => diet._id === dietId);
+
         setDietInfo(obj);
     };
 
@@ -81,7 +81,7 @@ const DietDetailBox = styled(Box)`
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: center;
-        gap: 30px;
+        gap: 50px;
     }
 `;
 

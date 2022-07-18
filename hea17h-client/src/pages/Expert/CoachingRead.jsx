@@ -92,7 +92,7 @@ const DietDetailBox = styled(Box)`
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: center;
-        gap: 30px;
+        gap: 50px;
     }
 `;
 
