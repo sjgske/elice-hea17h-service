@@ -68,10 +68,16 @@ class UserService {
     }
 
     async updateUser(userInfo) {
-        const hashedPassword = await bcrypt.hash(userInfo.password, 10);
+        if (userInfo.password) {
+            const hashedPassword = await bcrypt.hash(userInfo.password, 10);
+            const updatedUser = await this.userModel.updateUser({
+                ...userInfo,
+                password: hashedPassword,
+            });
+            return updatedUser;
+        }
         const updatedUser = await this.userModel.updateUser({
             ...userInfo,
-            password: hashedPassword,
         });
         return updatedUser;
     }
