@@ -1,18 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { login } from '../../slices/UserSlice';
+import * as Api from '../../api';
 
 function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [id, setId] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        if (id === '' || password === '') {
+            alert("아이디와 비밀번호를 입력해주세요.");
+            
+        } else {
+            try {
+                const data = { id, password };
+                const res = await Api.post('/users/login', data);
+
+                const jwtToken = res.data.token;
+                localStorage.setItem('userToken', jwtToken);
+                dispatch(login(data));
+
+                navigate('/', { replace: true });
+            } catch (err) {
+                console.log('로그인 실패', err);
+            }
+        }
+    };
+
+    const handleRegisterButton = () => {
+        navigate('/signup');
+    };
+
     return (
         <Container>
             <LoginContainer>
                 <h1 style={{ marginTop: '20px' }}>로그인</h1>
                 <InputForm>
                     <InputText>아이디</InputText>
-                    <InputItem />
+                    <InputItem
+                        onChange={(e) => { setId(e.target.value); }}
+                    />
                 </InputForm>
                 <InputForm>
                     <InputText>비밀번호</InputText>
-                    <InputItem />
+                    <InputItem
+                        type='password'
+                        onChange={(e) => { setPassword(e.target.value); }}
+                    />
                 </InputForm>
                 <SocialLoginButton>
                     <GoogleButton>
@@ -25,10 +66,10 @@ function Login() {
                         네이버 계정으로 로그인
                     </NaverButton>
                 </SocialLoginButton>
-                    <LoginButton>
+                    <LoginButton onClick={handleLogin}>
                         로그인
                     </LoginButton>
-                    <CreateIdButton>
+                    <CreateIdButton onClick={handleRegisterButton}>
                         계정 생성하기
                     </CreateIdButton>
             </LoginContainer>
