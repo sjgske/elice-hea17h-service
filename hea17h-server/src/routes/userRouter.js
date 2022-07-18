@@ -41,32 +41,24 @@ userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
 
 userRouter.post('/signUp', async (req, res, next) => {
     try {
-        const {
-            id,
-            name,
-            password,
-            gender,
-            height,
-            weight,
-            goalWeight,
-            age,
-            goal,
-            activeLevel,
-        } = req.body;
+        const { id, name, password } = req.body;
         const newUser = await userService.addUser({
             id,
             name,
             password,
-            gender,
-            height,
-            weight,
-            goalWeight,
-            age,
-            goal,
-            activeLevel,
         });
         console.log(`삽입 성공! ${newUser.name} 가 회원가입되었습니다`);
         res.json(newUser);
+    } catch (err) {
+        next(err);
+    }
+});
+
+userRouter.patch('/signUpDetail', (req, res, next) => {
+    try {
+        const userInfo = req.body;
+        const updatedUser = userService.updateUser(userInfo);
+        res.json(updatedUser);
     } catch (err) {
         next(err);
     }
@@ -113,7 +105,6 @@ userRouter.delete('/deleteUser', isLoggedIn, async (req, res, next) => {
     try {
         const userInfo = req.tokenInfo;
         const result = await userService.deleteUser(userInfo.id);
-        console.log(result);
         res.status(result.statusCode).json(result);
     } catch (err) {
         next(err);
