@@ -11,6 +11,11 @@ import CommentInput from '../../components/Comment/CommentInput';
 import convertDate from '../../utils';
 
 function CoachingWrite() {
+    console.log('write');
+    localStorage.setItem(
+        'userToken',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY',
+    );
     const [dietInfo, setDietInfo] = useState([]);
     const { dietId } = useParams();
 

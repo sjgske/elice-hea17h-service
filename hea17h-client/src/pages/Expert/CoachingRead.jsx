@@ -12,6 +12,7 @@ import * as Api from '../../api';
 
 function CoachingRead() {
     const [dietInfo, setDietInfo] = useState({});
+    const [myId, setMyId] = useState({});
     const { dietId } = useParams();
 
     const getData = async () => {
@@ -21,8 +22,15 @@ function CoachingRead() {
         setDietInfo(obj);
     };
 
+    const getMyInfo = async () => {
+        const { data } = await Api.get('/users/getUser');
+
+        setMyId(data._id);
+    };
+
     useEffect(() => {
         getData();
+        getMyInfo();
     }, []);
 
     return (
@@ -49,15 +57,11 @@ function CoachingRead() {
                         </UserInfo>
                         <CommentContainer>
                             <TitleText>코멘트</TitleText>
-                            {dietInfo.comment.map(
-                                ({ content, expert, _id }) => (
-                                    <Comment
-                                        key={_id}
-                                        content={content}
-                                        expert={expert}
-                                    />
-                                ),
-                            )}
+                            <Comment
+                                myId={myId}
+                                dietId={dietId}
+                                commentInfo={dietInfo.comment}
+                            />
                         </CommentContainer>
                     </Container>
                 )}
@@ -107,12 +111,6 @@ const CommentContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    & > div {
-        display: flex;
-        gap: 20px;
-        margin: 0 auto;
-    }
 `;
 
 export default CoachingRead;
