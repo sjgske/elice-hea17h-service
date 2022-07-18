@@ -45,6 +45,24 @@ class DietModel {
             .populate('comment.expert');
         return result;
     }
+
+    async modifyComment(dietId, commentId, content) {
+        const result = await this.diet.findOneAndUpdate(
+            { _id: dietId, 'comment._id': commentId },
+            { $set: { 'comment.$.content': content } },
+            { new: true },
+        );
+        return result;
+    }
+
+    async deleteComment(dietId, commentId) {
+        const result = await this.diet.findOneAndUpdate(
+            { _id: dietId },
+            { $pull: { comment: { _id: commentId } } },
+            { new: true },
+        );
+        return result;
+    }
 }
 
 const dietModel = new DietModel();
