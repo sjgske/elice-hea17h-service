@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Food() {
-    const [food, setFood] = useState([]);
+    const [food, setFood] = useState();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories')
+        axios.get('http://localhost:5000/foods')
             .then(response => {
                 setFood(response.data);
             });
@@ -13,7 +13,7 @@ function Food() {
 
     return (
         <>
-            <h1>Users</h1>
+            <h1>Food</h1>
             <div Food={food}/>
         </>
     );
