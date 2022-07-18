@@ -39,6 +39,16 @@ userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
     }
 });
 
+userRouter.patch('/signUpDetail', async (req, res, next) => {
+    try {
+        const userInfo = req.body;
+        const updatedUser = await userService.updateUser(userInfo);
+        res.json(updatedUser);
+    } catch (err) {
+        next(err);
+    }
+});
+
 userRouter.post('/signUp', async (req, res, next) => {
     try {
         const { id, name, password } = req.body;
@@ -49,16 +59,6 @@ userRouter.post('/signUp', async (req, res, next) => {
         });
         console.log(`삽입 성공! ${newUser.name} 가 회원가입되었습니다`);
         res.json(newUser);
-    } catch (err) {
-        next(err);
-    }
-});
-
-userRouter.patch('/signUpDetail', (req, res, next) => {
-    try {
-        const userInfo = req.body;
-        const updatedUser = userService.updateUser(userInfo);
-        res.json(updatedUser);
     } catch (err) {
         next(err);
     }
