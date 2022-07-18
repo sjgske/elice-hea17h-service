@@ -56,10 +56,6 @@ function Nav() {
 }
 
 const Container = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 30;
     margin: 0 auto;
     width: 100%;
     height: 80px;

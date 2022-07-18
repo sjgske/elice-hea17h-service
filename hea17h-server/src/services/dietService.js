@@ -53,7 +53,6 @@ class DietService {
     // 식단에 코멘트(피드백) 추가.
     async addComment(comment, id, dietId) {
         const expertInfo = await this.certificateModel.findById(id);
-        console.log(expertInfo);
         const result = await this.dietModel.addComment(
             comment,
             expertInfo._id,

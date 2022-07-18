@@ -19,7 +19,7 @@ const Container = styled(Box)`
 const Div = styled.div``;
 
 const SpaceBottom = styled.div`
-    * {
+    & > * {
         margin-bottom: 0.5rem;
     }
 
@@ -44,7 +44,7 @@ const H3 = styled.h3`
 `;
 
 const H4 = styled.h4`
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin-right: 1rem;
 `;
 
@@ -114,6 +114,19 @@ const IconButton = styled.button`
     top: 1.5rem;
     right: 2rem;
     font-size: 1.2rem;
+`;
+
+const FlexBox = styled.div`
+    display: flex;
+
+    * {
+        margin-right: 0.5rem;
+        margin-bottom: 0;
+    }
+
+    *:last-child {
+        margin: 0;
+    }
 `;
 
 function DietBox({ date, theme, calorie }) {
@@ -206,6 +219,8 @@ function DetailBox({ className, onClick }) {
             <Div className="margin-bottom">
                 <H3>아침</H3>
             </Div>
+
+            {/* 카테고리별로 div가 나눠져야함 */}
             <Div className="margin-bottom">
                 <SpaceBottom>
                     <Div className="flex-align-items">
@@ -216,14 +231,36 @@ function DetailBox({ className, onClick }) {
                             </Calorie>
                         </Badge>
                     </Div>
-                    <Badge>
-                        <Calorie>
-                            <strong>닭가슴살(100g)</strong> X <strong>1</strong>{' '}
-                            = <strong>164.9</strong> kcal
-                        </Calorie>{' '}
-                    </Badge>
+                    <FlexBox>
+                        <Badge>
+                            <Calorie>
+                                닭가슴살 <strong>100g</strong>
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                칼로리 <strong>164.9</strong> kcal
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                탄수화물 <strong>10</strong>g
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                단백질 <strong>10</strong>g
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                지방 <strong>10</strong>g
+                            </Calorie>{' '}
+                        </Badge>
+                    </FlexBox>
                 </SpaceBottom>
             </Div>
+
             <Div className="margin-bottom">
                 <SpaceBottom>
                     <Div className="flex-align-items">
@@ -234,30 +271,70 @@ function DetailBox({ className, onClick }) {
                             </Calorie>
                         </Badge>
                     </Div>
-                    <Badge>
-                        <Calorie>
-                            <strong>방울토마토(100g)</strong> X{' '}
-                            <strong>3</strong> = <strong>0.0018</strong> kcal
-                        </Calorie>{' '}
-                    </Badge>
-                    <Badge>
-                        <Calorie>
-                            <strong>양상추 샐러드(100g)</strong> X{' '}
-                            <strong>2</strong> = <strong>136</strong> kcal
-                        </Calorie>{' '}
-                    </Badge>
+                    <FlexBox>
+                        <Badge>
+                            <Calorie>
+                                방울토마토 <strong>100g</strong>
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                칼로리 <strong>164.9</strong> kcal
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                탄수화물 <strong>10</strong>g
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                단백질 <strong>10</strong>g
+                            </Calorie>{' '}
+                        </Badge>
+                        <Badge>
+                            <Calorie>
+                                지방 <strong>10</strong>g
+                            </Calorie>{' '}
+                        </Badge>
+                    </FlexBox>
                 </SpaceBottom>
             </Div>
-            <Div className="margin-bottom">
-                <Div className="flex-align-items">
-                    <H4>총합</H4>
+
+            <FlexBox className="margin-bottom">
+                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                    <H4>총 칼로리</H4>
                     <Badge>
                         <Calorie>
                             <strong>371.08</strong> kcal
                         </Calorie>
                     </Badge>
                 </Div>
-            </Div>
+                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                    <H4>총 탄수화물</H4>
+                    <Badge>
+                        <Calorie>
+                            <strong>371.08</strong> kcal
+                        </Calorie>
+                    </Badge>
+                </Div>
+                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                    <H4>총 단백질</H4>
+                    <Badge>
+                        <Calorie>
+                            <strong>371.08</strong> kcal
+                        </Calorie>
+                    </Badge>
+                </Div>
+                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                    <H4>총 지방</H4>
+                    <Badge>
+                        <Calorie>
+                            <strong>371.08</strong> kcal
+                        </Calorie>
+                    </Badge>
+                </Div>
+            </FlexBox>
 
             <SpaceRight className="flex">
                 <Button width="120px" color="#51CF66" onClick={onClick}>
