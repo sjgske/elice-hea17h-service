@@ -128,7 +128,7 @@ class UserService {
         const result = {
             status: 'success',
             statusCode: 200,
-            payload: { user: updatedExpert, certificate: certificateInfo },
+            payload: { user: updatedExpert, certificate: addCertificate },
         };
         return result;
     }

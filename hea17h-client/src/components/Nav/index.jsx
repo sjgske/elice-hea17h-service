@@ -6,6 +6,7 @@ import {
     faList,
     faComment,
     faChalkboardUser,
+    faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
@@ -43,7 +44,7 @@ function Nav() {
                 </Menu>
             </LeftSide>
             <RightSide>
-                <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <LoginButton>
                     <NavLink to="/login">로그인</NavLink>
                 </LoginButton>
