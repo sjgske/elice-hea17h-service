@@ -17,19 +17,19 @@ const UserSchema = new Schema(
         },
         gender: {
             type: String,
-            required: true,
+            default: '',
         },
         height: {
             type: Number,
-            required: true,
+            default: 0,
         },
         weight: {
             type: Number,
-            required: true,
+            default: 0,
         },
         age: {
             type: Number,
-            required: true,
+            default: 0,
         },
         goal: {
             type: Number,
