@@ -6,7 +6,8 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-body {
+html,
+.App {
     background-color: #efefef;
 }
 

@@ -8,7 +8,7 @@ async function get(endpoint, params = '') {
     return axios.get(`${apiUrl + endpoint}/${params}`, {
         // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
         headers: {
-            Authorization: `${localStorage.getItem('userToken')}`
+            userToken: `${localStorage.getItem('userToken')}`,
         },
     });
 }
@@ -23,7 +23,7 @@ async function post(endpoint, data) {
     return axios.post(apiUrl + endpoint, bodyData, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `${localStorage.getItem('userToken')}`,
+            userToken: `${localStorage.getItem('userToken')}`,
         },
     });
 }
