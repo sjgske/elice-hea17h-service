@@ -9,7 +9,7 @@ function errorHandler(err, req, res, next) {
     res.status(err.status || 500);
     // eslint-disable-next-line no-console
     // console.log(err);
-    res.json(err);
+    res.json({ status: 'error', message: err.message });
 }
 
 export default errorHandler;

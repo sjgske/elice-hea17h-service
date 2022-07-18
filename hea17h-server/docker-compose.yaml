@@ -1,0 +1,21 @@
+version: "3"
+services:
+  node-app:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./.env
+
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=hea17h
+      - MONGO_INITDB_ROOT_PASSWORD=hea17hpw
+    volumes:
+      - mongo-db:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo-db:

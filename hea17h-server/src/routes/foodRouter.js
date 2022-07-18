@@ -3,7 +3,7 @@ import is from '@sindresorhus/is';
 import request from 'request';
 import { asyncHandler } from '../middlewares/index.js';
 import { foodService } from '../services/index.js';
-import { upload } from '../utils/index.js';
+import { uploadFood } from '../utils/index.js';
 
 const foodRouter = Router();
 
@@ -81,7 +81,7 @@ foodRouter.get(
 // 음식 추가
 foodRouter.post(
     '/',
-    upload.single('image'),
+    uploadFood.single('image'),
     asyncHandler(async (req, res) => {
         // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
         if (is.emptyObject(req.body)) {
