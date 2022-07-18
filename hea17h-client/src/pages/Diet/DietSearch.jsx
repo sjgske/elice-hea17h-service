@@ -16,7 +16,6 @@ function DietSearch() {
                 <Section>
                     <SearchSection>
                         <SearchContainer>
-                            <InputText>검색</InputText>
                             <SearchPage />
                         </SearchContainer>
                         <LatestSearchContainer>
@@ -62,11 +61,6 @@ const SearchSection = styled.section`
 
 const SearchContainer = styled.div`
     padding-top: 2rem;
-`;
-
-const InputText = styled.span`
-    color: #51CF66;
-    margin-right: 0.5rem;
 `;
 
 const LatestSearchContainer = styled.div`
