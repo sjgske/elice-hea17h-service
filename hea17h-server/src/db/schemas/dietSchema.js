@@ -42,33 +42,37 @@ const DietSchema = new Schema(
                 },
                 foods: [
                     {
-                        name: {
-                            type: String,
-                            required: true,
-                        },
                         category: {
                             type: String,
                         },
-                        count: {
-                            type: Number,
-                            default: 100,
-                        },
-                        foodCalories: {
-                            type: Number,
-                            default: 0,
-                        },
-                        foodCarb: {
-                            type: Number,
-                            default: 0,
-                        },
-                        foodProtein: {
-                            type: Number,
-                            default: 0,
-                        },
-                        foodFat: {
-                            type: Number,
-                            default: 0,
-                        },
+                        categoryFoods: [
+                            {
+                                name: {
+                                    type: String,
+                                    required: true,
+                                },
+                                count: {
+                                    type: Number,
+                                    default: 100,
+                                },
+                                foodCalories: {
+                                    type: Number,
+                                    default: 0,
+                                },
+                                foodCarb: {
+                                    type: Number,
+                                    default: 0,
+                                },
+                                foodProtein: {
+                                    type: Number,
+                                    default: 0,
+                                },
+                                foodFat: {
+                                    type: Number,
+                                    default: 0,
+                                },
+                            },
+                        ],
                     },
                 ],
                 mealCalories: {
