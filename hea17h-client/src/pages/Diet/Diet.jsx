@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from '../../components/Nav/index';
+// import Nav from '../../components/Nav/index';
 
 function Diet() {
     return(
         <>
-            <Nav />
+            {/* <Nav /> */}
             <Title>식단</Title>
             <Container>
                 <Section>

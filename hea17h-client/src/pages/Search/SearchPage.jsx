@@ -28,7 +28,7 @@ function SearchPage() {
 
   // 검색어 삭제
   const handleRemoveKeyword = (id) => {
-    const nextKeyword = keywords.filter((thisKeyword) => thisKeyword.id != id);
+    const nextKeyword = keywords.filter((thisKeyword) => thisKeyword.id !== id);
     setKeywords(nextKeyword);
   };
 
@@ -37,7 +37,6 @@ function SearchPage() {
     setKeywords([]);
   };
 
-  // 자식 컴포넌트에서 setState를 못하기때문에 그거를 바꿔주는 함수를 선언후 그 함수를 넘겨야함
   return (
     <div>
       <SearchBar onAddKeyword={handleAddKeyword} />
