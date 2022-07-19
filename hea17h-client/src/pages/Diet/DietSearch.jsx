@@ -1,25 +1,9 @@
-import React, {useState, useEffect, useParams} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 // import Nav from '../../components/Nav/index';
 import SearchPage from '../Search/SearchPage';
-import * as Api from '../../api';
 
 function DietSearch() {
-    const [food, setFood] = useState({});
-    const [myId, setMyId] = useState({});
-    const { foodName } = useParams();
-
-    const getData = async () => {
-        const { data } = await Api.get('/foods');
-        const obj = data.payload.payload.find(food => foodName === keyword);
-
-        setFood(obj);
-    };
-
-    useEffect(() => {
-        getData();
-    }, []);
-
     return(
         <>
             {/* <Nav /> */}
