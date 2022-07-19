@@ -54,7 +54,7 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
     ) : (
         <CommentInput
             dietId={dietId}
-            content={content}
+            content={comment}
             commentId={commentId}
             clickEditBtn
             handleClick={handleClick}
@@ -65,6 +65,7 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
 
 const CommentBox = styled(Box)`
     padding: 10px;
+    white-space: pre-wrap;
 
     @media (max-width: 768px) {
         font-size: 0.8rem;

@@ -1,55 +1,68 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import Nav from '../../components/Nav';
 
 function Home() {
+    const navigate = useNavigate();
+
     return (
-        <MainContainer>
-            <div>
-                <h2>
-                    편리하게
-                    <br />
-                    다이어트 식단을
-                    <br />
-                    계산해보세요.
-                </h2>
-                <ButtonContainer color="#fd7e14">
-                    <button type="button">
-                        <img src="right-arrow.png" alt="right-arrow" />
-                    </button>
-                    <p>계산하기</p>
-                </ButtonContainer>
-            </div>
-            <div>
-                <h2>
-                    전문가의
-                    <br />
-                    식단 솔루션을
-                    <br />
-                    받아보세요.
-                </h2>
-                <ButtonContainer color="#fd7e14">
-                    <button type="button">
-                        <img src="left-arrow.png" alt="left-arrow" />
-                    </button>
-                    <p>솔루션 받기 </p>
-                </ButtonContainer>
-            </div>
-            <div>
-                <h2>
-                    식단 개선에
-                    <br />
-                    도움을 주시는
-                    <br />
-                    전문가를 찾고 있습니다.
-                </h2>
-                <ButtonContainer color="#51CF66">
-                    <button type="button">
-                        <img src="plus.png" alt="plus" />
-                    </button>
-                    <p>전문가 지원하기</p>
-                </ButtonContainer>
-            </div>
-        </MainContainer>
+        <div>
+            <Nav />
+            <MainContainer>
+                <div>
+                    <h2>
+                        편리하게
+                        <br />
+                        다이어트 식단을
+                        <br />
+                        계산해보세요.
+                    </h2>
+                    <ButtonContainer color="#fd7e14">
+                        <button type="button" onClick={() => navigate('/diet')}>
+                            <img src="right-arrow.png" alt="right-arrow" />
+                        </button>
+                        <p>계산하기</p>
+                    </ButtonContainer>
+                </div>
+                <div>
+                    <h2>
+                        전문가의
+                        <br />
+                        식단 솔루션을
+                        <br />
+                        받아보세요.
+                    </h2>
+                    <ButtonContainer color="#fd7e14">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/comment')}
+                        >
+                            <img src="left-arrow.png" alt="left-arrow" />
+                        </button>
+                        <p>솔루션 받기 </p>
+                    </ButtonContainer>
+                </div>
+                <div>
+                    <h2>
+                        식단 개선에
+                        <br />
+                        도움을 주시는
+                        <br />
+                        전문가를 찾고 있습니다.
+                    </h2>
+                    <ButtonContainer color="#51CF66">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/certify')}
+                        >
+                            <img src="plus.png" alt="plus" />
+                        </button>
+                        <p>전문가 지원하기</p>
+                    </ButtonContainer>
+                </div>
+            </MainContainer>
+        </div>
     );
 }
 

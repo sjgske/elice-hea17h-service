@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Nav from '../../components/Nav';
 import Box from '../../components/Box';
 import DietTheme from '../../components/DietInfo/DietTheme';
 import DietDetail from '../../components/DietInfo/DietDetail';
@@ -35,7 +36,7 @@ function CoachingRead() {
 
     return (
         <div>
-            {/* <Nav /> */}
+            <Nav />
             <MainContainer>
                 <h2>코칭</h2>
                 {Object.keys(dietInfo).length > 0 && (
