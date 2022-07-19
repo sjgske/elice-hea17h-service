@@ -1,42 +1,160 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import * as Api from '../../api';
 
 function SignupDetail() {
+    const navigate = useNavigate();
+    const id = useLocation().state;
+
+    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState('');
+    const [age, setAge] = useState('');
+    const [gender, setGender] = useState('M');
+    const [BMI, setBMI] = useState(0);
+    const [goal, setGoal] = useState(1);
+    const [activeLevel, setActiveLevel] = useState(1);
+    // const [RDI, setRDI] = useState(0);
+
+    const calBMI = () => {
+        setBMI(((weight / height ** 2) * 10000).toFixed(2));
+    };
+
+    // const calRDI = () => {
+    //     let PA;
+
+    //     switch (activeLevel) {
+    //         case '1':
+    //             PA = 1.0;
+    //             break;
+    //         case '2':
+    //             PA = 1.12;
+    //             break;
+    //         case '3':
+    //             PA = 1.27;
+    //             break;
+    //         case '4':
+    //             PA = 1.54;
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    //     console.log(PA);
+
+    //     if (gender === 'M')
+    //         setRDI(864 - 9.72 * age + PA * (14.2 * weight + 503 * height));
+    //     else if (gender === 'W')
+    //         setRDI(387 - 7.31 * age + PA * (10.9 * weight + 660.7 * height));
+        
+    // };
+
+    const handleRegisterDetail = async (e) => {
+        e.preventDefault();
+
+        try {
+            const data = {
+                id,
+                height,
+                weight,
+                age,
+                gender,
+                goal,
+                activeLevel
+            };
+            
+            await Api.patch('/users/signUpDetail', data);
+
+            navigate('/', { replace: true });
+        } catch (err) {
+            console.log('상세정보 입력 실패', err);
+        }
+    };
+
     return (
         <Container>
             <SignupDetailContainer>
                 <h2 style={{ marginTop: '20px' }}>상세정보</h2>
                 <InputForm>
                     <InputText>키(cm)</InputText>
-                    <InputItem placeholder='키'/>
+                    <InputItem
+                        onChange={(e) => {
+                            setHeight(e.target.value);
+                        }}
+                        placeholder='키'
+                        value={height}
+                    />
                     <InputText>몸무게(kg)</InputText>
-                    <InputItem placeholder='몸무게'/>
+                    <InputItem
+                        onChange={(e) => {
+                            setWeight(e.target.value);
+                        }}
+                        placeholder='몸무게'
+                        value={weight}
+                    />
                     <InputText>나이</InputText>
-                    <InputItem placeholder='나이' />
+                    <InputItem
+                        onChange={(e) => {
+                            setAge(e.target.value);
+                            setTimeout(calBMI, 1000);
+                        }}
+                        placeholder='나이'
+                        value={age}
+                    />
                     <InputText>성별</InputText>
                     <SelectGender>
-                        <RadioButton type="radio" />
+                        <RadioButton
+                            type="radio"
+                            name="gender"
+                            value="M"
+                            onChange={(e) => {
+                                setGender(e.target.value);
+                            }}
+                        />
                         <div>남자</div>
-                        <RadioButton type="radio" />
+                        <RadioButton
+                            type="radio"
+                            name="gender"
+                            value="W"
+                            onChange={(e) => {
+                                setGender(e.target.value);
+                            }}
+                        />
                         <div>여자</div>
                     </SelectGender>
                     <InputText>BMI(㎏/㎡)</InputText>
-                    <InputItem placeholder='(자동계산)' />
+                    <InputItem
+                        value={BMI}
+                        disabled
+                    />
                     <InputText>다이어트 목표</InputText>
-                    <SelectBox>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                    <SelectBox 
+                        onChange={(e) => {
+                            setGoal(e.target.value);
+                        }}
+                        value={goal}
+                    >
+                        <option value="1">체중 증가</option>
+                        <option value="2">현재 체중 유지하기</option>
+                        <option value="3">체중 감소</option>
                     </SelectBox>
                     <InputText>활동 정도</InputText>
-                    <SelectBox>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                    <SelectBox
+                        onChange={(e) => {
+                            setActiveLevel(e.target.value);
+                        }}
+                        value={activeLevel}
+                    >
+                        <option value="1">전혀 운동하지 않음</option>
+                        <option value="2">가벼운 운동(주 1~3일)</option>
+                        <option value="3">적당한 운동(주 3~5일)</option>
+                        <option value="4">격렬한 운동(주 6~7일)</option>
                     </SelectBox>
                     <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
-                    <InputItem placeholder='(자동계산)' />
-                    <CompleteButton>입력완료</CompleteButton>
+                    <InputItem
+                        value=''
+                        disabled
+                    />
+                    <CompleteButton onClick={handleRegisterDetail}>입력완료</CompleteButton>
                 </InputForm>
             </SignupDetailContainer>
         </Container>
