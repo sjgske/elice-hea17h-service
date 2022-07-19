@@ -50,6 +50,11 @@ class DietService {
         return { status: 'success', statusCode: 200, payload: newDiet };
     }
 
+    async deleteDiet(dietId) {
+        const result = await this.dietModel.deleteDiet(dietId);
+        return { status: 'success', statusCode: 200, payload: result };
+    }
+
     // 식단에 코멘트(피드백) 추가.
     async addComment(comment, id, dietId) {
         const expertInfo = await this.certificateModel.findById(id);

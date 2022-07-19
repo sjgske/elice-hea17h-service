@@ -70,6 +70,15 @@ dietRouter.patch(
 );
 
 dietRouter.delete(
+    '/deleteDiet',
+    asyncHandler(async (req, res) => {
+        const { dietId } = req.body;
+        const result = await dietService.deleteDiet(dietId);
+        res.status(result.statusCode).json(result);
+    }),
+);
+
+dietRouter.delete(
     '/deleteComment',
     isExpert,
     asyncHandler(async (req, res) => {
