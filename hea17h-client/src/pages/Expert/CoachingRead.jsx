@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Nav from '../../components/Nav';
 import Box from '../../components/Box';
 import DietTheme from '../../components/DietInfo/DietTheme';
 import DietDetail from '../../components/DietInfo/DietDetail';
@@ -12,6 +13,7 @@ import * as Api from '../../api';
 
 function CoachingRead() {
     const [dietInfo, setDietInfo] = useState({});
+    const [myId, setMyId] = useState({});
     const { dietId } = useParams();
 
     const getData = async () => {
@@ -21,13 +23,20 @@ function CoachingRead() {
         setDietInfo(obj);
     };
 
+    const getMyInfo = async () => {
+        const { data } = await Api.get('/users/getUser');
+
+        setMyId(data._id);
+    };
+
     useEffect(() => {
         getData();
+        getMyInfo();
     }, []);
 
     return (
         <div>
-            {/* <Nav /> */}
+            <Nav />
             <MainContainer>
                 <h2>코칭</h2>
                 {Object.keys(dietInfo).length > 0 && (
@@ -49,15 +58,11 @@ function CoachingRead() {
                         </UserInfo>
                         <CommentContainer>
                             <TitleText>코멘트</TitleText>
-                            {dietInfo.comment.map(
-                                ({ content, expert, _id }) => (
-                                    <Comment
-                                        key={_id}
-                                        content={content}
-                                        expert={expert}
-                                    />
-                                ),
-                            )}
+                            <Comment
+                                myId={myId}
+                                dietId={dietId}
+                                commentInfo={dietInfo.comment}
+                            />
                         </CommentContainer>
                     </Container>
                 )}
@@ -92,7 +97,7 @@ const DietDetailBox = styled(Box)`
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: center;
-        gap: 30px;
+        gap: 50px;
     }
 `;
 
@@ -107,12 +112,6 @@ const CommentContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    & > div {
-        display: flex;
-        gap: 20px;
-        margin: 0 auto;
-    }
 `;
 
 export default CoachingRead;
