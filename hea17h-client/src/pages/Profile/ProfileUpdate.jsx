@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
@@ -8,8 +8,9 @@ import * as Api from '../../api';
     아이디, Gender, BMI, RDI 변경 불가
 */
 function ProfileUpdate() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
+    const [certifyInfo, setCertifyInfo] = useState('');
     const {
         id,
         password,
@@ -28,8 +29,15 @@ function ProfileUpdate() {
         setUserInfo(data);
     };
 
+    const getCertify = async () => {
+        const { data }  = await Api.get('/users/getExpertInfo');
+
+        setCertifyInfo(data.payload.certificate[0].name);
+    };
+
     useEffect(() => {
         getInfo();
+        getCertify();
     }, []);
 
     const handleUserInfo = (e) => {
@@ -37,7 +45,6 @@ function ProfileUpdate() {
             ...prevState,
             [e.target.name]: e.target.value,
         }));
-        console.log(e.target.name, e.target.value);
     };
 
     const handleSaveButton = async (e) => {
@@ -58,7 +65,8 @@ function ProfileUpdate() {
             
             await Api.patch('/users/updateUser', data);
 
-            // navigate('/', { replace: true });
+            alert("회원 수정이 완료되었습니다.")
+            navigate('/', { replace: true });
         } catch (err) {
             console.log('상세정보 입력 실패', err);
         }
@@ -121,13 +129,13 @@ function ProfileUpdate() {
                             <InputText>BMI(㎏/㎡)</InputText>
                             <InputItem placeholder='(자동계산)' disabled />
                             <InputText>다이어트 목표</InputText>
-                            <SelectBox value={goal || ''}>
+                            <SelectBox value={goal || ''} name='goal' onChange={handleUserInfo}>
                                 <option value="1">체중 증가</option>
                                 <option value="2">현재 체중 유지하기</option>
                                 <option value="3">체중 감소</option>
                             </SelectBox>
                             <InputText>활동 정도</InputText>
-                            <SelectBox value={activeLevel || ''}>
+                            <SelectBox value={activeLevel || ''} name='activeLevel' onChange={handleUserInfo}>
                                 <option value="1">전혀 운동하지 않음</option>
                                 <option value="2">가벼운 운동(주 1~3일)</option>
                                 <option value="3">적당한 운동(주 3~5일)</option>
@@ -155,7 +163,7 @@ function ProfileUpdate() {
                                     ? (
                                         <>
                                             <InputText>경력 및 자격사항</InputText>
-                                            <InputItem placeholder='생활스포츠지도사 2급' disabled />
+                                            <InputItem value={certifyInfo} disabled />
                                         </>
                                     )
                                     : null

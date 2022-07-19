@@ -55,16 +55,22 @@ function Nav() {
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <LoginButton>
                     {token !== null
-                        ? <NavLink to="/">로그아웃</NavLink>
+                        ? <NavLink to="/" onClick={() => localStorage.removeItem('userToken')}>로그아웃</NavLink>
                         : <NavLink to="/login">로그인</NavLink>
                     }
                 </LoginButton>
-                <SignupButton>
-                    {token !== null
-                        ? <NavLink to="/profile">마이페이지</NavLink>
-                        : <NavLink to="/signup">회원가입</NavLink>
+                
+                {token !== null
+                    ?
+                    <SignupButton style={{ backgroundColor: '#fd7e14' }}>
+                        <NavLink to="/profile" style={{ color: 'white' }}>마이페이지</NavLink>
+                    </SignupButton>
+                    :
+                    <SignupButton>
+                        <NavLink to="/signup">회원가입</NavLink>
+                    </SignupButton>
                     }
-                </SignupButton>
+                
             </RightSide>
         </Container>
     );
