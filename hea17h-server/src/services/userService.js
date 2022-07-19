@@ -46,9 +46,9 @@ class UserService {
         return newUser;
     }
 
-    async deleteUser(userId) {
-        const isUser = await this.userModel.findById(userId);
-        if (!isUser) {
+    async deleteUser(inputId, inputPw) {
+        const user = await this.userModel.findById(inputId);
+        if (!user) {
             const error = {
                 status: 'error',
                 statusCode: 404,
@@ -56,7 +56,15 @@ class UserService {
             };
             return error;
         }
-        const result = await this.userModel.deleteOneUser(userId);
+        const isPasswordCorrect = await bcrypt.compare(inputPw, user.password);
+        if (!isPasswordCorrect) {
+            return {
+                status: 'error',
+                statusCode: 400,
+                message: '비밀번호가 올바르지 않습니다!',
+            };
+        }
+        const result = await this.userModel.deleteOneUser(inputId);
         const returnResult = { status: 'success', statusCode: 200, result };
         return returnResult;
     }
