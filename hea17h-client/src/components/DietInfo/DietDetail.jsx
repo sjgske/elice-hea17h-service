@@ -11,25 +11,34 @@ function DietDetail({ meal }) {
                 <ImageBadge imgUrl={meal.mainImg} />
                 <p>{meal.mealType}</p>
             </ImageBadgeContainer>
-            <Category>
-                <div>
-                    <TitleText>고기</TitleText>
-                    <Badge fontColor="#999999">164.9 kcal</Badge>
-                </div>
-                <Badge fontColor="#999999">
-                    닭가슴살(100)g X 1 = 165.9 kcal
-                </Badge>
-            </Category>
-            <Category>
-                <TitleText>채소</TitleText>
-                <Badge fontColor="#999999">
-                    방울토마토(100g) X 3 = 0.018 kcal
-                </Badge>
-            </Category>
-            <Category>
-                <TitleText>견과</TitleText>
-                <Badge fontColor="#999999">아몬드(1알) X 10 = 70 kcal</Badge>
-            </Category>
+            {meal.foods.map(({ category, categoryFoods }) => {
+                let calorieByCategory = 0;
+
+                categoryFoods.forEach(({ count, foodCalories }) => {
+                    calorieByCategory += count * foodCalories;
+                });
+
+                return (
+                    <Category key={category}>
+                        <div>
+                            <TitleText>{category}</TitleText>
+                            <Badge fontColor="#999999">
+                                {calorieByCategory} kcal
+                            </Badge>
+                        </div>
+                        {categoryFoods.map(
+                            ({ name, count, foodCalories, _id }) => (
+                                <Badge key={_id} fontColor="#999999">
+                                    {`${name} X ${count} = ${
+                                        foodCalories * count
+                                    } kcal`}
+                                </Badge>
+                            ),
+                        )}
+                    </Category>
+                );
+            })}
+
             <TotalCalorie>
                 <TitleText>총합</TitleText>
                 <Badge fontColor="#999999">{meal.mealCalories} kcal</Badge>
@@ -68,7 +77,7 @@ const TotalCalorie = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 40px;
+    margin-top: 15px;
 `;
 
 export default DietDetail;

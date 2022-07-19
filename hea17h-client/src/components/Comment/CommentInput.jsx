@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as Api from '../../api';
 import Button from '../Button';
 
-function CommentInput({ dietId }) {
+function CommentInput({
+    dietId,
+    content,
+    commentId,
+    clickEditBtn,
+    handleClick,
+    updateComment,
+}) {
     const [comment, setComment] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (clickEditBtn) {
+            setComment(content);
+        }
+    }, []);
 
     const inputComment = e => {
         setComment(e.target.value);
@@ -23,11 +36,26 @@ function CommentInput({ dietId }) {
         }
     };
 
+    const editComment = async () => {
+        await Api.patch('/diets/modifyComment', {
+            dietId,
+            commentId,
+            content: comment,
+        });
+
+        handleClick();
+        updateComment(comment);
+    };
+
     return (
         <Root>
-            <textarea onChange={inputComment} />
+            <textarea value={comment} onChange={inputComment} />
             <div>
-                <Button width="10rem" color="#51CF66" onClick={addComment}>
+                <Button
+                    width="10rem"
+                    color="#51CF66"
+                    onClick={clickEditBtn ? editComment : addComment}
+                >
                     작성 완료
                 </Button>
             </div>
