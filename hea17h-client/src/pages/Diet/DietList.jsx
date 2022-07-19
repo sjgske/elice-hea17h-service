@@ -81,15 +81,24 @@ const H4 = styled.h4`
     margin-right: 1rem;
 `;
 
+const Div = styled.div`
+    width: 100%;
+    height: 13rem;
+`;
+
 function DietList() {
     const [data, setData] = useState([]);
+    const [httpStatusCode, setHttpStatusCode] = useState('');
 
     async function getDiet() {
         try {
             const res = await Api.get('/diets/getDiet');
             setData(res.data.payLoad.reverse());
         } catch (err) {
-            console.log(err);
+            setHttpStatusCode(err.response.status);
+            if (httpStatusCode === 500) {
+                window.location.href = '/login';
+            }
         }
     }
 
@@ -129,16 +138,23 @@ function DietList() {
                         </Button>
                     </Search>
 
-                    {data.map(diet => (
-                        <DietBox
-                            key={diet._id}
-                            date={getStringDate(diet.createdAt)}
-                            theme={diet.name}
-                            calorie={separateThousand(diet.totalCalories)}
-                            comment={diet.comment}
-                            dietFoods={diet.dietFoods}
-                        />
-                    ))}
+                    {httpStatusCode === 404 ? (
+                        <Div className="flex">
+                            <H4>저장된 식단이 없습니다.</H4>
+                        </Div>
+                    ) : (
+                        data.map(diet => (
+                            <DietBox
+                                key={diet._id}
+                                id={diet._id}
+                                date={getStringDate(diet.createdAt)}
+                                theme={diet.name}
+                                calorie={separateThousand(diet.totalCalories)}
+                                comment={diet.comment}
+                                dietFoods={diet.dietFoods}
+                            />
+                        ))
+                    )}
                 </Main>
             </Container>
 

@@ -10,6 +10,7 @@ import Box from '../Box';
 import Badge from '../Badge';
 import Button from '../Button';
 import Modal from '../Modal';
+import * as Api from '../../api';
 
 const Container = styled(Box)`
     padding: 2rem 2.5rem;
@@ -158,7 +159,7 @@ const FlexItem = styled.div`
     width: 11rem;
 `;
 
-function DietBox({ date, theme, calorie, comment, dietFoods }) {
+function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
     const [isActive, setIsActive] = useState(false);
     const [show, setShow] = useState(false);
     const [meal, setMeal] = useState('');
@@ -172,8 +173,6 @@ function DietBox({ date, theme, calorie, comment, dietFoods }) {
             }
             return mealState;
         });
-
-        // initialValue와 mealState가 같을때만 setIsActive(!isActive)
     };
 
     return (
@@ -222,6 +221,7 @@ function DietBox({ date, theme, calorie, comment, dietFoods }) {
             </Container>
 
             <DetailBox
+                id={id}
                 className={!isActive ? 'hidden' : null}
                 onClick={() => setShow(true)}
                 dietFoods={dietFoods}
@@ -237,7 +237,7 @@ function DietBox({ date, theme, calorie, comment, dietFoods }) {
                     <SpaceBottom>
                         <H3>코멘트</H3>
                         <GreyText>
-                            생활스포츠지도사2급
+                            {comment[page].expert.certificate[0].name}
                             <br />
                             전문가의 코멘트입니다.
                         </GreyText>
@@ -254,32 +254,36 @@ function DietBox({ date, theme, calorie, comment, dietFoods }) {
                     <FontAwesomeIcon icon={faXmark} />
                 </IconButton>
 
-                <LeftButton
-                    onClick={() => {
-                        if (page === 0) {
-                            return;
-                        }
-                        setPage(page - 1);
-                    }}
-                >
-                    <FontAwesomeIcon icon={faAngleLeft} />
-                </LeftButton>
-                <RightButton
-                    onClick={() => {
-                        if (page === comment.length - 1) {
-                            return;
-                        }
-                        setPage(page + 1);
-                    }}
-                >
-                    <FontAwesomeIcon icon={faAngleRight} />
-                </RightButton>
+                {comment.length > 1 && (
+                    <>
+                        <LeftButton
+                            onClick={() => {
+                                if (page === 0) {
+                                    return;
+                                }
+                                setPage(page - 1);
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faAngleLeft} />
+                        </LeftButton>
+                        <RightButton
+                            onClick={() => {
+                                if (page === comment.length - 1) {
+                                    return;
+                                }
+                                setPage(page + 1);
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faAngleRight} />
+                        </RightButton>
+                    </>
+                )}
             </Modal>
         </>
     );
 }
 
-function DetailBox({ className, onClick, dietFoods, mealState }) {
+function DetailBox({ id, className, onClick, dietFoods, mealState }) {
     const [breakfast, lunch, dinner] = dietFoods;
     let currentMeal;
 
@@ -290,6 +294,20 @@ function DetailBox({ className, onClick, dietFoods, mealState }) {
     } else {
         currentMeal = dinner;
     }
+
+    const deleteDiet = async () => {
+        try {
+            if (window.confirm('정말 삭제하시겠습니까?')) {
+                await Api.delete('/diets/deleteDiet', {
+                    dietId: id,
+                });
+                window.alert('삭제되었습니다.');
+                window.location.reload(true);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     return (
         <Container width="60vw" color="#F5F5F5" className={className}>
@@ -397,12 +415,7 @@ function DetailBox({ className, onClick, dietFoods, mealState }) {
                 <Button
                     width="120px"
                     color="#FD7E14"
-                    onClick={() => {
-                        if (window.confirm('정말 삭제하시겠습니까?')) {
-                            window.alert('삭제되었습니다.');
-                            window.location.reload(true);
-                        }
-                    }}
+                    onClick={() => deleteDiet()}
                 >
                     삭제하기
                 </Button>
