@@ -29,9 +29,15 @@ function App() {
                         path="/signup/complete"
                         element={<SignupComplete />}
                     />
-                    <Route path="/signup/detail" element={<SignupDetail />} />
+                    <Route
+                        path="/signup/detail"
+                        element={<SignupDetail />}
+                    />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/profile/update" element={<ProfileUpdate />} />
+                    <Route
+                        path="/profile/update"
+                        element={<ProfileUpdate />}
+                    />
                     <Route path="/diet" element={<Diet />} />
                     <Route path="/diet/search" element={<DietSearch />} />
                     <Route path="/diet/list" element={<DietList />} />
