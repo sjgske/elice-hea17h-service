@@ -14,13 +14,19 @@ function Coaching() {
     const getData = async () => {
         const { data } = await Api.get('/diets/getAllDiet');
 
-        setDietList(data.payload.payload);
+        // 최신순 정렬
+        const sortedData = data.payload.payload.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+        );
+
+        setDietList(sortedData);
     };
 
     useEffect(() => {
         getData();
     }, []);
 
+    console.log(dietList);
     return (
         <div>
             <Nav />

@@ -85,6 +85,15 @@ const MainContainer = styled.div`
         align-self: flex-end;
         align-items: end;
     }
+
+    @media (max-width: 768px) {
+        & > div {
+            width: 50%;
+        }
+        & h2 {
+            font-size: 1rem;
+        }
+    }
 `;
 
 const ButtonContainer = styled.div`
