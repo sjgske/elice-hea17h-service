@@ -103,8 +103,8 @@ userRouter.post(
 
 userRouter.delete('/deleteUser', isLoggedIn, async (req, res, next) => {
     try {
-        const { id, pw } = req.body;
-        const result = await userService.deleteUser(id, pw);
+        const { id, password } = req.body;
+        const result = await userService.deleteUser(id, password);
         res.status(result.statusCode).json(result);
     } catch (err) {
         next(err);

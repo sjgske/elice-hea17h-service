@@ -29,9 +29,15 @@ function App() {
                         path="/signup/complete"
                         element={<SignupComplete />}
                     />
-                    <Route path="/signup/detail" element={<SignupDetail />} />
+                    <Route
+                        path="/signup/detail"
+                        element={<SignupDetail />}
+                    />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/profile/update" element={<ProfileUpdate />} />
+                    <Route
+                        path="/profile/update"
+                        element={<ProfileUpdate />}
+                    />
                     <Route path="/diet" element={<Diet />} />
                     <Route path="/diet/search" element={<DietSearch />} />
                     <Route path="/diet/list" element={<DietList />} />
@@ -39,11 +45,11 @@ function App() {
                     <Route path="/certify" element={<Certify />} />
                     <Route path="/coaching" element={<Coaching />} />
                     <Route
-                        path="/coachingWrite/:id"
+                        path="/coachingWrite/:dietId"
                         element={<CoachingWrite />}
                     />
                     <Route
-                        path="/coachingRead/:id"
+                        path="/coachingRead/:dietId"
                         element={<CoachingRead />}
                     />
                 </Routes>

@@ -1,40 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
+import convertDate from '../../utils';
+import * as Api from '../../api';
 
 function Coaching() {
+    const [dietList, setDietList] = useState([]);
+
+    const getData = async () => {
+        const { data } = await Api.get('/diets/getAllDiet');
+
+        setDietList(data.payload.payload);
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
     return (
         <MainContainer>
             <h2>코칭</h2>
-            <Box width="100%" color="white">
-                <Container>
+            <Container width="100%" color="white">
+                {dietList.map(diet => (
                     <DietTheme
-                        date="2022.07.05"
-                        theme="헬스장 가기 전에 먹기 좋은 식단"
-                        calorie="1850"
+                        key={diet._id}
+                        date={convertDate(diet.createdAt)}
+                        name={diet.name}
+                        totalCalories={diet.totalCalories}
                     >
-                        <Link to="/coachingWrite/1">
-                            <Button width="10rem" color="#FD7E14">
-                                코멘트 작성
-                            </Button>
-                        </Link>
+                        {diet.comment.length > 0 ? (
+                            <ButtonLink to={`/coachingRead/${diet._id}`}>
+                                <Button width="10rem" color="#51CF66">
+                                    코멘트 보기
+                                </Button>
+                            </ButtonLink>
+                        ) : (
+                            <ButtonLink to={`/coachingWrite/${diet._id}`}>
+                                <Button width="10rem" color="#FD7E14">
+                                    코멘트 작성
+                                </Button>
+                            </ButtonLink>
+                        )}
                     </DietTheme>
-                    <DietTheme
-                        date="2022.07.05"
-                        theme="다이어트 최고, 지중해식 식단"
-                        calorie="1850"
-                    >
-                        <Link to="/coachingRead/2">
-                            <Button width="10rem" color="#51CF66">
-                                코멘트 보기
-                            </Button>
-                        </Link>
-                    </DietTheme>
-                </Container>
-            </Box>
+                ))}
+            </Container>
         </MainContainer>
     );
 }
@@ -48,12 +60,16 @@ const MainContainer = styled.div`
     }
 `;
 
-const Container = styled.div`
+const Container = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
     padding: 50px 0;
+`;
+
+const ButtonLink = styled(Link)`
+    text-decoration: none;
 `;
 
 export default Coaching;

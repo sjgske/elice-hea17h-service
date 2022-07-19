@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from '../../components/Nav/index';
-import AxiosGet from './AxiosGet';
+// import Nav from '../../components/Nav/index';
+import SearchPage from '../Search/SearchPage';
 
 function DietSearch() {
     return(
         <>
-            <Nav />
+            {/* <Nav /> */}
             <SearchTitle>
                 <SearchInfo>Search<GreenDot>.</GreenDot><br />
                     닭가슴살 100g<OrangeDot>.</OrangeDot> 방울토마토 20개<OrangeDot>.</OrangeDot>
@@ -16,9 +16,7 @@ function DietSearch() {
                 <Section>
                     <SearchSection>
                         <SearchContainer>
-                            <InputText>돋보기</InputText>
-                            <InputItem/>
-                            <AxiosGet />
+                            <SearchPage />
                         </SearchContainer>
                         <LatestSearchContainer>
                             <LatestSearchText>최근 검색어</LatestSearchText>
@@ -63,14 +61,6 @@ const SearchSection = styled.section`
 
 const SearchContainer = styled.div`
     padding-top: 2rem;
-`;
-
-const InputText = styled.span`
-    color: #51CF66;
-    margin-right: 0.5rem;
-`;
-
-const InputItem = styled.input`
 `;
 
 const LatestSearchContainer = styled.div`
