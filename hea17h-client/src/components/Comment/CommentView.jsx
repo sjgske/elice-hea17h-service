@@ -33,6 +33,9 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
 
     return !clickEditBtn ? (
         <div>
+            <ExpertInfo>
+                {expert.certificate.map(({ name }) => name).join(' / ')}
+            </ExpertInfo>
             <CommentBox width="100%" color="white" borderColor="#D9D9D9">
                 {comment}
             </CommentBox>
@@ -54,7 +57,7 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
     ) : (
         <CommentInput
             dietId={dietId}
-            content={content}
+            content={comment}
             commentId={commentId}
             clickEditBtn
             handleClick={handleClick}
@@ -63,8 +66,24 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
     );
 }
 
+const ExpertInfo = styled.div`
+    color: #999999;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+
+    & > p {
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+    }
+`;
+
 const CommentBox = styled(Box)`
     padding: 10px;
+    white-space: pre-wrap;
 
     @media (max-width: 768px) {
         font-size: 0.8rem;
