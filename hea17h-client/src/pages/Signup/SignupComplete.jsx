@@ -1,22 +1,39 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function SignupComplete() {
+    const navigate = useNavigate();
+    const id = useLocation().state;
+
+    const handleLaterButton = (e) => {
+        e.preventDefault();
+        navigate('/', { replace: true });
+    };
+
+    const handleGoButton = async (e) => {
+        e.preventDefault();
+        navigate(`/signup/detail`, { state: id }, { replace: true });
+    };
+
     return (
         <Container>
             <SignupCompleteContainer>
                 <h2 style={{ marginTop: '20px' }}>🎉회원가입이 완료되었습니다🎉</h2>
                 <InputForm>
                     <InputText>아이디</InputText>
-                    <InputItem placeholder='아이디' />
+                    <InputItem
+                        placeholder={id}
+                        disabled
+                    />
                 </InputForm>
                 <Info>
                     상세 정보를 입력하고
                     <br />
                     전문가의 솔루션을 받아보세요.
                 </Info>
-                <LaterButton>나중에 입력하기</LaterButton>
-                <GoToDetailButton>상세 정보 입력하기</GoToDetailButton>
+                <LaterButton onClick={handleLaterButton}>나중에 입력하기</LaterButton>
+                <GoToDetailButton onClick={handleGoButton}>상세 정보 입력하기</GoToDetailButton>
             </SignupCompleteContainer>
         </Container>
     );
@@ -65,7 +82,7 @@ const InputText = styled.h4`
 
 const InputItem = styled.input`
     width: 300px;
-    height: 35px;
+    height: 40px;
 
     border: 1px solid #dbdbdb;
 

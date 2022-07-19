@@ -59,6 +59,7 @@ async function del(endpoint, data) {
     });
 }
 
+
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
 export { get, post, patch, del as delete };

@@ -6,10 +6,13 @@ import {
     faList,
     faComment,
     faChalkboardUser,
+    faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
 function Nav() {
+    const token = localStorage.getItem('userToken');
+
     return (
         <Container>
             <LeftSide>
@@ -33,22 +36,34 @@ function Nav() {
                         <StyledFontAwesomeIcon icon={faComment} size="xl" />
                         <SubMenu>코멘트</SubMenu>
                     </NavLink>
-                    <NavLink to="/coaching">
-                        <StyledFontAwesomeIcon
-                            icon={faChalkboardUser}
-                            size="xl"
-                        />
-                        <SubMenu>코칭</SubMenu>
-                    </NavLink>
+                    {token !== null
+                        ? (
+                            <NavLink to="/coaching">
+                                <StyledFontAwesomeIcon
+                                    icon={faChalkboardUser}
+                                    size="xl"
+                                />
+                                <SubMenu>코칭</SubMenu>
+                            </NavLink>
+                        )
+                        : ''
+                    }
+                    
                 </Menu>
             </LeftSide>
             <RightSide>
-                <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <LoginButton>
-                    <NavLink to="/login">로그인</NavLink>
+                    {token !== null
+                        ? <NavLink to="/">로그아웃</NavLink>
+                        : <NavLink to="/login">로그인</NavLink>
+                    }
                 </LoginButton>
                 <SignupButton>
-                    <NavLink to="/signup">회원가입</NavLink>
+                    {token !== null
+                        ? <NavLink to="/profile">마이페이지</NavLink>
+                        : <NavLink to="/signup">회원가입</NavLink>
+                    }
                 </SignupButton>
             </RightSide>
         </Container>
@@ -87,7 +102,7 @@ const Menu = styled.div`
     line-height: 80px;
 `;
 
-const SubMenu = styled.text`
+const SubMenu = styled.div`
     margin: 0 10px;
 
     color: #3cb371;
@@ -119,16 +134,17 @@ const RightSide = styled.div`
     }
 `;
 
-const LoginButton = styled.text`
+const LoginButton = styled.div`
     margin: 0 1rem;
 
     @media screen and (max-width: 768px) {
         margin-right: 0.1rem;
+        word-break: break-all;
     }
 `;
 
 const SignupButton = styled.button`
-    width: 90px;
+    width: 6rem;
     height: 40px;
 
     color: #fd7e14;
@@ -136,6 +152,7 @@ const SignupButton = styled.button`
     border: 1px solid transparent;
     border-radius: 30px;
 
+    font-size: 1rem;
     font-weight: 700;
 
     @media screen and (max-width: 768px) {
