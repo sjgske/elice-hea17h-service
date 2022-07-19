@@ -33,7 +33,12 @@ class DietModel {
         return newDiet;
     }
 
-    //
+    async deleteDiet(dietId) {
+        const result = await this.diet.deleteOne({ _id: dietId });
+        return result;
+    }
+
+    // 댓글추가
     async addComment(comment, expertId, dietId) {
         const result = await this.diet
             .findOneAndUpdate(
