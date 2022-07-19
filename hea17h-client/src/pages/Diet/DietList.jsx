@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,6 +9,8 @@ import Button from '../../components/Button';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
 import DietBox from '../../components/DietInfo/DietThemeWithButton';
+import * as Api from '../../api';
+import { getStringDate, separateThousand } from '../../utils/UsefulFunction';
 
 const Container = styled.div`
     display: flex;
@@ -80,6 +82,21 @@ const H4 = styled.h4`
 `;
 
 function DietList() {
+    const [data, setData] = useState([]);
+
+    async function getDiet() {
+        try {
+            const res = await Api.get('/diets/getDiet');
+            setData(res.data.payLoad.reverse());
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        getDiet();
+    }, []);
+
     return (
         <>
             <Nav />
@@ -102,7 +119,7 @@ function DietList() {
                             <input
                                 type="date"
                                 id="end"
-                                value="2022-07-08"
+                                value="2022-07-18"
                                 onChange={() => {}}
                             />
                             <FontAwesomeIcon icon={faCalendarDays} />
@@ -112,17 +129,16 @@ function DietList() {
                         </Button>
                     </Search>
 
-                    <DietBox
-                        date="2022.07.05"
-                        theme="헬스장 가기 전에 먹기 좋은 식단"
-                        calorie="1,443"
-                    />
-
-                    <DietBox
-                        date="2022.07.06"
-                        theme="다이어트 최고, 지중해식 식단"
-                        calorie="1,329"
-                    />
+                    {data.map(diet => (
+                        <DietBox
+                            key={diet._id}
+                            date={getStringDate(diet.createdAt)}
+                            theme={diet.name}
+                            calorie={separateThousand(diet.totalCalories)}
+                            comment={diet.comment}
+                            dietFoods={diet.dietFoods}
+                        />
+                    ))}
                 </Main>
             </Container>
 
