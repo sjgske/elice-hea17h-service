@@ -39,11 +39,11 @@ function App() {
                     <Route path="/certify" element={<Certify />} />
                     <Route path="/coaching" element={<Coaching />} />
                     <Route
-                        path="/coachingWrite/:id"
+                        path="/coachingWrite/:dietId"
                         element={<CoachingWrite />}
                     />
                     <Route
-                        path="/coachingRead/:id"
+                        path="/coachingRead/:dietId"
                         element={<CoachingRead />}
                     />
                 </Routes>
