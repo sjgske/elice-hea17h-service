@@ -38,6 +38,11 @@ const Span = styled.span`
     font-size: 0.9rem;
 `;
 
+const GreyText = styled.span`
+    font-size: 0.9rem;
+    color: #888;
+`;
+
 const Div = styled.div``;
 
 const SpaceRight = styled.div`
@@ -56,8 +61,8 @@ const Img = styled.img`
 `;
 
 const FormBox = styled.form`
-    width: 95%;
-    padding: 1.2rem 0;
+    width: 90%;
+    padding: 1.5rem 0;
     margin-bottom: 1.5rem;
     background-color: #f5f5f5;
     border-radius: 5px;
@@ -104,22 +109,22 @@ async function handleSubmit(e) {
     const config = {
         headers: {
             'content-type': 'multipart/form-data',
-            userToken:
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImppaG85OSIsIm5hbWUiOiLso7zsp4DtmLgiLCJpYXQiOjE2NTc3OTQ5MTR9.2MNs_EKH7A6hMVNaAORWtb7o9D3JnRJtiopI0jz6DrY',
+            userToken: `${localStorage.getItem('userToken')}`,
         },
     };
 
-    await axios
-        .post('http://localhost:5000/users/registerExpert', formData, config)
-        .then(res => {
-            console.log(res);
-
-            alert('자격증 등록이 완료되었습니다.');
-            window.location.href = '/';
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    try {
+        const res = await axios.post(
+            'http://localhost:5000/users/registerExpert',
+            formData,
+            config,
+        );
+        console.log(res);
+        alert('자격증 등록이 완료되었습니다.');
+        window.location.href = '/';
+    } catch (err) {
+        alert(err.message);
+    }
 }
 
 function Certify() {
@@ -168,7 +173,7 @@ function Certify() {
                 </SpaceRight>
 
                 <FormBox onSubmit={handleSubmit} className="flex-column center">
-                    <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
+                    <Div style={{ width: '20rem', marginBottom: '1rem' }}>
                         <Label htmlFor="name">자격증 이름</Label>
                         <Input
                             type="text"
@@ -177,7 +182,9 @@ function Certify() {
                         />
                     </Div>
                     <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
-                        <Label htmlFor="image">자격증 파일</Label>
+                        <Label htmlFor="image">
+                            자격증 파일 <GreyText>(.png, .jpeg, .jpg)</GreyText>
+                        </Label>
                         <Input
                             type="file"
                             name="image"
