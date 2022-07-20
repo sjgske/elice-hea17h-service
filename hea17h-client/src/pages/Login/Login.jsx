@@ -11,6 +11,11 @@ function Login() {
 
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const [isCorrect, setIsCorrect] = useState(false);
+
+    const handleIsCorrect = () => {
+        setIsCorrect(!isCorrect);
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -30,6 +35,7 @@ function Login() {
                 navigate('/', { replace: true });
             } catch (err) {
                 console.log('로그인 실패', err);
+                handleIsCorrect();
             }
         }
     };
@@ -54,6 +60,11 @@ function Login() {
                         type='password'
                         onChange={(e) => { setPassword(e.target.value); }}
                     />
+                    {
+                    isCorrect && (
+                        <WrongPassword>비밀번호가 일치하지 않습니다.</WrongPassword>
+                        )
+                    }  
                 </InputForm>
                 <SocialLoginButton>
                     <GoogleButton>
@@ -120,6 +131,14 @@ const InputText = styled.h4`
 const InputItem = styled.input`
     width: 300px;
     height: 40px;
+`;
+
+const WrongPassword = styled.h4`
+    color: red;
+    font-weight: 400;
+
+    float: left;
+    margin-left: 50px;
 `;
 
 const SocialLoginButton = styled.div`

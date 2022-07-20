@@ -40,7 +40,7 @@ function Home() {
                         >
                             <img src="left-arrow.png" alt="left-arrow" />
                         </button>
-                        <p>솔루션 받기 </p>
+                        <p>계산하기</p>
                     </ButtonContainer>
                 </div>
                 <div>

@@ -28,6 +28,7 @@ function Resign(props) {
                 const data = { id, password };
                 await Api.delete('/users/deleteUser', data);
                 localStorage.removeItem('userToken');
+                alert("회원 탈퇴되었습니다. 그동안 이용해 주셔서 감사합니다.");
                 navigate('/', { replace: true });
             } catch (err) {
                 console.log('회원 탈퇴 실패', err);
