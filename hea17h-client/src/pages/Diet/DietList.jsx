@@ -10,7 +10,11 @@ import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
 import DietBox from '../../components/DietInfo/DietThemeWithButton';
 import * as Api from '../../api';
-import { getStringDate, separateThousand } from '../../utils/UsefulFunction';
+import {
+    getStringDate,
+    toStringDate,
+    separateThousand,
+} from '../../utils/UsefulFunction';
 
 const Container = styled.div`
     display: flex;
@@ -32,6 +36,12 @@ const Search = styled.div`
 
     span {
         margin-right: 12px;
+    }
+
+    @media screen and (max-width: 768px) {
+        h4 {
+            display: none;
+        }
     }
 `;
 
@@ -88,19 +98,39 @@ const Div = styled.div`
 
 function DietList() {
     const [data, setData] = useState([]);
+    const [filter, setFilter] = useState([]);
     const [httpStatusCode, setHttpStatusCode] = useState('');
 
-    async function getDiet() {
+    const curDate = new Date();
+    const firstDate = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
+    const [startDate, setStartDate] = useState(toStringDate(firstDate));
+    const [endDate, setEndDate] = useState(toStringDate(curDate));
+
+    const getDiet = async () => {
         try {
             const res = await Api.get('/diets/getDiet');
-            setData(res.data.payLoad.reverse());
+            const items = await res.data.payLoad.reverse();
+            setData(items);
+            setFilter(items);
+            console.log(items);
         } catch (err) {
             setHttpStatusCode(err.response.status);
-            if (httpStatusCode === 500) {
+            if (httpStatusCode === 500 || httpStatusCode === 403) {
                 window.location.href = '/login';
             }
         }
-    }
+    };
+
+    const filterByDate = () => {
+        const filteredData = data.filter(el => {
+            const createdDate = new Date(el.createdAt).getTime();
+            return (
+                createdDate >= new Date(startDate).getTime() &&
+                createdDate <= new Date(endDate).getTime()
+            );
+        });
+        setFilter(filteredData);
+    };
 
     useEffect(() => {
         getDiet();
@@ -118,8 +148,8 @@ function DietList() {
                             <input
                                 type="date"
                                 id="start"
-                                value="2022-07-01"
-                                onChange={() => {}}
+                                value={startDate}
+                                onChange={e => setStartDate(e.target.value)}
                             />
                             <FontAwesomeIcon icon={faCalendarDays} />
                         </InputGroup>
@@ -128,22 +158,28 @@ function DietList() {
                             <input
                                 type="date"
                                 id="end"
-                                value="2022-07-18"
-                                onChange={() => {}}
+                                value={endDate}
+                                onChange={e => setEndDate(e.target.value)}
                             />
                             <FontAwesomeIcon icon={faCalendarDays} />
                         </InputGroup>
-                        <Button width="40px" color="#FD7E14">
+                        <Button
+                            width="40px"
+                            color="#FD7E14"
+                            onClick={() => {
+                                filterByDate();
+                            }}
+                        >
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </Button>
                     </Search>
 
-                    {httpStatusCode === 404 ? (
+                    {httpStatusCode === 404 || !filter.length ? (
                         <Div className="flex">
                             <H4>저장된 식단이 없습니다.</H4>
                         </Div>
                     ) : (
-                        data.map(diet => (
+                        filter.map(diet => (
                             <DietBox
                                 key={diet._id}
                                 id={diet._id}

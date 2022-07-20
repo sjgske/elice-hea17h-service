@@ -165,6 +165,10 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
     const [meal, setMeal] = useState('');
     const [page, setPage] = useState(0);
 
+    useState(() => {
+        console.log(page, comment);
+    });
+
     const buttonClick = mealState => {
         setIsActive(true);
         setMeal(prev => {
@@ -233,49 +237,64 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                 height="25rem"
                 className={!show ? 'hidden' : null}
             >
-                <Div className="margin-bottom">
-                    <SpaceBottom>
-                        <H3>코멘트</H3>
-                        <GreyText>
-                            {comment[page].expert.certificate[0].name}
-                            <br />
-                            전문가의 코멘트입니다.
-                        </GreyText>
-                    </SpaceBottom>
-                </Div>
-                <CommentBox width="100%" borderColor="#D9D9D9">
-                    {comment[page].content}
-                </CommentBox>
-                <IconButton
-                    onClick={() => {
-                        setShow(false);
-                    }}
-                >
-                    <FontAwesomeIcon icon={faXmark} />
-                </IconButton>
-
-                {comment.length > 1 && (
+                {!comment.length ? (
                     <>
-                        <LeftButton
+                        <H3>코멘트가 없습니다.</H3>
+                        <IconButton
                             onClick={() => {
-                                if (page === 0) {
-                                    return;
-                                }
-                                setPage(page - 1);
+                                setShow(false);
                             }}
                         >
-                            <FontAwesomeIcon icon={faAngleLeft} />
-                        </LeftButton>
-                        <RightButton
+                            <FontAwesomeIcon icon={faXmark} />
+                        </IconButton>
+                    </>
+                ) : (
+                    <>
+                        <Div className="margin-bottom">
+                            <SpaceBottom>
+                                <H3>코멘트</H3>
+                                <GreyText>
+                                    {comment[page].expert.certificate[0].name}
+                                    <br />
+                                    전문가의 코멘트입니다.
+                                </GreyText>
+                            </SpaceBottom>
+                        </Div>
+                        <CommentBox width="100%" borderColor="#D9D9D9">
+                            {comment[page].content}
+                        </CommentBox>
+                        <IconButton
                             onClick={() => {
-                                if (page === comment.length - 1) {
-                                    return;
-                                }
-                                setPage(page + 1);
+                                setShow(false);
                             }}
                         >
-                            <FontAwesomeIcon icon={faAngleRight} />
-                        </RightButton>
+                            <FontAwesomeIcon icon={faXmark} />
+                        </IconButton>
+
+                        {comment.length > 1 && (
+                            <>
+                                <LeftButton
+                                    onClick={() => {
+                                        if (page === 0) {
+                                            return;
+                                        }
+                                        setPage(page - 1);
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faAngleLeft} />
+                                </LeftButton>
+                                <RightButton
+                                    onClick={() => {
+                                        if (page === comment.length - 1) {
+                                            return;
+                                        }
+                                        setPage(page + 1);
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faAngleRight} />
+                                </RightButton>
+                            </>
+                        )}
                     </>
                 )}
             </Modal>
