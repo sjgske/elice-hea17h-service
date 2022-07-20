@@ -39,6 +39,14 @@ const RemoveButton = styled.button`
   border-radius: 15px;
 `;
 
+const AddButton = styled.button`
+  float: right;
+  color: #0cde8b;
+  border: 1px solid #0cde8b;
+  padding: 3px 5px;
+  border-radius: 15px;
+`;
+
 const Keyword = styled.span`
   font-size: 18px;
   font-weight: 400;
@@ -68,6 +76,7 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
               >
                 삭제
               </RemoveButton>
+              <AddButton>추가</AddButton>
             </KeywordContainer>
           ))}
       </ListContainer>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import * as Api from '../../api';
 
 const horizontalCenter = css`
   position: absolute;
@@ -82,13 +83,18 @@ const Input = styled.input`
   `}
 `;
 
+const AlertMessage = styled.p`
+  color: #F03E3E;
+`;
+
 function SearchBar({ onAddKeyword }) {
   // 1. 검색어를 state 로 다루도록 변경
   // 2. 이벤트 연결
   // 3. Link to 설명
 
-  // form을 관련 요소를 다룰때는 2-way 데이터 바인딩을 해줍니다! (input 의 value에 state를 넣는 것)
   const [keyword, setKeyword] = useState('');
+  const [foodName, setFoodName] = useState('');
+  const [foodAmount, setFoodAmount] = useState('100g');
 
   const handleKeyword = (e) => {
     setKeyword(e.target.value);
@@ -99,6 +105,11 @@ function SearchBar({ onAddKeyword }) {
       onAddKeyword(keyword);
       setKeyword('');
     }
+    const foodData = e.target.value.split(' ');
+    setFoodName(foodData[0]);
+    setFoodAmount(foodData[1]);
+    console.log(foodName);
+    console.log(foodAmount);
   };
 
   const handleClearKeyword = () => {
@@ -109,8 +120,25 @@ function SearchBar({ onAddKeyword }) {
   // 키워드를 가지고 있다면 active가 발생하여 padding이 발생함. // 패딩이 없으면 x 아이콘까지 글자가 침법하기 때문
   const hasKeyword = !!keyword;
 
-  // keyword가 있으면 true, 없으면 false가 리턴이 되는 것을 확인 할 수 있습니다
+  // keyword가 있으면 true, 없으면 false
   console.log(!!keyword);
+
+  const [food, setFood] = useState([]);
+
+  const fetchData = async () => {
+  try{
+    const {data} = await Api.get(`/foods/${keyword}`);
+    setFood(data);
+    console.log(data);
+    console.log(food);
+  } catch(err) {
+    console.log(err);
+    console.log(err.message);
+  }};
+
+  useEffect(()=>{
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -126,6 +154,7 @@ function SearchBar({ onAddKeyword }) {
 
         {keyword && <RemoveIcon onClick={handleClearKeyword} />}
       </InputContainer>
+      <AlertMessage>은 추가할 수 없는 항목입니다.</AlertMessage>
       <SearchIcon />
     </Container>
   );

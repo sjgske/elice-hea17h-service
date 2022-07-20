@@ -14,8 +14,6 @@ function SearchPage() {
     localStorage.setItem('keywords', JSON.stringify(keywords));
   }, [keywords]);
 
-  // state를 다루는 함수는 handle 보통 많이 붙인다.
-
   // 검색어 추가
   const handleAddKeyword = (text) => {
     console.log('text', text);

@@ -1,40 +1,56 @@
 import React from 'react';
 import styled from 'styled-components';
-// import Nav from '../../components/Nav/index';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Nav from '../../components/Nav/index';
 
 function Diet() {
+    
+
     return(
         <>
-            {/* <Nav /> */}
+            <Nav />
             <Title>식단</Title>
             <Container>
                 <Section>
                     <TitleContainer>
                         <Info>원하는 식단을 검색하고<br />내 식단 목록에 추가해 보세요<GreenDot>.</GreenDot></Info>
-                        <Icon />
+                        <CircleLink
+                            to="/diet/search"
+                            className="flex-column-align-items"
+                        >
+                            <Circle>
+                                <FontAwesomeIcon icon={faArrowRight} />
+                            </Circle>
+                            <Calculate>계산해보기</Calculate>
+                        </CircleLink>
                     </TitleContainer>
                     <DietContainer>
                         <AddBtnContainer>
-                            <AddBtn>추가</AddBtn>
+                            <AddBtn to="/diet/search">추가</AddBtn>
                         </AddBtnContainer>
-                        <MeatContainer>
+                        <MoringContainer>
+                            <MorningTitle>아침</MorningTitle>
                             <MeatTitle>고기</MeatTitle>
                             <ContentBtn>닭가슴살 100g</ContentBtn>
                             <EditBtn>수정</EditBtn>
                             <DelBtn>삭제</DelBtn>
-                        </MeatContainer>
-                        <VegeContainer>
+                        </MoringContainer>
+                        <AfternoonContainer>
+                            <AfternoonTitle>점심</AfternoonTitle>
                             <VegeTitle>채소</VegeTitle>
                             <ContentBtn>방울토마토 3개</ContentBtn>
                             <EditBtn>수정</EditBtn>
                             <DelBtn>삭제</DelBtn>
-                        </VegeContainer>
-                        <NutsContainer>
+                        </AfternoonContainer>
+                        <EveningContainer>
+                            <EveningTitle>저녁</EveningTitle>
                             <NutsTitle>견과</NutsTitle>
                             <ContentBtn>아몬드 70g</ContentBtn>
                             <EditBtn>수정</EditBtn>
                             <DelBtn>삭제</DelBtn>
-                        </NutsContainer>
+                        </EveningContainer>
                         <BtnContainer>
                             <CalculateBtn>계산하기</CalculateBtn>
                             <br />
@@ -63,22 +79,45 @@ const Section = styled.section`
 `;
 
 const TitleContainer = styled.div`
-    display: flex;
-    flex-direction : row;
 `;
 
 const Info = styled.h1`
     margin-top: 2rem;
     margin-left: 3rem;
 `;
+const CircleLink = styled(Link)`
+    transition: all 400ms ease;
 
-const GreenDot = styled.span`
-    display: inline-block;
+    &:hover {
+        transform: translateX(20px);
+    }
+`;
+
+const Circle = styled.div`
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-left: 3rem;
+    margin-bottom: 0.5rem;
+    background-color: #e9ecef;
+    border-radius: 50%;
+
+    svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2.5rem;
+        color: #51CF66;
+    }
+`;
+const Calculate = styled.p`
+    margin-left: 3rem;
     color: #51CF66;
 `;
 
-const Icon = styled.h5`
-    flex: auto; 
+const GreenDot = styled.span`
+    display: inline-block;
     color: #51CF66;
 `;
 
@@ -103,23 +142,32 @@ const AddBtn = styled.button`
     border: solid 1px #51CF66;
 `;
 
-const MeatContainer = styled.div`
+const MoringContainer = styled.div`
     padding-top: 1rem;
     padding-left: 3rem;
+`;
+
+const MorningTitle = styled.h2`
 `;
 
 const MeatTitle = styled.h2`
 `;
 
-const VegeContainer = styled.div`
+const AfternoonContainer = styled.div`
     padding-left: 3rem;
+`;
+
+const AfternoonTitle = styled.h2`
 `;
 
 const VegeTitle = styled.h2`
 `;
 
-const NutsContainer = styled.div`
+const EveningContainer = styled.div`
     padding-left: 3rem; 
+`;
+
+const EveningTitle = styled.h2`
 `;
 
 const NutsTitle = styled.h2`
@@ -144,7 +192,8 @@ const ContentBtn = styled.button`
 `;
 
 const EditBtn = styled.button`
-    height: 40px;
+    height: 2rem;
+    width: 2rem;
     background: #FD7E14;
     color: #FFFFFF;
     border-radius: 5px;
@@ -157,7 +206,8 @@ const EditBtn = styled.button`
 `;
 
 const DelBtn = styled.button`
-    height: 40px;
+    height: 2rem;
+    width: 2rem;
     background: #FF000F;
     color: #FFFFFF;
     border-radius: 5px;
@@ -178,6 +228,8 @@ const BtnContainer = styled.div`
 `;
 
 const CalculateBtn = styled.button`
+    height: 2rem;
+    width: 4rem;
     justify-content: center;
     align-items: center;
     color: #FFFFFF;
