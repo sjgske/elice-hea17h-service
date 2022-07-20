@@ -75,9 +75,9 @@ function Login() {
                 </InputForm>
                 <SocialLoginButton>
                     <GoogleButton>Google 계정으로 로그인</GoogleButton>
-                    <KakaoButton href={KAKAO_AUTH_URL}>
-                        카카오 계정으로 로그인
-                    </KakaoButton>
+                    <a href={KAKAO_AUTH_URL}>
+                        <KakaoButton>카카오 계정으로 로그인</KakaoButton>
+                    </a>
                     <NaverButton>네이버 계정으로 로그인</NaverButton>
                 </SocialLoginButton>
                 <LoginButton onClick={handleLogin}>로그인</LoginButton>

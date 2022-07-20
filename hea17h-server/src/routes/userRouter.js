@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { Router } from 'express';
 import is from '@sindresorhus/is';
+import axios from 'axios';
 import { userService } from '../services/index.js';
 import { isLoggedIn } from '../middlewares/index.js';
 import { uploadExpert } from '../utils/index.js';
@@ -31,17 +32,39 @@ userRouter.get('/getExpertInfo', isLoggedIn, async (req, res, next) => {
 userRouter.get('/kauth/callback', async (req, res, next) => {
     const { code } = req.query;
     try {
-        await fetch(
-            `${process.env.KAKAO_OAUTH_TOKEN_API_URL}?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&code=${code}`,
-            {
-                headers: {
-                    'Content-type':
-                        'application/x-www-form-urlencoded;charset=utf-8',
+        await axios
+            .post(
+                `${process.env.KAKAO_OAUTH_TOKEN_API_URL}?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&code=${code}`,
+                {
+                    headers: {
+                        'Content-type':
+                            'application/x-www-form-urlencoded;charset=utf-8',
+                    },
                 },
-            },
-        ).then(result => {
-            console.log(result.data.access_token);
-        });
+            )
+            .then(async result => {
+                if (!result) {
+                    res.status(404).redirect('http://localhost:3000/login');
+                } else {
+                    await axios
+                        .get('https://kapi.kakao.com/v2/user/me', {
+                            headers: {
+                                Authorization: `Bearer ${result.data.access_token}`,
+                            },
+                        })
+                        .then(async resultData => {
+                            const result = await userService.addUser({
+                                id: resultData.data.id,
+                                name: resultData.data.properties.nickname,
+                                password: 'kakaoUser',
+                            });
+                            console.log(result);
+                            res.status(200).redirect(
+                                'http://localhost:3000/signup/complete',
+                            );
+                        });
+                }
+            });
     } catch (err) {
         next(err);
     }
