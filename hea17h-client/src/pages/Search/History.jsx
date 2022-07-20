@@ -21,8 +21,8 @@ const ListContainer = styled.ul`
   margin: 10px 0;
 `;
 
-// &는 자기 자신을 나타냄
-// 즉, 나 자신(li)들에서 마지막 요소 값을 제외한 값에 margin-bottom 속성 지정
+// &는 자기 자신
+// 마지막 요소 값을 제외한 값에 margin-bottom 속성 지정
 const KeywordContainer = styled.li`
   overflow: hidden;
 
@@ -52,7 +52,7 @@ const Keyword = styled.span`
   font-weight: 400;
 `;
 
-function History({ keywords, onRemoveKeyword, onClearKeywords }) {
+function History({ keywords, onRemoveKeyword, onClearKeywords, onRedirectKeyword }) {
   console.log('keyword', keywords);
   if (keywords.length === 0) {
     return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>;
@@ -69,14 +69,18 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
               <Keyword>{text}</Keyword>
               <RemoveButton
                 // 눌렸을때 해야하는거라 arrow function을 사용하여 실행
-                // 그냥 함수 쓰면은 그려지자마자 바로 실행됨
+                // 그냥 함수 쓰면은 그려지자마자 바로 실행
                 onClick={() => {
                   onRemoveKeyword(id);
                 }}
               >
                 삭제
               </RemoveButton>
-              <AddButton>추가</AddButton>
+              <AddButton
+              onClick={()=> {
+                onRedirectKeyword();
+              }}
+              >추가</AddButton>
             </KeywordContainer>
           ))}
       </ListContainer>

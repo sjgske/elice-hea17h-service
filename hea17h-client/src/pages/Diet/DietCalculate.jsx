@@ -5,14 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
+import {blankToQuery, changeQueryText} from '../../utils/UsefulFunction';
 
 function DietCalculate() {
+    
+    // const [moringData, setMoringData] = useState('');
+    // const [afternoonData, setAfternoonData] = useState('');
+    // const [eveningData, setEveningData] = useState('');
+
     const [foodList, setFoodList] = useState([]);
-    const dataquery = '1바나나50g시금치';
+    const dataQuery = changeQueryText(`1 바나나 50g 시금치`);
+    const postQuery = blankToQuery(dataQuery);
 
     const fetchData = async () => {
     try{
-        const {data} = await Api.get(`/foods/selected?info=${dataquery}`);
+        const {data} = await Api.get(`/foods/selected?info=${postQuery}`);
         setFoodList(data);
         console.log(data);
         console.log(foodList);
@@ -23,7 +30,20 @@ function DietCalculate() {
 
     useEffect(()=>{
         fetchData();
-    }, []);
+      }, []);
+    
+    // const [callWords, setCallWords] = useState(
+    //     JSON.parse(localStorage.getItem('callWords') || '[]'),
+    // );
+
+    // const handleAddquery = (query) => {
+    //     console.log('query', query);
+    //     const newCallWords = {
+    //         id: Date.now(),
+    //         callWords,
+    //     };
+    //     setCallWords([newCallWords, ...newCallWords])
+    // };
 
     return(
         <>
@@ -63,7 +83,7 @@ function DietCalculate() {
                             <ContentBtn>아몬드 70g</ContentBtn>
                         </EveningContainer>
                         <BtnContainer>
-                            <CalculateBtn>계산하기</CalculateBtn>
+                            <CalculateBtn>저장하기</CalculateBtn>
                             <br />
                             <RetryBtn>다시해보기</RetryBtn>
                             <CalculateInfo>항목 추가가 안되었나요? 더 알아보기</CalculateInfo>

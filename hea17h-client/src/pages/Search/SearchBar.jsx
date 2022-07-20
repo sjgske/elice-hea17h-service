@@ -18,9 +18,9 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-// Link태그의 스타일을 입히는거임(페이지이동하는 버튼)
+// Link태그의 스타일을 입히는것
 // horizontalCenter 스타일 컴포넌트를 믹스인하여 속성값 전달
-// 홈으로 가기 위한 뒤로가기 버튼입니다
+// 뒤로가기 버튼
 const ArrowIcon = styled(Link)`
   ${horizontalCenter}
   left: 18px;
@@ -49,7 +49,7 @@ const SearchIcon = styled.span`
   background-repeat: no-repeat;
 `;
 
-// 글자를 입력하면 RemoveIcon이 나오게 되고 누르면 input의 value값이 사라집니다
+// 글자를 입력하면 RemoveIcon이 나오게 되고 누르면 input의 value값이 사라짐
 const RemoveIcon = styled.span`
   ${horizontalCenter}
   right: 0px;
@@ -94,14 +94,14 @@ function SearchBar({ onAddKeyword }) {
 
   const [keyword, setKeyword] = useState('');
   const [foodName, setFoodName] = useState('');
-  const [foodAmount, setFoodAmount] = useState('100g');
+  const [foodAmount, setFoodAmount] = useState(`100g`);
 
   const handleKeyword = (e) => {
     setKeyword(e.target.value);
   };
   const handleEnter = (e) => {
     if (keyword && e.keyCode === 13) {
-      // 엔터일때 부모의 addkeyword에 전달
+      // 엔터일때 addkeyword에 전달
       onAddKeyword(keyword);
       setKeyword('');
     }
@@ -116,20 +116,23 @@ function SearchBar({ onAddKeyword }) {
     setKeyword('');
   };
 
-  // 느낌표로 키워드를 갖고있냐 없냐로 boolean 형태로 나옴
-  // 키워드를 가지고 있다면 active가 발생하여 padding이 발생함.
+  // 키워드를 가지고 있다면 active가 발생하여 padding
   const hasKeyword = !!keyword;
 
   // keyword가 있으면 true, 없으면 false
   console.log(!!keyword);
 
+  const [foodList, setFoodList] = useState([]);
   const [food, setFood] = useState([]);
 
   const fetchData = async () => {
   try{
-    const {data} = await Api.get(`/foods?name=${keyword}`);
-    setFood(data);
-    console.log(data);
+    const {data} = await Api.get(`/foods`);
+    const {selectedData} = await Api.get(`/foods?name=${foodName}`);
+  
+    setFoodList(data);
+    setFood(selectedData);
+    console.log(foodList);
     console.log(food);
   } catch(err) {
     console.log(err);
@@ -142,7 +145,7 @@ function SearchBar({ onAddKeyword }) {
 
   return (
     <Container>
-      <ArrowIcon to="/" />
+      <ArrowIcon to="/diet" />
       <InputContainer>
         <Input
           placeholder="검색어를 입력해주세요"

@@ -6,8 +6,6 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Nav from '../../components/Nav/index';
 
 function Diet() {
-    
-
     return(
         <>
             <Nav />

@@ -4,8 +4,11 @@ const apiUrl = 'http://localhost:5000';
 
 async function get(endpoint, params = '') {
     console.log(`GET 요청 ${`${apiUrl + endpoint}/${params}`}`);
+    const url = params
+        ? `${apiUrl + endpoint}/${params}`
+        : `${apiUrl + endpoint}`;
 
-    return axios.get(`${apiUrl + endpoint}/${params}`, {
+    return axios.get(url, {
         // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
         headers: {
             userToken: `${localStorage.getItem('userToken')}`,
@@ -58,7 +61,6 @@ async function del(endpoint, data) {
         },
     });
 }
-
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
