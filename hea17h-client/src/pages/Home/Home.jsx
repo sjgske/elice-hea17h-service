@@ -6,6 +6,19 @@ import Nav from '../../components/Nav';
 function Home() {
     const navigate = useNavigate();
 
+    const handleClick = e => {
+        if (localStorage.getItem('userToken')) {
+            if (e.currentTarget.id === 'expert-solution') {
+                navigate('/comment');
+            } else {
+                navigate('/certify');
+            }
+        } else {
+            alert('로그인 후 이용해주세요.');
+            navigate('/login');
+        }
+    };
+
     return (
         <div>
             <Nav />
@@ -36,11 +49,12 @@ function Home() {
                     <ButtonContainer color="#fd7e14">
                         <button
                             type="button"
-                            onClick={() => navigate('/comment')}
+                            id="expert-solution"
+                            onClick={handleClick}
                         >
                             <img src="left-arrow.png" alt="left-arrow" />
                         </button>
-                        <p>계산하기</p>
+                        <p>솔루션 받기</p>
                     </ButtonContainer>
                 </div>
                 <div>
@@ -54,7 +68,8 @@ function Home() {
                     <ButtonContainer color="#51CF66">
                         <button
                             type="button"
-                            onClick={() => navigate('/certify')}
+                            id="expert-apply"
+                            onClick={handleClick}
                         >
                             <img src="plus.png" alt="plus" />
                         </button>
