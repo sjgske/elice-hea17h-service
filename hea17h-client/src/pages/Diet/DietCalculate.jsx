@@ -1,11 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Nav from '../../components/Nav/index';
+import * as Api from '../../api';
 
 function DietCalculate() {
+    const [foodList, setFoodList] = useState([]);
+    const dataquery = '1바나나50g시금치';
+
+    const fetchData = async () => {
+    try{
+        const {data} = await Api.get(`/foods/selected?info=${dataquery}`);
+        setFoodList(data);
+        console.log(data);
+        console.log(foodList);
+    } catch(err) {
+        console.log(err);
+        console.log(err.message);
+    }};
+
+    useEffect(()=>{
+        fetchData();
+    }, []);
+
     return(
         <>
             <Nav />
@@ -201,7 +220,7 @@ const CalculateBtn = styled.button`
     background: #51CF66;
     border-radius: 5px;
     border: solid 1px #51CF66;
-    
+
     white-space: pre-wrap;
 `;
 

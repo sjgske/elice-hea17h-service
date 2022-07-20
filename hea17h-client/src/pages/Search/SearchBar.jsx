@@ -117,7 +117,7 @@ function SearchBar({ onAddKeyword }) {
   };
 
   // 느낌표로 키워드를 갖고있냐 없냐로 boolean 형태로 나옴
-  // 키워드를 가지고 있다면 active가 발생하여 padding이 발생함. // 패딩이 없으면 x 아이콘까지 글자가 침법하기 때문
+  // 키워드를 가지고 있다면 active가 발생하여 padding이 발생함.
   const hasKeyword = !!keyword;
 
   // keyword가 있으면 true, 없으면 false
@@ -127,7 +127,7 @@ function SearchBar({ onAddKeyword }) {
 
   const fetchData = async () => {
   try{
-    const {data} = await Api.get(`/foods/${keyword}`);
+    const {data} = await Api.get(`/foods?name=${keyword}`);
     setFood(data);
     console.log(data);
     console.log(food);
@@ -138,7 +138,7 @@ function SearchBar({ onAddKeyword }) {
 
   useEffect(()=>{
     fetchData();
-  }, []);
+  }, [keyword]);
 
   return (
     <Container>
