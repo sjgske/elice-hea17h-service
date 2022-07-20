@@ -42,6 +42,10 @@ const Search = styled.div`
         h4 {
             display: none;
         }
+
+        button {
+            width: 40px;
+        }
     }
 `;
 
@@ -77,6 +81,17 @@ const InputGroup = styled.div`
         top: 12px;
         left: 14px;
     }
+
+    @media screen and (max-width: 768px) {
+        input {
+            width: 23vw;
+            margin-right: 0.5rem;
+        }
+
+        span {
+            margin-right: 0.5rem;
+        }
+    }
 `;
 
 const H1 = styled.h1`
@@ -98,8 +113,8 @@ const Div = styled.div`
 
 function DietList() {
     const [data, setData] = useState([]);
-    const [filter, setFilter] = useState([]);
-    const [httpStatusCode, setHttpStatusCode] = useState('');
+    const [filtered, setFiltered] = useState([]);
+    const [httpStatusCode, setHttpStatusCode] = useState(0);
 
     const curDate = new Date();
     const firstDate = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
@@ -111,8 +126,7 @@ function DietList() {
             const res = await Api.get('/diets/getDiet');
             const items = await res.data.payLoad.reverse();
             setData(items);
-            setFilter(items);
-            console.log(items);
+            setFiltered(items);
         } catch (err) {
             setHttpStatusCode(err.response.status);
             if (httpStatusCode === 500 || httpStatusCode === 403) {
@@ -129,7 +143,7 @@ function DietList() {
                 createdDate <= new Date(endDate).getTime()
             );
         });
-        setFilter(filteredData);
+        setFiltered(filteredData);
     };
 
     useEffect(() => {
@@ -174,12 +188,12 @@ function DietList() {
                         </Button>
                     </Search>
 
-                    {httpStatusCode === 404 || !filter.length ? (
+                    {httpStatusCode === 404 || !filtered.length ? (
                         <Div className="flex">
                             <H4>저장된 식단이 없습니다.</H4>
                         </Div>
                     ) : (
-                        filter.map(diet => (
+                        filtered.map(diet => (
                             <DietBox
                                 key={diet._id}
                                 id={diet._id}

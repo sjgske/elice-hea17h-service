@@ -107,13 +107,19 @@ const Circle = styled.div`
 
 function Comment() {
     const [data, setData] = useState([]);
+    const [httpStatusCode, setHttpStatusCode] = useState(0);
 
     async function getDiet() {
         try {
             const res = await Api.get('/diets/getDiet');
-            setData(res.data.payLoad);
+            const items = await res.data.payLoad.reverse();
+            setData(items);
         } catch (err) {
             console.log(err);
+            setHttpStatusCode(err.response.status);
+            if (httpStatusCode === 500 || httpStatusCode === 403) {
+                window.location.href = '/login';
+            }
         }
     }
 
