@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+    faXmark,
+    faAngleLeft,
+    faAngleRight,
+} from '@fortawesome/free-solid-svg-icons';
 import Box from '../Box';
 import Badge from '../Badge';
 import Button from '../Button';
@@ -86,7 +90,8 @@ const CircleImage = styled.img`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70px;
+    width: 55px;
+    border-radius: 50%;
 `;
 
 const DietTitle = styled.h3`
@@ -98,15 +103,34 @@ const DietTitle = styled.h3`
     white-space: nowrap;
 `;
 
-const Grey = styled.p`
+const GreyText = styled.p`
     font-size: 1.3rem;
     font-weight: 700;
     color: #999999;
 `;
 
+const LeftButton = styled.button`
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+`;
+
+const RightButton = styled.button`
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+`;
+
 const CommentBox = styled(Box)`
     padding: 1rem;
     flex-grow: 1;
+    overflow: auto;
 `;
 
 const IconButton = styled.button`
@@ -118,6 +142,7 @@ const IconButton = styled.button`
 
 const FlexBox = styled.div`
     display: flex;
+    flex-wrap: wrap;
 
     * {
         margin-right: 0.5rem;
@@ -129,9 +154,27 @@ const FlexBox = styled.div`
     }
 `;
 
-function DietBox({ date, theme, calorie }) {
+const FlexItem = styled.div`
+    width: 11rem;
+`;
+
+function DietBox({ date, theme, calorie, comment, dietFoods }) {
     const [isActive, setIsActive] = useState(false);
     const [show, setShow] = useState(false);
+    const [meal, setMeal] = useState('');
+    const [page, setPage] = useState(0);
+
+    const buttonClick = mealState => {
+        setIsActive(true);
+        setMeal(prev => {
+            if (prev === mealState) {
+                setIsActive(!isActive);
+            }
+            return mealState;
+        });
+
+        // initialValue와 mealState가 같을때만 setIsActive(!isActive)
+    };
 
     return (
         <>
@@ -140,7 +183,7 @@ function DietBox({ date, theme, calorie }) {
                 color="#faf3e3"
                 className="flex-space-between"
             >
-                <SpaceBottom>
+                <SpaceBottom style={{ minWidth: '10vw' }}>
                     <Badge>{date}</Badge>
                     <DietTitle>{theme}</DietTitle>
                     <Calorie>
@@ -148,28 +191,28 @@ function DietBox({ date, theme, calorie }) {
                     </Calorie>
                 </SpaceBottom>
                 <Div>
-                    <CircleButton onClick={() => setIsActive(!isActive)}>
+                    <CircleButton onClick={() => buttonClick('breakfast')}>
                         <Circle>
                             <CircleImage
-                                src={`${process.env.PUBLIC_URL}/assets/food1.png`}
+                                src={`${process.env.PUBLIC_URL}/assets/morning.png`}
                                 alt="아침"
                             />
                         </Circle>
                         <span>아침</span>
                     </CircleButton>
-                    <CircleButton onClick={() => {}}>
+                    <CircleButton onClick={() => buttonClick('lunch')}>
                         <Circle>
                             <CircleImage
-                                src={`${process.env.PUBLIC_URL}/assets/food2.png`}
+                                src={`${process.env.PUBLIC_URL}/assets/afternoon.png`}
                                 alt="점심"
                             />
                         </Circle>
                         <span>점심</span>
                     </CircleButton>
-                    <CircleButton onClick={() => {}}>
+                    <CircleButton onClick={() => buttonClick('dinner')}>
                         <Circle>
                             <CircleImage
-                                src={`${process.env.PUBLIC_URL}/assets/food3.png`}
+                                src={`${process.env.PUBLIC_URL}/assets/night.png`}
                                 alt="저녁"
                             />
                         </Circle>
@@ -181,6 +224,8 @@ function DietBox({ date, theme, calorie }) {
             <DetailBox
                 className={!isActive ? 'hidden' : null}
                 onClick={() => setShow(true)}
+                dietFoods={dietFoods}
+                mealState={meal}
             />
 
             <Modal
@@ -191,15 +236,15 @@ function DietBox({ date, theme, calorie }) {
                 <Div className="margin-bottom">
                     <SpaceBottom>
                         <H3>코멘트</H3>
-                        <Grey>
+                        <GreyText>
                             생활스포츠지도사2급
                             <br />
                             전문가의 코멘트입니다.
-                        </Grey>
+                        </GreyText>
                     </SpaceBottom>
                 </Div>
-                <CommentBox width="100%" height="10rem" borderColor="#D9D9D9">
-                    ...
+                <CommentBox width="100%" borderColor="#D9D9D9">
+                    {comment[page].content}
                 </CommentBox>
                 <IconButton
                     onClick={() => {
@@ -208,138 +253,147 @@ function DietBox({ date, theme, calorie }) {
                 >
                     <FontAwesomeIcon icon={faXmark} />
                 </IconButton>
+
+                <LeftButton
+                    onClick={() => {
+                        if (page === 0) {
+                            return;
+                        }
+                        setPage(page - 1);
+                    }}
+                >
+                    <FontAwesomeIcon icon={faAngleLeft} />
+                </LeftButton>
+                <RightButton
+                    onClick={() => {
+                        if (page === comment.length - 1) {
+                            return;
+                        }
+                        setPage(page + 1);
+                    }}
+                >
+                    <FontAwesomeIcon icon={faAngleRight} />
+                </RightButton>
             </Modal>
         </>
     );
 }
 
-function DetailBox({ className, onClick }) {
+function DetailBox({ className, onClick, dietFoods, mealState }) {
+    const [breakfast, lunch, dinner] = dietFoods;
+    let currentMeal;
+
+    if (mealState === 'breakfast') {
+        currentMeal = breakfast;
+    } else if (mealState === 'lunch') {
+        currentMeal = lunch;
+    } else {
+        currentMeal = dinner;
+    }
+
     return (
         <Container width="60vw" color="#F5F5F5" className={className}>
             <Div className="margin-bottom">
-                <H3>아침</H3>
+                <H3>{currentMeal.mealType}</H3>
             </Div>
 
-            {/* 카테고리별로 div가 나눠져야함 */}
-            <Div className="margin-bottom">
-                <SpaceBottom>
-                    <Div className="flex-align-items">
-                        <H4>고기</H4>
-                        <Badge>
-                            <Calorie>
-                                <strong>164.9</strong> kcal
-                            </Calorie>
-                        </Badge>
-                    </Div>
-                    <FlexBox>
-                        <Badge>
-                            <Calorie>
-                                닭가슴살 <strong>100g</strong>
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                칼로리 <strong>164.9</strong> kcal
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                탄수화물 <strong>10</strong>g
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                단백질 <strong>10</strong>g
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                지방 <strong>10</strong>g
-                            </Calorie>{' '}
-                        </Badge>
-                    </FlexBox>
-                </SpaceBottom>
-            </Div>
-
-            <Div className="margin-bottom">
-                <SpaceBottom>
-                    <Div className="flex-align-items">
-                        <H4>채소</H4>
-                        <Badge>
-                            <Calorie>
-                                <strong>136.18</strong> kcal
-                            </Calorie>
-                        </Badge>
-                    </Div>
-                    <FlexBox>
-                        <Badge>
-                            <Calorie>
-                                방울토마토 <strong>100g</strong>
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                칼로리 <strong>164.9</strong> kcal
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                탄수화물 <strong>10</strong>g
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                단백질 <strong>10</strong>g
-                            </Calorie>{' '}
-                        </Badge>
-                        <Badge>
-                            <Calorie>
-                                지방 <strong>10</strong>g
-                            </Calorie>{' '}
-                        </Badge>
-                    </FlexBox>
-                </SpaceBottom>
-            </Div>
+            {/* 카테고리별 */}
+            {currentMeal.foods.map(meal => (
+                <Div key={meal._id} className="margin-bottom">
+                    <SpaceBottom>
+                        <Div className="flex-align-items">
+                            <H4>{meal.category}</H4>
+                            <Badge>
+                                <Calorie>
+                                    <strong>
+                                        {meal.categoryFoods.reduce(
+                                            (prev, next) =>
+                                                prev + next.foodCalories,
+                                            0,
+                                        )}
+                                    </strong>
+                                    kcal
+                                </Calorie>
+                            </Badge>
+                        </Div>
+                        {meal.categoryFoods.map(food => (
+                            <FlexBox key={food._id}>
+                                <Badge>
+                                    <Calorie>
+                                        {food.name}
+                                        <strong>{food.count}g</strong>
+                                    </Calorie>
+                                </Badge>
+                                <Badge>
+                                    <Calorie>
+                                        칼로리
+                                        <strong>{food.foodCalories}</strong>
+                                        kcal
+                                    </Calorie>
+                                </Badge>
+                                <Badge>
+                                    <Calorie>
+                                        탄수화물
+                                        <strong>{food.foodCarb}</strong>g
+                                    </Calorie>
+                                </Badge>
+                                <Badge>
+                                    <Calorie>
+                                        단백질
+                                        <strong>{food.foodProtein}</strong>g
+                                    </Calorie>
+                                </Badge>
+                                <Badge>
+                                    <Calorie>
+                                        지방 <strong>{food.foodFat}</strong>g
+                                    </Calorie>
+                                </Badge>
+                            </FlexBox>
+                        ))}
+                    </SpaceBottom>
+                </Div>
+            ))}
 
             <FlexBox className="margin-bottom">
-                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                <FlexItem className="flex-align-items">
                     <H4>총 칼로리</H4>
                     <Badge>
                         <Calorie>
-                            <strong>371.08</strong> kcal
+                            <strong>{currentMeal.mealCalories}</strong> kcal
                         </Calorie>
                     </Badge>
-                </Div>
-                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                </FlexItem>
+                <FlexItem className="flex-align-items">
                     <H4>총 탄수화물</H4>
                     <Badge>
                         <Calorie>
-                            <strong>371.08</strong> kcal
+                            <strong>{currentMeal.mealCarb}</strong> g
                         </Calorie>
                     </Badge>
-                </Div>
-                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                </FlexItem>
+                <FlexItem className="flex-align-items">
                     <H4>총 단백질</H4>
                     <Badge>
                         <Calorie>
-                            <strong>371.08</strong> kcal
+                            <strong>{currentMeal.mealProtein}</strong> g
                         </Calorie>
                     </Badge>
-                </Div>
-                <Div className="flex-align-items" style={{ width: '14rem' }}>
+                </FlexItem>
+                <FlexItem className="flex-align-items">
                     <H4>총 지방</H4>
                     <Badge>
                         <Calorie>
-                            <strong>371.08</strong> kcal
+                            <strong>{currentMeal.mealFat}</strong> g
                         </Calorie>
                     </Badge>
-                </Div>
+                </FlexItem>
             </FlexBox>
 
             <SpaceRight className="flex">
                 <Button width="120px" color="#51CF66" onClick={onClick}>
                     코멘트 보기
                 </Button>
+
                 <Button
                     width="120px"
                     color="#FD7E14"

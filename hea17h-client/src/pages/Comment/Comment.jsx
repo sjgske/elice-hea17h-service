@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,8 @@ import Box from '../../components/Box';
 import Button from '../../components/Button';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
+import * as Api from '../../api';
+import { getStringDate, separateThousand } from '../../utils/UsefulFunction';
 
 const Container = styled.div`
     display: flex;
@@ -104,6 +106,21 @@ const Circle = styled.div`
 `;
 
 function Comment() {
+    const [data, setData] = useState([]);
+
+    async function getDiet() {
+        try {
+            const res = await Api.get('/diets/getDiet');
+            setData(res.data.payLoad);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        getDiet();
+    }, []);
+
     return (
         <>
             <Nav />
@@ -135,31 +152,36 @@ function Comment() {
                         </CircleLink>
                     </Header>
 
-                    <MainBox width="100%" color="#faf3e3">
-                        <SpaceDiv>
-                            <Badge>2022.07.05</Badge>
-                            <H3>헬스장 가기 전에 먹기 좋은 식단</H3>
-                            <Calorie>
-                                <strong>1,443</strong> kcal
-                            </Calorie>
-                        </SpaceDiv>
-                        <Button width="10rem" color="#FD7E14">
-                            등록 취소
-                        </Button>
-                    </MainBox>
-
-                    <MainBox width="100%" color="#faf3e3">
-                        <SpaceDiv>
-                            <Badge>2022.07.06</Badge>
-                            <H3>다이어트 최고, 지중해식 식단</H3>
-                            <Calorie>
-                                <strong>1,326</strong> kcal
-                            </Calorie>
-                        </SpaceDiv>
-                        <Button width="10rem" color="#51cf66">
-                            코멘트 받기
-                        </Button>
-                    </MainBox>
+                    {data.map(diet => (
+                        <MainBox width="100%" color="#faf3e3" key={diet._id}>
+                            <SpaceDiv>
+                                <Badge>{getStringDate(diet.createdAt)}</Badge>
+                                <H3>{diet.name}</H3>
+                                <Calorie>
+                                    <strong>
+                                        {separateThousand(diet.totalCalories)}
+                                    </strong>
+                                    kcal
+                                </Calorie>
+                            </SpaceDiv>
+                            {diet.comment.length === 0 ? (
+                                <Button
+                                    width="10rem"
+                                    color="#E9ECEF"
+                                    fontColor="#999"
+                                    disabled
+                                >
+                                    코멘트 대기 중
+                                </Button>
+                            ) : (
+                                <Link to="/diet/list">
+                                    <Button width="10rem" color="#51cf66">
+                                        코멘트 보러 가기
+                                    </Button>
+                                </Link>
+                            )}
+                        </MainBox>
+                    ))}
                 </Main>
                 <TopButton />
             </Container>
