@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Nav from '../../components/Nav/index';
@@ -21,7 +21,6 @@ function DietCalculate() {
     try{
         const {data} = await Api.get(`/foods/selected?info=${postQuery}`);
         setFoodList(data);
-        console.log(data);
         console.log(foodList);
     } catch(err) {
         console.log(err);
@@ -45,6 +44,14 @@ function DietCalculate() {
     //     setCallWords([newCallWords, ...newCallWords])
     // };
 
+    const navigate = useNavigate();
+    const savehandler = () => {
+        navigate(`/diet/list`);
+    };
+    const retryhandler = () => {
+        navigate(`/diet`);
+    };
+
     return(
         <>
             <Nav />
@@ -64,9 +71,6 @@ function DietCalculate() {
                         </CircleLink>
                     </TitleContainer>
                     <DietContainer>
-                        <AddBtnContainer>
-                            <AddBtn to="/diet/search">추가</AddBtn>
-                        </AddBtnContainer>
                         <MoringContainer>
                             <MorningTitle>아침</MorningTitle>
                             <MeatTitle>고기</MeatTitle>
@@ -83,9 +87,9 @@ function DietCalculate() {
                             <ContentBtn>아몬드 70g</ContentBtn>
                         </EveningContainer>
                         <BtnContainer>
-                            <CalculateBtn>저장하기</CalculateBtn>
+                            <CalculateBtn onClick={savehandler}>저장하기</CalculateBtn>
                             <br />
-                            <RetryBtn>다시해보기</RetryBtn>
+                            <RetryBtn onClicl={retryhandler}>다시해보기</RetryBtn>
                             <CalculateInfo>항목 추가가 안되었나요? 더 알아보기</CalculateInfo>
                         </BtnContainer>
                     </DietContainer>
@@ -157,21 +161,6 @@ const DietContainer = styled.div`
     margin-left: 3rem;
     margin-right: 3rem;
     background: #F5F5F5;;
-`;
-
-const AddBtnContainer = styled.div`
-    padding-top: 2rem;
-`;
-
-const AddBtn = styled.button`
-    margin-right: 3rem;
-    float: right;
-    width: 60px;
-    height: 35px;   
-    color: #FFFFFF;
-    background: #51CF66;
-    border-radius: 5px;
-    border: solid 1px #51CF66;
 `;
 
 const MoringContainer = styled.div`

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 
 const HistoryContainer = styled.div`
@@ -52,11 +53,16 @@ const Keyword = styled.span`
   font-weight: 400;
 `;
 
-function History({ keywords, onRemoveKeyword, onClearKeywords, onRedirectKeyword }) {
+function History({ keywords, onRemoveKeyword, onClearKeywords}) {
   console.log('keyword', keywords);
   if (keywords.length === 0) {
     return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>;
   }
+  const navigate = useNavigate();
+  const passContent = () => {
+    navigate(`/diet`, { state: keywords });
+  };
+
   return (
     <HistoryContainer>
       <HeaderContainer>
@@ -77,9 +83,7 @@ function History({ keywords, onRemoveKeyword, onClearKeywords, onRedirectKeyword
                 삭제
               </RemoveButton>
               <AddButton
-              onClick={()=> {
-                onRedirectKeyword();
-              }}
+              onClick={passContent}
               >추가</AddButton>
             </KeywordContainer>
           ))}

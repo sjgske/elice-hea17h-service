@@ -31,9 +31,6 @@ function SearchPage() {
   };
 
   // 식단 페이지에 해당 값 넘겨주기
-  const handleRedirectKeyword = () => {
-    document.location.href('/diet');
-  };
 
   // 검색어 전체 삭제
   const handleClearKeywords = () => {
@@ -47,7 +44,6 @@ function SearchPage() {
         keywords={keywords}
         onClearKeywords={handleClearKeywords}
         onRemoveKeyword={handleRemoveKeyword}
-        onRedirectKeyword={handleRedirectKeyword}
       />
     </div>
   );

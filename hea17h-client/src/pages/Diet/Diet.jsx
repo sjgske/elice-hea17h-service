@@ -1,11 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Nav from '../../components/Nav/index';
 
 function Diet() {
+    const { state } = useLocation();
+    console.log(state);
+
+    const navigate = useNavigate();
+    const searchhandler = () => {
+        navigate(`/diet/search`);
+    };
+    const calculatehandler = () => {
+        navigate(`diet/calculate`);
+    };
     return(
         <>
             <Nav />
@@ -26,7 +36,7 @@ function Diet() {
                     </TitleContainer>
                     <DietContainer>
                         <AddBtnContainer>
-                            <AddBtn to="/diet/search">추가</AddBtn>
+                            <AddBtn onClick={searchhandler}>추가</AddBtn>
                         </AddBtnContainer>
                         <MoringContainer>
                             <MorningTitle>아침</MorningTitle>
@@ -50,7 +60,8 @@ function Diet() {
                             <DelBtn>삭제</DelBtn>
                         </EveningContainer>
                         <BtnContainer>
-                            <CalculateBtn>계산하기</CalculateBtn>
+                            <CalculateBtn
+                            onClick={calculatehandler}>계산하기</CalculateBtn>
                             <br />
                             <CalculateInfo>항목 추가가 안되었나요? 더 알아보기</CalculateInfo>
                         </BtnContainer>
