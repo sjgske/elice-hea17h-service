@@ -28,6 +28,25 @@ userRouter.get('/getExpertInfo', isLoggedIn, async (req, res, next) => {
     }
 });
 
+userRouter.get('/kauth/callback', async (req, res, next) => {
+    const { code } = req.query;
+    try {
+        await fetch(
+            `${process.env.KAKAO_OAUTH_TOKEN_API_URL}?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&code=${code}`,
+            {
+                headers: {
+                    'Content-type':
+                        'application/x-www-form-urlencoded;charset=utf-8',
+                },
+            },
+        ).then(result => {
+            console.log(result.data.access_token);
+        });
+    } catch (err) {
+        next(err);
+    }
+});
+
 userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
     try {
         const userInfo = req.body;

@@ -5,6 +5,10 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../slices/UserSlice';
 import * as Api from '../../api';
 
+const CLIENT_ID = '52598a2c91fa7e9e93e1645debaefe5d';
+const REDIRECT_URI = 'http://localhost:5000/users/kauth/callback';
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -17,12 +21,11 @@ function Login() {
         setIsCorrect(!isCorrect);
     };
 
-    const handleLogin = async (e) => {
+    const handleLogin = async e => {
         e.preventDefault();
 
         if (id === '' || password === '') {
-            alert("아이디와 비밀번호를 입력해주세요.");
-            
+            alert('아이디와 비밀번호를 입력해주세요.');
         } else {
             try {
                 const data = { id, password };
@@ -51,38 +54,36 @@ function Login() {
                 <InputForm>
                     <InputText>아이디</InputText>
                     <InputItem
-                        onChange={(e) => { setId(e.target.value); }}
+                        onChange={e => {
+                            setId(e.target.value);
+                        }}
                     />
                 </InputForm>
                 <InputForm>
                     <InputText>비밀번호</InputText>
                     <InputItem
-                        type='password'
-                        onChange={(e) => { setPassword(e.target.value); }}
+                        type="password"
+                        onChange={e => {
+                            setPassword(e.target.value);
+                        }}
                     />
-                    {
-                    isCorrect && (
-                        <WrongPassword>비밀번호가 일치하지 않습니다.</WrongPassword>
-                        )
-                    }  
+                    {isCorrect && (
+                        <WrongPassword>
+                            비밀번호가 일치하지 않습니다.
+                        </WrongPassword>
+                    )}
                 </InputForm>
                 <SocialLoginButton>
-                    <GoogleButton>
-                        Google 계정으로 로그인
-                    </GoogleButton>
-                    <KakaoButton>
+                    <GoogleButton>Google 계정으로 로그인</GoogleButton>
+                    <KakaoButton href={KAKAO_AUTH_URL}>
                         카카오 계정으로 로그인
                     </KakaoButton>
-                    <NaverButton>
-                        네이버 계정으로 로그인
-                    </NaverButton>
+                    <NaverButton>네이버 계정으로 로그인</NaverButton>
                 </SocialLoginButton>
-                    <LoginButton onClick={handleLogin}>
-                        로그인
-                    </LoginButton>
-                    <CreateIdButton onClick={handleRegisterButton}>
-                        계정 생성하기
-                    </CreateIdButton>
+                <LoginButton onClick={handleLogin}>로그인</LoginButton>
+                <CreateIdButton onClick={handleRegisterButton}>
+                    계정 생성하기
+                </CreateIdButton>
             </LoginContainer>
         </Container>
     );
@@ -94,7 +95,7 @@ const Container = styled.div`
     margin: 0 auto;
     padding: 0;
     background-color: #faf3e3;
-    
+
     width: 100%;
     height: 100%;
 `;
@@ -142,7 +143,7 @@ const WrongPassword = styled.h4`
 `;
 
 const SocialLoginButton = styled.div`
-    margin: 40px auto ;
+    margin: 40px auto;
 `;
 
 const GoogleButton = styled.button`
@@ -164,12 +165,12 @@ const KakaoButton = styled.button`
     width: 300px;
     height: 40px;
 
-    background-color: #F7E600;
+    background-color: #f7e600;
     border: 1px solid transparent;
 
     font-weight: 600;
     font-size: 14px;
-    
+
     border-radius: 5px;
 `;
 
@@ -179,12 +180,12 @@ const NaverButton = styled.button`
     height: 40px;
 
     background-color: white;
-    border: 1px solid #2DB400;
-    color: #2DB400;
+    border: 1px solid #2db400;
+    color: #2db400;
 
     font-weight: 600;
     font-size: 14px;
-    
+
     border-radius: 5px;
 `;
 
