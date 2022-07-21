@@ -14,7 +14,7 @@ function Diet() {
         navigate(`/diet/search`);
     };
     const calculatehandler = () => {
-        navigate(`diet/calculate`);
+        navigate(`calculate`);
     };
     return(
         <>

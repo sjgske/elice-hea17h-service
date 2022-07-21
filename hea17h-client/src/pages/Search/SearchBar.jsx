@@ -55,6 +55,7 @@ const RemoveIcon = styled.span`
   right: 0px;
   width: 20px;
   height: 20px;
+  margin-right: 1rem;
   background-position: -389px -29px;
   display: inline-block;
   overflow: hidden;
@@ -131,7 +132,7 @@ function SearchBar({ onAddKeyword }) {
     const {selectedData} = await Api.get(`/foods?name=${foodName}`);
   
     setFoodList(data);
-    setFood(selectedData);
+    setFood(JSON.stringify(selectedData));
     console.log(foodList);
     console.log(food);
   } catch(err) {
@@ -145,7 +146,7 @@ function SearchBar({ onAddKeyword }) {
 
   return (
     <Container>
-      <ArrowIcon to="/diet" />
+      <ArrowIcon className="flex-column-align-items" to="/diet" />
       <InputContainer>
         <Input
           placeholder="검색어를 입력해주세요"

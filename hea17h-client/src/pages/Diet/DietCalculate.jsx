@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Nav from '../../components/Nav/index';
@@ -8,6 +8,8 @@ import * as Api from '../../api';
 import {blankToQuery, changeQueryText} from '../../utils/UsefulFunction';
 
 function DietCalculate() {
+    const { state } = useLocation();
+    console.log(state); // state가 배열이면 합치는 과정 거쳐야함
     
     // const [moringData, setMoringData] = useState('');
     // const [afternoonData, setAfternoonData] = useState('');
@@ -89,7 +91,7 @@ function DietCalculate() {
                         <BtnContainer>
                             <CalculateBtn onClick={savehandler}>저장하기</CalculateBtn>
                             <br />
-                            <RetryBtn onClicl={retryhandler}>다시해보기</RetryBtn>
+                            <RetryBtn onClick={retryhandler}>다시해보기</RetryBtn>
                             <CalculateInfo>항목 추가가 안되었나요? 더 알아보기</CalculateInfo>
                         </BtnContainer>
                     </DietContainer>

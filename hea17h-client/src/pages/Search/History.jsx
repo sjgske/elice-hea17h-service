@@ -59,15 +59,13 @@ function History({ keywords, onRemoveKeyword, onClearKeywords}) {
     return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>;
   }
   const navigate = useNavigate();
-  const passContent = () => {
-    navigate(`/diet`, { state: keywords });
-  };
 
   return (
     <HistoryContainer>
       <HeaderContainer>
         <Title>최근 검색어</Title>
         <RemoveText onClick={onClearKeywords}>전체삭제</RemoveText>
+        <RemoveText onClick={() => navigate(`/diet`, { state: keywords })}>전체추가&nbsp;</RemoveText>
       </HeaderContainer>
       <ListContainer>
         {keywords.map(({ id, text }) => (
@@ -83,7 +81,7 @@ function History({ keywords, onRemoveKeyword, onClearKeywords}) {
                 삭제
               </RemoveButton>
               <AddButton
-              onClick={passContent}
+              onClick = {() => navigate(`/diet`, { state: text })}
               >추가</AddButton>
             </KeywordContainer>
           ))}
