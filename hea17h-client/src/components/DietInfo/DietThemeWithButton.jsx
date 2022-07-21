@@ -25,7 +25,7 @@ const Div = styled.div``;
 
 const SpaceBottom = styled.div`
     & > * {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.7rem;
     }
 
     *:last-child {
@@ -60,6 +60,14 @@ const Calorie = styled.span`
     }
 `;
 
+const ButtonGroup = styled.div`
+    flex-wrap: nowrap;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+`;
+
 const CircleButton = styled.button`
     margin-right: 1.5rem;
 
@@ -74,16 +82,34 @@ const CircleButton = styled.button`
     &:hover div {
         transform: scale(1.1);
     }
+
+    @media screen and (max-width: 768px) {
+        width: 3rem;
+        height: 1.5rem;
+        background-color: #fd7e14;
+        border-radius: 5px;
+        color: #fff;
+        margin-right: 0;
+        margin-bottom: 1rem;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
 `;
 
 const Circle = styled.div`
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 5rem;
+    height: 5rem;
     margin-bottom: 0.5rem;
     background-color: #fff;
     border-radius: 50%;
     transition: all 200ms ease-in;
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const CircleImage = styled.img`
@@ -91,7 +117,7 @@ const CircleImage = styled.img`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 55px;
+    width: 3.5rem;
     border-radius: 50%;
 `;
 
@@ -108,6 +134,15 @@ const GreyText = styled.p`
     font-size: 1.3rem;
     font-weight: 700;
     color: #999999;
+
+    small {
+        display: block;
+        padding-top: 0.3rem;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #333;
+        text-decoration: underline;
+    }
 `;
 
 const LeftButton = styled.button`
@@ -159,15 +194,44 @@ const FlexItem = styled.div`
     width: 11rem;
 `;
 
+const HoverDiv = styled.div`
+    position: absolute;
+    top: 0;
+    right: -180px;
+    padding: 1rem;
+    width: 250px;
+    background-color: #f5f5f5;
+    opacity: 0.8;
+
+    h5 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    span {
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    img {
+        width: 100%;
+    }
+`;
+
+const PageText = styled.div`
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+`;
+
 function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
     const [isActive, setIsActive] = useState(false);
     const [show, setShow] = useState(false);
     const [meal, setMeal] = useState('');
     const [page, setPage] = useState(0);
-
-    useState(() => {
-        console.log(page, comment);
-    });
+    const [hover, setHover] = useState(false);
 
     const buttonClick = mealState => {
         setIsActive(true);
@@ -193,7 +257,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                         <strong>{calorie}</strong> kcal
                     </Calorie>
                 </SpaceBottom>
-                <Div>
+                <ButtonGroup className="flex">
                     <CircleButton onClick={() => buttonClick('breakfast')}>
                         <Circle>
                             <CircleImage
@@ -221,7 +285,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                         </Circle>
                         <span>저녁</span>
                     </CircleButton>
-                </Div>
+                </ButtonGroup>
             </Container>
 
             <DetailBox
@@ -236,10 +300,13 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                 width="25rem"
                 height="25rem"
                 className={!show ? 'hidden' : null}
+                style={{ position: 'relative' }}
             >
                 {!comment.length ? (
                     <>
-                        <H3>코멘트가 없습니다.</H3>
+                        <Div className="flex" style={{ padding: '2rem 0' }}>
+                            <H3>아직 작성된 코멘트가 없습니다.</H3>
+                        </Div>
                         <IconButton
                             onClick={() => {
                                 setShow(false);
@@ -251,13 +318,35 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                 ) : (
                     <>
                         <Div className="margin-bottom">
-                            <SpaceBottom>
+                            <SpaceBottom style={{ position: 'relative' }}>
                                 <H3>코멘트</H3>
                                 <GreyText>
                                     {comment[page].expert.certificate[0].name}
                                     <br />
                                     전문가의 코멘트입니다.
+                                    <small
+                                        onMouseEnter={() => setHover(true)}
+                                        onMouseLeave={() => setHover(false)}
+                                    >
+                                        전문가 정보 더보기
+                                    </small>
                                 </GreyText>
+
+                                <HoverDiv className={!hover ? 'hidden' : null}>
+                                    <h5>전문가 정보</h5>
+                                    <span>
+                                        {comment[page].expert.certificate
+                                            .map(el => el.name)
+                                            .join(' / ')}
+                                    </span>
+                                    <img
+                                        src={
+                                            comment[page].expert.certificate[0]
+                                                .image
+                                        }
+                                        alt="자격증"
+                                    />
+                                </HoverDiv>
                             </SpaceBottom>
                         </Div>
                         <CommentBox width="100%" borderColor="#D9D9D9">
@@ -293,6 +382,12 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                                 >
                                     <FontAwesomeIcon icon={faAngleRight} />
                                 </RightButton>
+
+                                <PageText>
+                                    <span>{`${page + 1} / ${
+                                        comment.length
+                                    }`}</span>
+                                </PageText>
                             </>
                         )}
                     </>
@@ -331,12 +426,20 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
     return (
         <Container width="60vw" color="#F5F5F5" className={className}>
             <Div className="margin-bottom">
+                {/* 아점저 */}
                 <H3>{currentMeal.mealType}</H3>
             </Div>
 
-            {/* 카테고리별 */}
+            {/* 카테고리 */}
             {currentMeal.foods.map(meal => (
-                <Div key={meal._id} className="margin-bottom">
+                <Div
+                    key={meal._id}
+                    className="margin-bottom"
+                    style={{
+                        borderBottom: '1px solid #ccc',
+                        paddingBottom: '2rem',
+                    }}
+                >
                     <SpaceBottom>
                         <Div className="flex-align-items">
                             <H4>{meal.category}</H4>
@@ -358,31 +461,31 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                                 <Badge>
                                     <Calorie>
                                         {food.name}
-                                        <strong>{food.count}g</strong>
+                                        <strong> {food.count}</strong>g
                                     </Calorie>
                                 </Badge>
                                 <Badge>
                                     <Calorie>
                                         칼로리
-                                        <strong>{food.foodCalories}</strong>
+                                        <strong> {food.foodCalories}</strong>
                                         kcal
                                     </Calorie>
                                 </Badge>
                                 <Badge>
                                     <Calorie>
                                         탄수화물
-                                        <strong>{food.foodCarb}</strong>g
+                                        <strong> {food.foodCarb}</strong>g
                                     </Calorie>
                                 </Badge>
                                 <Badge>
                                     <Calorie>
                                         단백질
-                                        <strong>{food.foodProtein}</strong>g
+                                        <strong> {food.foodProtein}</strong>g
                                     </Calorie>
                                 </Badge>
                                 <Badge>
                                     <Calorie>
-                                        지방 <strong>{food.foodFat}</strong>g
+                                        지방 <strong> {food.foodFat}</strong>g
                                     </Calorie>
                                 </Badge>
                             </FlexBox>
@@ -391,7 +494,7 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                 </Div>
             ))}
 
-            <FlexBox className="margin-bottom">
+            <FlexBox style={{ marginBottom: '4rem' }}>
                 <FlexItem className="flex-align-items">
                     <H4>총 칼로리</H4>
                     <Badge>

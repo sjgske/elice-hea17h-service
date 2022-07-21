@@ -19,12 +19,15 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
+    position: relative;
     background: #fff;
     padding: 5vw 8vw;
 `;
 
 const Header = styled.div`
+    position: relative;
     margin-bottom: 6rem;
+    z-index: 10;
 `;
 
 const Div = styled.div``;
@@ -71,6 +74,25 @@ const Orange = styled.span`
     font-weight: 700;
 `;
 
+const SampleImg = styled.div`
+    position: absolute;
+    top: 200px;
+    right: 8vw;
+    opacity: 0.5;
+    z-index: 5;
+
+    img {
+        width: 20rem;
+        border: 2px solid #f5f5f5;
+        border-radius: 5px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    @media screen and (max-width: 1024px) {
+        display: none;
+    }
+`;
+
 const MainBox = styled(Box)`
     display: flex;
     justify-content: space-between;
@@ -111,7 +133,8 @@ function Comment() {
     async function getDiet() {
         try {
             const res = await Api.get('/diets/getDiet');
-            setData(res.data.payLoad);
+            const items = await res.data.payLoad.reverse();
+            setData(items);
         } catch (err) {
             console.log(err);
         }
@@ -151,6 +174,14 @@ function Comment() {
                             <Orange>계산해보기</Orange>
                         </CircleLink>
                     </Header>
+
+                    <SampleImg>
+                        {/* <h5>(예시 코멘트)</h5> */}
+                        <img
+                            src={`${process.env.PUBLIC_URL}/assets/comment.png`}
+                            alt="예시 코멘트"
+                        />
+                    </SampleImg>
 
                     {data.map(diet => (
                         <MainBox width="100%" color="#faf3e3" key={diet._id}>

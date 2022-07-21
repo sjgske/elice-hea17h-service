@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,6 +10,7 @@ import Button from '../../components/Button';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
 import DietBox from '../../components/DietInfo/DietThemeWithButton';
+import Loading from '../../components/Loading';
 import * as Api from '../../api';
 import {
     getStringDate,
@@ -41,6 +43,10 @@ const Search = styled.div`
     @media screen and (max-width: 768px) {
         h4 {
             display: none;
+        }
+
+        button {
+            width: 40px;
         }
     }
 `;
@@ -77,6 +83,17 @@ const InputGroup = styled.div`
         top: 12px;
         left: 14px;
     }
+
+    @media screen and (max-width: 768px) {
+        input {
+            width: 23vw;
+            margin-right: 0.5rem;
+        }
+
+        span {
+            margin-right: 0.5rem;
+        }
+    }
 `;
 
 const H1 = styled.h1`
@@ -98,26 +115,38 @@ const Div = styled.div`
 
 function DietList() {
     const [data, setData] = useState([]);
-    const [filter, setFilter] = useState([]);
-    const [httpStatusCode, setHttpStatusCode] = useState('');
+    const [filtered, setFiltered] = useState([]);
+    const [httpStatusCode, setHttpStatusCode] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const curDate = new Date();
     const firstDate = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
     const [startDate, setStartDate] = useState(toStringDate(firstDate));
     const [endDate, setEndDate] = useState(toStringDate(curDate));
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem('userToken')) {
+            alert('로그인 후 이용해주세요.');
+            navigate('/login');
+        }
+    });
+
     const getDiet = async () => {
         try {
+            setLoading(true);
             const res = await Api.get('/diets/getDiet');
-            const items = await res.data.payLoad.reverse();
-            setData(items);
-            setFilter(items);
-            console.log(items);
+            const sortedData = await res.data.payLoad.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+            );
+            setData(sortedData);
+            setFiltered(sortedData);
+            console.log(sortedData);
+            setLoading(false);
         } catch (err) {
             setHttpStatusCode(err.response.status);
-            if (httpStatusCode === 500 || httpStatusCode === 403) {
-                window.location.href = '/login';
-            }
+            console.log(err);
         }
     };
 
@@ -129,7 +158,7 @@ function DietList() {
                 createdDate <= new Date(endDate).getTime()
             );
         });
-        setFilter(filteredData);
+        setFiltered(filteredData);
     };
 
     useEffect(() => {
@@ -139,6 +168,7 @@ function DietList() {
     return (
         <>
             <Nav />
+            {loading ? <Loading /> : null}
             <Container>
                 <H1>식단 목록</H1>
                 <Main>
@@ -174,12 +204,12 @@ function DietList() {
                         </Button>
                     </Search>
 
-                    {httpStatusCode === 404 || !filter.length ? (
+                    {httpStatusCode === 404 || !filtered.length ? (
                         <Div className="flex">
                             <H4>저장된 식단이 없습니다.</H4>
                         </Div>
                     ) : (
-                        filter.map(diet => (
+                        filtered.map(diet => (
                             <DietBox
                                 key={diet._id}
                                 id={diet._id}

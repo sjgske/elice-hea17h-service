@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 
@@ -93,41 +94,49 @@ const Input = styled.input`
     }
 `;
 
-async function handleSubmit(e) {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-
-    const name = formData.get('name');
-    const image = formData.get('image');
-
-    if (!name || !image.name) {
-        alert('정보를 모두 기입해 주세요.');
-        return;
-    }
-
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data',
-            userToken: `${localStorage.getItem('userToken')}`,
-        },
-    };
-
-    try {
-        const res = await axios.post(
-            'http://localhost:5000/users/registerExpert',
-            formData,
-            config,
-        );
-        console.log(res);
-        alert('자격증 등록이 완료되었습니다.');
-        window.location.href = '/';
-    } catch (err) {
-        alert(err.message);
-    }
-}
-
 function Certify() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem('userToken')) {
+            alert('로그인 후 이용해주세요.');
+            navigate('/login');
+        }
+    });
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const name = formData.get('name');
+        const image = formData.get('image');
+
+        if (!name || !image.name) {
+            alert('정보를 모두 기입해 주세요.');
+            return;
+        }
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data',
+                userToken: `${localStorage.getItem('userToken')}`,
+            },
+        };
+
+        try {
+            const res = await axios.post(
+                'http://localhost:5000/users/registerExpert',
+                formData,
+                config,
+            );
+            console.log(res);
+            alert('자격증 등록이 완료되었습니다.');
+            navigate('/');
+        } catch (err) {
+            console.log(err);
+        }
+    };
     return (
         <Container>
             <Main className="flex-column center">
