@@ -6,7 +6,10 @@ import {
     faList,
     faComment,
     faChalkboardUser,
-    faMagnifyingGlass,
+    faCircleUser,
+    faUserPlus,
+    faLock,
+    faLockOpen,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
@@ -17,7 +20,6 @@ function Nav() {
         <Container>
             <LeftSide>
                 <LogoLink to="/">
-                    {/* HEA<span style={{ color: '#FD7E14' }}>17</span>H. */}
                     <Logo
                         src={`${process.env.PUBLIC_URL}/assets/logo.png`}
                         alt="logo"
@@ -36,41 +38,63 @@ function Nav() {
                         <StyledFontAwesomeIcon icon={faComment} size="xl" />
                         <SubMenu>코멘트</SubMenu>
                     </NavLink>
-                    {token !== null
-                        ? (
-                            <NavLink to="/coaching">
-                                <StyledFontAwesomeIcon
-                                    icon={faChalkboardUser}
-                                    size="xl"
-                                />
-                                <SubMenu>코칭</SubMenu>
-                            </NavLink>
-                        )
-                        : ''
-                    }
-                    
+                    {token !== null ? (
+                        <NavLink to="/coaching">
+                            <StyledFontAwesomeIcon
+                                icon={faChalkboardUser}
+                                size="xl"
+                            />
+                            <SubMenu>코칭</SubMenu>
+                        </NavLink>
+                    ) : (
+                        ''
+                    )}
                 </Menu>
             </LeftSide>
             <RightSide>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <LoginButton>
-                    {token !== null
-                        ? <NavLink to="/" onClick={() => localStorage.removeItem('userToken')}>로그아웃</NavLink>
-                        : <NavLink to="/login">로그인</NavLink>
-                    }
+                    {token !== null ? (
+                        <NavLink
+                            to="/"
+                            onClick={() => localStorage.removeItem('userToken')}
+                        >
+                            <StyledFontAwesomeIcon
+                                icon={faLockOpen}
+                                size="xl"
+                            />
+                            <SubMenu>로그아웃</SubMenu>
+                        </NavLink>
+                    ) : (
+                        <NavLink to="/login">
+                            <StyledFontAwesomeIcon icon={faLock} size="xl" />
+                            <SubMenu>로그인</SubMenu>
+                        </NavLink>
+                    )}
                 </LoginButton>
-                
-                {token !== null
-                    ?
-                    <SignupButton style={{ backgroundColor: '#fd7e14' }}>
-                        <NavLink to="/profile" style={{ color: 'white' }}>마이페이지</NavLink>
-                    </SignupButton>
-                    :
-                    <SignupButton>
-                        <NavLink to="/signup">회원가입</NavLink>
-                    </SignupButton>
-                    }
-                
+
+                {token !== null ? (
+                    <NavLink to="/profile" style={{ color: 'white' }}>
+                        <StyledFontAwesomeIcon
+                            icon={faCircleUser}
+                            size="xl"
+                            style={{ color: '#fd7e14' }}
+                        />
+                        <SignupButton style={{ backgroundColor: '#fd7e14' }}>
+                            <SubMenu style={{ color: 'white' }}>
+                                마이페이지
+                            </SubMenu>
+                        </SignupButton>
+                    </NavLink>
+                ) : (
+                    <NavLink to="/signup">
+                        <StyledFontAwesomeIcon icon={faUserPlus} size="xl" />
+                        <SignupButton>
+                            <SubMenu style={{ color: '#fd7e14' }}>
+                                회원가입
+                            </SubMenu>
+                        </SignupButton>
+                    </NavLink>
+                )}
             </RightSide>
         </Container>
     );
@@ -100,6 +124,10 @@ const LogoLink = styled(NavLink)`
 
 const Logo = styled.img`
     width: 120px;
+
+    @media screen and (max-width: 768px) {
+        width: 80px;
+    }
 `;
 
 const Menu = styled.div`
@@ -162,8 +190,12 @@ const SignupButton = styled.button`
     font-weight: 700;
 
     @media screen and (max-width: 768px) {
-        width: 80px;
-        height: 30px;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: polygon(0 0, 0 0, 0 0);
     }
 `;
 
@@ -174,6 +206,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     @media screen and (max-width: 768px) {
         display: inline;
         margin: 0 8px;
+        font-size: 16px;
     }
 `;
 
