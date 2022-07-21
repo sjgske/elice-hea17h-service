@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import History from './History';
 import SearchBar from './SearchBar';
 
 function SearchPage() {
+
+  const state = useLocation();
+  console.log(state);
+
   // string은 map을 사용 할 수 없기때문에 object 형태로 변환 시키기 위해 parsing
   const [keywords, setKeywords] = useState(
     JSON.parse(localStorage.getItem('keywords') || '[]'),

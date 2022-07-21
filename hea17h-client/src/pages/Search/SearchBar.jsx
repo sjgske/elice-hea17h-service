@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as Api from '../../api';
@@ -93,6 +93,7 @@ function SearchBar({ onAddKeyword }) {
   // 2. 이벤트 연결
   // 3. Link to 설명
 
+  const [clickEditBtn, setClickEditBtn] = useState(false);
   const [keyword, setKeyword] = useState('');
   const [foodName, setFoodName] = useState('');
   const [foodAmount, setFoodAmount] = useState(`100g`);
@@ -105,6 +106,7 @@ function SearchBar({ onAddKeyword }) {
       // 엔터일때 addkeyword에 전달
       onAddKeyword(keyword);
       setKeyword('');
+      setClickEditBtn(!clickEditBtn);
     }
     const foodData = e.target.value.split(' ');
     setFoodName(foodData[0]);
@@ -122,7 +124,7 @@ function SearchBar({ onAddKeyword }) {
 
   // keyword가 있으면 true, 없으면 false
   console.log(!!keyword);
-
+ 
   const [foodList, setFoodList] = useState([]);
   const [food, setFood] = useState([]);
 
@@ -134,8 +136,8 @@ function SearchBar({ onAddKeyword }) {
     setFoodList(dataList.data);
     setFood(data);
 
-    console.log(food);
     console.log(foodList);
+    console.log(food);
   } catch(err) {
     console.log(err);
     console.log(err.message);
@@ -145,24 +147,39 @@ function SearchBar({ onAddKeyword }) {
     fetchData();
   }, [keyword]);
 
-  return (
-    <Container>
-      <ArrowIcon className="flex-column-align-items" to="/diet" />
-      <InputContainer>
+    return !clickEditBtn ? (
+      <Container>
+        <ArrowIcon className="flex-column-align-items" to="/diet" />
+        <InputContainer>
         <Input
-          placeholder="검색어를 입력해주세요"
-          active={hasKeyword}
-          value={keyword}
-          onChange={handleKeyword}
-          onKeyDown={handleEnter}
-        />
-
-        {keyword && <RemoveIcon onClick={handleClearKeyword} />}
-      </InputContainer>
-      <AlertMessage>은 추가할 수 없는 항목입니다.</AlertMessage>
-      <SearchIcon />
-    </Container>
-  );
+            placeholder="검색어를 입력해주세요"
+            active={hasKeyword}
+            value={keyword}
+            onChange={handleKeyword}
+            onKeyDown={handleEnter}
+          />
+          <AlertMessage>추가 할 수 없는 항목입니다.</AlertMessage>
+          {keyword && <RemoveIcon onClick={handleClearKeyword} />}
+        </InputContainer>
+        <SearchIcon />
+      </Container>
+    ) : (
+      <Container>
+        <ArrowIcon className="flex-column-align-items" to="/diet" />
+        <InputContainer>
+        <Input
+            placeholder="검색어를 입력해주세요"
+            active={hasKeyword}
+            value={keyword}
+            onChange={handleKeyword}
+            onKeyDown={handleEnter}
+          />
+          {keyword && <RemoveIcon onClick={handleClearKeyword} />}
+        </InputContainer>
+        <SearchIcon />
+      </Container>
+    );
+  
 }
 
 export default SearchBar;

@@ -10,9 +10,6 @@ function Diet() {
     console.log(state);
 
     const navigate = useNavigate();
-    const searchhandler = () => {
-        navigate(`/diet/search`);
-    };
     const calculatehandler = () => {
         navigate(`calculate`);
     };
@@ -35,11 +32,9 @@ function Diet() {
                         </CircleLink>
                     </TitleContainer>
                     <DietContainer>
-                        <AddBtnContainer>
-                            <AddBtn onClick={searchhandler}>추가</AddBtn>
-                        </AddBtnContainer>
                         <MoringContainer>
                             <MorningTitle>아침</MorningTitle>
+                            <AddBtn onClick={() => navigate(`/diet/search`, { state: 'morning' })}>추가</AddBtn>
                             <MeatTitle>고기</MeatTitle>
                             <ContentBtn>닭가슴살 100g</ContentBtn>
                             <EditBtn>수정</EditBtn>
@@ -47,6 +42,7 @@ function Diet() {
                         </MoringContainer>
                         <AfternoonContainer>
                             <AfternoonTitle>점심</AfternoonTitle>
+                            <AddBtn onClick={() => navigate(`/diet/search`, { state: 'afternoon' })}>추가</AddBtn>
                             <VegeTitle>채소</VegeTitle>
                             <ContentBtn>방울토마토 3개</ContentBtn>
                             <EditBtn>수정</EditBtn>
@@ -54,6 +50,7 @@ function Diet() {
                         </AfternoonContainer>
                         <EveningContainer>
                             <EveningTitle>저녁</EveningTitle>
+                            <AddBtn onClick={() => navigate(`/diet/search`, { state: 'evening' })}>추가</AddBtn>
                             <NutsTitle>견과</NutsTitle>
                             <ContentBtn>아몬드 70g</ContentBtn>
                             <EditBtn>수정</EditBtn>
@@ -136,13 +133,8 @@ const DietContainer = styled.div`
     background: #F5F5F5;;
 `;
 
-const AddBtnContainer = styled.div`
-    padding-top: 2rem;
-`;
-
 const AddBtn = styled.button`
     margin-right: 3rem;
-    float: right;
     width: 60px;
     height: 35px;   
     color: #FFFFFF;
