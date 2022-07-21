@@ -7,10 +7,12 @@ import {
     faArrowRight,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
+import queryString from "query-string"
 import Nav from '../../components/Nav';
 import TopButton from '../../components/TopButton';
 
 function Home() {
+    const queryParams = queryString.parse(window.location.search);
     const navigate = useNavigate();
 
     const handleClick = e => {
@@ -25,6 +27,11 @@ function Home() {
             navigate('/login');
         }
     };
+
+    const token = queryParams.userToken;
+    if (token !== undefined) {
+        localStorage.setItem('userToken', token);
+    }
 
     return (
         <div>

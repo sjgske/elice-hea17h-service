@@ -5,12 +5,8 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../slices/UserSlice';
 import * as Api from '../../api';
 
-const CLIENT_ID = '52598a2c91fa7e9e93e1645debaefe5d';
-const REDIRECT_URI = 'http://localhost:5000/users/kauth/callback';
-const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-const NAVER_CLIENT_ID = '0pjw9UmVDxwBWXqPHEov';
-const NAVER_REDIRECT_URI = 'http://localhost:5000/users/nauth/callback';
-const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=RAMDOM_STATE`;
+const KAKAO_AUTH_URL = process.env.REACT_APP_KAKAO_AUTH_URL;
+const NAVER_AUTH_URL = process.env.REACT_APP_NAVER_AUTH_URL;
 
 function Login() {
     const dispatch = useDispatch();
