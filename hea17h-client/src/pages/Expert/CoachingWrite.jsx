@@ -9,6 +9,7 @@ import DietDetail from '../../components/DietInfo/DietDetail';
 import UserInfoView from '../../components/UserInfo/UserInfoView';
 import TitleText from '../../components/DietInfo/TitleText';
 import CommentInput from '../../components/Comment/CommentInput';
+import TopButton from '../../components/TopButton';
 import convertDate from '../../utils';
 
 function CoachingWrite() {
@@ -54,6 +55,7 @@ function CoachingWrite() {
                         </Comment>
                     </Container>
                 )}
+                <TopButton />
             </MainContainer>
         </div>
     );

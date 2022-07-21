@@ -8,6 +8,7 @@ import DietDetail from '../../components/DietInfo/DietDetail';
 import UserInfoView from '../../components/UserInfo/UserInfoView';
 import Comment from '../../components/Comment/Comment';
 import TitleText from '../../components/DietInfo/TitleText';
+import TopButton from '../../components/TopButton';
 import convertDate from '../../utils';
 import * as Api from '../../api';
 
@@ -66,6 +67,7 @@ function CoachingRead() {
                         </CommentContainer>
                     </Container>
                 )}
+                <TopButton />
             </MainContainer>
         </div>
     );
