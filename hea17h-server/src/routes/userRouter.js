@@ -1,8 +1,13 @@
 /* eslint-disable no-console */
 import { Router } from 'express';
+import bcrypt from 'bcrypt';
 import is from '@sindresorhus/is';
 import { userService } from '../services/index.js';
-import { isLoggedIn } from '../middlewares/index.js';
+import {
+    isLoggedIn,
+    naverCallback,
+    kakaoCallback,
+} from '../middlewares/index.js';
 import { uploadExpert } from '../utils/index.js';
 
 const userRouter = Router();
@@ -26,6 +31,26 @@ userRouter.get('/getExpertInfo', isLoggedIn, async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+});
+
+userRouter.get('/kauth/callback', kakaoCallback, async (req, res, next) => {
+    const user = req.kakaoUser;
+    const userInfo = { id: user.id, password: process.env.KAKAO_USER_PASSWORD };
+    const result = await userService.login(userInfo);
+    console.log(result);
+    res.redirect(
+        `http://localhost:3000/signup/complete?userToken=${result.token}`,
+    );
+});
+
+userRouter.get('/nauth/callback', naverCallback, async (req, res, next) => {
+    const user = req.naverUser;
+    const userInfo = { id: user.id, password: process.env.NAVER_USER_PASSWORD };
+    const result = await userService.login(userInfo);
+    console.log(result);
+    res.redirect(
+        `http://localhost:3000/signup/complete?userToken=${result.token}`,
+    );
 });
 
 userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
