@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -121,6 +122,8 @@ function DietList() {
     const [startDate, setStartDate] = useState(toStringDate(firstDate));
     const [endDate, setEndDate] = useState(toStringDate(curDate));
 
+    const navigate = useNavigate();
+
     const getDiet = async () => {
         try {
             const res = await Api.get('/diets/getDiet');
@@ -130,7 +133,8 @@ function DietList() {
         } catch (err) {
             setHttpStatusCode(err.response.status);
             if (httpStatusCode === 500 || httpStatusCode === 403) {
-                window.location.href = '/login';
+                alert('로그인 후 이용해주세요.');
+                navigate('/login');
             }
         }
     };

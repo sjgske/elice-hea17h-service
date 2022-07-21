@@ -219,7 +219,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                     <CircleButton onClick={() => buttonClick('breakfast')}>
                         <Circle>
                             <CircleImage
-                                src={`${process.env.PUBLIC_URL}/assets/morning.png`}
+                                src={dietFoods[0].mainImage}
                                 alt="아침"
                             />
                         </Circle>
@@ -228,7 +228,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                     <CircleButton onClick={() => buttonClick('lunch')}>
                         <Circle>
                             <CircleImage
-                                src={`${process.env.PUBLIC_URL}/assets/afternoon.png`}
+                                src={dietFoods[1].mainImage}
                                 alt="점심"
                             />
                         </Circle>
@@ -237,7 +237,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                     <CircleButton onClick={() => buttonClick('dinner')}>
                         <Circle>
                             <CircleImage
-                                src={`${process.env.PUBLIC_URL}/assets/night.png`}
+                                src={dietFoods[2].mainImage}
                                 alt="저녁"
                             />
                         </Circle>
