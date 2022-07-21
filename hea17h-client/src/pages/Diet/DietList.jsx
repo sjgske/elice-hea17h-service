@@ -10,6 +10,7 @@ import Button from '../../components/Button';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
 import DietBox from '../../components/DietInfo/DietThemeWithButton';
+import Loading from '../../components/Loading';
 import * as Api from '../../api';
 import {
     getStringDate,
@@ -116,6 +117,7 @@ function DietList() {
     const [data, setData] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [httpStatusCode, setHttpStatusCode] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const curDate = new Date();
     const firstDate = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
@@ -124,18 +126,27 @@ function DietList() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (!localStorage.getItem('userToken')) {
+            alert('로그인 후 이용해주세요.');
+            navigate('/login');
+        }
+    });
+
     const getDiet = async () => {
         try {
+            setLoading(true);
             const res = await Api.get('/diets/getDiet');
-            const items = await res.data.payLoad.reverse();
-            setData(items);
-            setFiltered(items);
+            const sortedData = await res.data.payLoad.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+            );
+            setData(sortedData);
+            setFiltered(sortedData);
+            console.log(sortedData);
+            setLoading(false);
         } catch (err) {
             setHttpStatusCode(err.response.status);
-            if (httpStatusCode === 500 || httpStatusCode === 403) {
-                alert('로그인 후 이용해주세요.');
-                navigate('/login');
-            }
+            console.log(err);
         }
     };
 
@@ -157,6 +168,7 @@ function DietList() {
     return (
         <>
             <Nav />
+            {loading ? <Loading /> : null}
             <Container>
                 <H1>식단 목록</H1>
                 <Main>

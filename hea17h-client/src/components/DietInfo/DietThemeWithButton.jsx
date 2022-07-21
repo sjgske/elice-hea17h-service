@@ -134,6 +134,15 @@ const GreyText = styled.p`
     font-size: 1.3rem;
     font-weight: 700;
     color: #999999;
+
+    small {
+        display: block;
+        padding-top: 0.3rem;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #333;
+        text-decoration: underline;
+    }
 `;
 
 const LeftButton = styled.button`
@@ -185,11 +194,44 @@ const FlexItem = styled.div`
     width: 11rem;
 `;
 
+const HoverDiv = styled.div`
+    position: absolute;
+    top: 0;
+    right: -180px;
+    padding: 1rem;
+    width: 250px;
+    background-color: #f5f5f5;
+    opacity: 0.8;
+
+    h5 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    span {
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    img {
+        width: 100%;
+    }
+`;
+
+const PageText = styled.div`
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+`;
+
 function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
     const [isActive, setIsActive] = useState(false);
     const [show, setShow] = useState(false);
     const [meal, setMeal] = useState('');
     const [page, setPage] = useState(0);
+    const [hover, setHover] = useState(false);
 
     const buttonClick = mealState => {
         setIsActive(true);
@@ -219,7 +261,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                     <CircleButton onClick={() => buttonClick('breakfast')}>
                         <Circle>
                             <CircleImage
-                                src={dietFoods[0].mainImage}
+                                src={`${process.env.PUBLIC_URL}/assets/morning.png`}
                                 alt="아침"
                             />
                         </Circle>
@@ -228,7 +270,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                     <CircleButton onClick={() => buttonClick('lunch')}>
                         <Circle>
                             <CircleImage
-                                src={dietFoods[1].mainImage}
+                                src={`${process.env.PUBLIC_URL}/assets/afternoon.png`}
                                 alt="점심"
                             />
                         </Circle>
@@ -237,7 +279,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                     <CircleButton onClick={() => buttonClick('dinner')}>
                         <Circle>
                             <CircleImage
-                                src={dietFoods[2].mainImage}
+                                src={`${process.env.PUBLIC_URL}/assets/night.png`}
                                 alt="저녁"
                             />
                         </Circle>
@@ -258,6 +300,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                 width="25rem"
                 height="25rem"
                 className={!show ? 'hidden' : null}
+                style={{ position: 'relative' }}
             >
                 {!comment.length ? (
                     <>
@@ -275,13 +318,35 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                 ) : (
                     <>
                         <Div className="margin-bottom">
-                            <SpaceBottom>
+                            <SpaceBottom style={{ position: 'relative' }}>
                                 <H3>코멘트</H3>
                                 <GreyText>
                                     {comment[page].expert.certificate[0].name}
                                     <br />
                                     전문가의 코멘트입니다.
+                                    <small
+                                        onMouseEnter={() => setHover(true)}
+                                        onMouseLeave={() => setHover(false)}
+                                    >
+                                        전문가 정보 더보기
+                                    </small>
                                 </GreyText>
+
+                                <HoverDiv className={!hover ? 'hidden' : null}>
+                                    <h5>전문가 정보</h5>
+                                    <span>
+                                        {comment[page].expert.certificate
+                                            .map(el => el.name)
+                                            .join(' / ')}
+                                    </span>
+                                    <img
+                                        src={
+                                            comment[page].expert.certificate[0]
+                                                .image
+                                        }
+                                        alt="자격증"
+                                    />
+                                </HoverDiv>
                             </SpaceBottom>
                         </Div>
                         <CommentBox width="100%" borderColor="#D9D9D9">
@@ -317,6 +382,12 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                                 >
                                     <FontAwesomeIcon icon={faAngleRight} />
                                 </RightButton>
+
+                                <PageText>
+                                    <span>{`${page + 1} / ${
+                                        comment.length
+                                    }`}</span>
+                                </PageText>
                             </>
                         )}
                     </>
