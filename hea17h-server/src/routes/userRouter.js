@@ -38,7 +38,7 @@ userRouter.get('/kauth/callback', kakaoCallback, async (req, res, next) => {
     const userInfo = { id: user.id, password: process.env.KAKAO_USER_PASSWORD };
     const result = await userService.login(userInfo);
     console.log(result);
-    res.redirect(`http://localhost:3000/handleOauth?userToken=${result.token}`);
+    res.redirect(`http://localhost:3000?userToken=${result.token}`);
 });
 
 userRouter.get('/nauth/callback', naverCallback, async (req, res, next) => {
@@ -46,7 +46,7 @@ userRouter.get('/nauth/callback', naverCallback, async (req, res, next) => {
     const userInfo = { id: user.id, password: process.env.NAVER_USER_PASSWORD };
     const result = await userService.login(userInfo);
     console.log(result);
-    res.redirect(`http://localhost:3000/handleOauth?userToken=${result.token}`);
+    res.redirect(`http://localhost:3000?userToken=${result.token}`);
 });
 
 userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
