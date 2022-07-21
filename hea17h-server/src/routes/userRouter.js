@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { Router } from 'express';
+import bcrypt from 'bcrypt';
 import is from '@sindresorhus/is';
 import { userService } from '../services/index.js';
 import {
@@ -33,13 +34,23 @@ userRouter.get('/getExpertInfo', isLoggedIn, async (req, res, next) => {
 });
 
 userRouter.get('/kauth/callback', kakaoCallback, async (req, res, next) => {
-    const userInfo = req.kakaoUser;
-    console.log(userInfo);
+    const user = req.kakaoUser;
+    const userInfo = { id: user.id, password: process.env.KAKAO_USER_PASSWORD };
+    const result = await userService.login(userInfo);
+    console.log(result);
+    res.redirect(
+        `http://localhost:3000/signup/complete?userToken=${result.token}`,
+    );
 });
 
 userRouter.get('/nauth/callback', naverCallback, async (req, res, next) => {
-    const userInfo = req.naverUser;
-    console.log(userInfo);
+    const user = req.naverUser;
+    const userInfo = { id: user.id, password: process.env.NAVER_USER_PASSWORD };
+    const result = await userService.login(userInfo);
+    console.log(result);
+    res.redirect(
+        `http://localhost:3000/signup/complete?userToken=${result.token}`,
+    );
 });
 
 userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
