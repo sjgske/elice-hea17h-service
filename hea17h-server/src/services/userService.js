@@ -19,6 +19,7 @@ class UserService {
             age,
             goal,
             activeLevel,
+            platform,
         } = userInfo;
         const user = await this.userModel.findById(id);
         if (user) {
@@ -41,6 +42,7 @@ class UserService {
             age,
             goal,
             activeLevel,
+            platform,
         };
         const newUser = await this.userModel.create(newInfo);
         return newUser;
