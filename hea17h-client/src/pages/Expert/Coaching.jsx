@@ -5,13 +5,18 @@ import Nav from '../../components/Nav';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 import DietTheme from '../../components/DietInfo/DietTheme';
+import TopButton from '../../components/TopButton';
+import Loading from '../../components/Loading';
 import convertDate from '../../utils';
 import * as Api from '../../api';
 
 function Coaching() {
     const [dietList, setDietList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const getData = async () => {
+        setLoading(true);
+
         const { data } = await Api.get('/diets/getAllDiet');
 
         // 최신순 정렬
@@ -20,6 +25,7 @@ function Coaching() {
         );
 
         setDietList(sortedData);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -30,6 +36,7 @@ function Coaching() {
     return (
         <div>
             <Nav />
+            {loading ? <Loading /> : null}
             <MainContainer>
                 <h2>코칭</h2>
                 <Container width="100%" color="white">
@@ -56,6 +63,7 @@ function Coaching() {
                         </DietTheme>
                     ))}
                 </Container>
+                <TopButton />
             </MainContainer>
         </div>
     );
