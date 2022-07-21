@@ -1,80 +1,99 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from '../../components/Nav/index';
-import SearchPage from '../Search/SearchPage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+
 
 function DietSearch() {
     return(
-        <>
-            <Nav />
-            <SearchTitle>
-                <SearchInfo>Search<GreenDot>.</GreenDot><br />
-                    닭가슴살 100g<OrangeDot>.</OrangeDot> 방울토마토 20개<OrangeDot>.</OrangeDot>
-                </SearchInfo>
-            </SearchTitle>
-            <Container>
-                <Section>
-                    <SearchSection>
-                        <SearchContainer>
-                            <SearchPage />
-                        </SearchContainer>
-                        <LatestSearchContainer>
-                            <LatestSearchText>최근 검색어</LatestSearchText>
-                            <LatestSearchList>닭가슴살 100g </LatestSearchList>
-                            <LatestSearchList>토마토 200g 시저 샐러드 100g</LatestSearchList>
-                            <LatestSearchList>아몬드 10g</LatestSearchList>
-                        </LatestSearchContainer>
-                    </SearchSection>
-                </Section>
-            </Container>
-        </>
+        <Container>
+            <Main>
+                <Header>
+                    <Div className="margin-bottom">
+                        <H2>
+                            Search<Green>.</Green>
+                            <br /> 닭가슴살 200g<Orange>.</Orange>
+                            <br /> 토마토 5개<Orange>.</Orange>
+                        </H2>
+                    </Div>
+                    <SearchBox>
+                        <IconWrapper>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        </IconWrapper>
+                            <SearchInput 
+                            type="search"
+                            placeholder="Search"
+                            />
+                    </SearchBox>
+                </Header>
+            </Main>
+        </Container>
     );
 };
 
-const SearchTitle = styled.div`
-    margin-left: 3rem;
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    background: #f7f7f9;
+    padding: 8vw 10vw;
 `;
 
-const SearchInfo = styled.h2`
+const Main = styled.div`
+    position: relative;
+    background: #fff;
+    padding: 5vw 8vw;
 `;
 
-const GreenDot = styled.span`
-    color: #51CF66;
+const Header = styled.div`
+    position: relative;
+    margin-bottom: 6rem;
+    z-index: 10;
 `;
 
-const OrangeDot = styled.span`
+const Div = styled.div``;
+
+const H2 = styled.h2`
+    font-size: 2.5rem;
+    line-height: 3.8rem;
+
+    &:first-child {
+        margin-bottom: 3rem;
+    }
+`;
+
+const Green = styled.span`
+    color: #51cf66;
+`;
+
+const Orange = styled.span`
     color: #FD7E14;
 `;
 
-const Container = styled.div`
-    background: #F7F7F9;
+const SearchBox = styled.div`
+    display: flex;
+    border-bottom: 6px solid #51CF66;
 `;
 
-const Section = styled.div`
-    background: #FFFFFF;
+const IconWrapper = styled.span`
+    color: #51cf66;
+    width: 50px;
+    height: 50px;
+    font-size: 2.5rem;
+    padding-right: 0.5rem;
 `;
 
-const SearchSection = styled.section`
-    margin-left: 3rem;
-    margin-right: 3rem;
-`;
-
-const SearchContainer = styled.div`
-    padding-top: 2rem;
-`;
-
-const LatestSearchContainer = styled.div`
-    color: black;
-    padding-bottom: 3rem;
-`;
-
-const LatestSearchText = styled.h2`
-    font-weight: 700;
+const SearchInput = styled.input`
     font-size: 36px;
-`;
-
-const LatestSearchList = styled.h3`
-    color: #999999
+    line-height: 48px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: #fff;
+    color: #000000;
+    outline: none;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
 `;
 
 export default DietSearch;

@@ -127,18 +127,18 @@ function SearchBar({ onAddKeyword }) {
  
   const [foodList, setFoodList] = useState([]);
   const [food, setFood] = useState([]);
+  const [httpStatusCode, setHttpStatusCode] = useState(0);
 
   const fetchData = async () => {
   try{
     const dataList = await Api.get(`/foods`);
     const {data} = await Api.get(`/foods?name=${foodName}`);
-
     setFoodList(dataList.data);
     setFood(data);
-
     console.log(foodList);
     console.log(food);
   } catch(err) {
+    setHttpStatusCode(err.response.status);
     console.log(err);
     console.log(err.message);
   }};
@@ -147,7 +147,7 @@ function SearchBar({ onAddKeyword }) {
     fetchData();
   }, [keyword]);
 
-    return !clickEditBtn ? (
+    return httpStatusCode === 500 ? (
       <Container>
         <ArrowIcon className="flex-column-align-items" to="/diet" />
         <InputContainer>
