@@ -8,7 +8,18 @@ import * as Api from '../../api';
 function Profile() {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
+    const [certifyInfo, setCertifyInfo] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const {
+        id,
+        name,
+        height,
+        weight,
+        age,
+        gender,
+        goal,
+        activeLevel
+    } = userInfo;
 
     const getInfo = async () => {
         const { data } = await Api.get('/users/getUser');
@@ -16,8 +27,15 @@ function Profile() {
         setUserInfo(data);
     };
 
+    const getCertify = async () => {
+        const { data }  = await Api.get('/users/getExpertInfo');
+
+        setCertifyInfo(data.payload.certificate[0].name);
+    };
+
     useEffect(() => {
         getInfo();
+        getCertify();
     }, []);
 
     const handleUpdateButton = (e) => {
@@ -42,71 +60,71 @@ function Profile() {
                         <TitleText>기본 회원정보 <span style={{color: '#999999'}}>필수</span></TitleText>
                         <InputForm>
                             <InputText>아이디</InputText>
-                            <InputItem value={userInfo.id || ''} disabled />
+                            <InputItem value={id || ''} disabled />
                             <InputText>비밀번호</InputText>
                             <InputItem value='******' disabled />
                             <InputText>이름</InputText>
-                            <InputItem value={userInfo.name || ''} disabled />
+                            <InputItem value={name || ''} disabled />
                         </InputForm>
                     </BoxContainer>
                     <BoxContainer>
                         <TitleText>상세 회원정보 <span style={{ color: '#999999' }}>선택</span></TitleText>
                         <InputForm>
                             <InputText>키(cm)</InputText>
-                            <InputItem value={userInfo.height || ''} disabled />
+                            <InputItem value={height || ''} disabled />
                             <InputText>몸무게(kg)</InputText>
-                            <InputItem value={userInfo.weight || ''} disabled />
+                            <InputItem value={weight || ''} disabled />
                             <InputText>나이</InputText>
-                            <InputItem value={userInfo.age || ''} disabled />
+                            <InputItem value={age || ''} disabled />
                             <InputText>성별</InputText>
                             <SelectGender>
-                                <RadioButton type="radio" checked={userInfo.gender === 'M'} readOnly />
+                                <RadioButton type="radio" checked={gender === 'M'} readOnly />
                                 <div>남자</div>
-                                <RadioButton type="radio" checked={userInfo.gender === 'W'} readOnly />
+                                <RadioButton type="radio" checked={gender === 'W'} readOnly />
                                 <div>여자</div>
                             </SelectGender>
                             <InputText>BMI(㎏/㎡)</InputText>
                             <InputItem placeholder='(자동계산)' disabled />
                             <InputText>다이어트 목표</InputText>
-                            {
-                                (() => {
-                                    switch (userInfo.goal) {
-                                        case 1:
-                                            return <InputItem value='체중 증가' disabled />;
-                                        case 2:
-                                            return <InputItem value='현재 체중 유지하기' disabled />;
-                                        case 3:
-                                            return <InputItem value='체중 감소' disabled />;
-                                        default:
-                                            return null;
-                                    }
-                                })()
-                            }
+                            <SelectBox value={goal || ''} disabled >
+                                <option value="1">체중 증가</option>
+                                <option value="2">현재 체중 유지하기</option>
+                                <option value="3">체중 감소</option>
+                            </SelectBox>
                             <InputText>활동 정도</InputText>
-                            {
-                                (() => {
-                                    switch (userInfo.activeLevel) {
-                                        case 1:
-                                            return <InputItem value='전혀 운동하지 않음' disabled />;
-                                        case 2:
-                                            return <InputItem value='가벼운 운동(주 1~3일)' disabled />;
-                                        case 3:
-                                            return <InputItem value='적당한 운동(주 3~5일)' disabled />;
-                                        case 4:
-                                            return <InputItem value='격렬한 운동(주 6~7일)' disabled />;
-                                        case 5:
-                                            return <InputItem value='힘든 운동(운동선수)' disabled />;
-                                        default:
-                                            return null;
-                                    }
-                                })()
-                            }
+                            <SelectBox value={activeLevel || ''} disabled >
+                                <option value="1">전혀 운동하지 않음</option>
+                                <option value="2">가벼운 운동(주 1~3일)</option>
+                                <option value="3">적당한 운동(주 3~5일)</option>
+                                <option value="4">격렬한 운동(주 6~7일)</option>
+                            </SelectBox>
                             <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
                             <InputItem placeholder='(자동계산)' disabled />
-                            <InputText>전문가 인증</InputText>
-                            <InputItem style={{ color: '#51CF66' }} placeholder='인증받은 아이디입니다.' disabled />
-                            <InputText>경력 및 자격사항</InputText>
-                            <InputItem placeholder='생활스포츠지도사 2급' disabled />
+                            {
+                                userInfo.role === 'expert'
+                                    ? (
+                                        <>
+                                            <InputText>전문가 인증</InputText>
+                                            <InputItem style={{ color: '#51CF66' }} placeholder='인증받은 아이디입니다.' disabled />
+                                        </>
+                                    )
+                                    : (
+                                        <>
+                                            <InputText>전문가 인증</InputText>
+                                            <InputItem style={{ color: '#FD7E14' }} placeholder='인증되지 않은 아이디입니다.' disabled />
+                                        </>
+                                    )
+                            }
+                            {
+                                userInfo.role === 'expert'
+                                    ? (
+                                        <>
+                                            <InputText>경력 및 자격사항</InputText>
+                                            <InputItem value={certifyInfo} disabled />
+                                        </>
+                                    )
+                                    : null
+                            }
                         </InputForm>
                     </BoxContainer>
                 </ProfileContainer>
@@ -193,6 +211,15 @@ const SelectGender = styled.div`
 
 const RadioButton = styled.input`
     margin: 0 5px;
+`;
+
+const SelectBox = styled.select`
+    margin-left: -100px;
+    width: 300px;
+    height: 35px;
+    color: gray;
+
+    border: 1px solid #dbdbdb;
 `;
 
 const Buttons = styled.div`
