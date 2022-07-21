@@ -25,6 +25,7 @@ function SearchPage() {
     const newKeyword = {
       id: Date.now(),
       text,
+      state: state.state,
     };
     setKeywords([newKeyword, ...keywords]);
   };

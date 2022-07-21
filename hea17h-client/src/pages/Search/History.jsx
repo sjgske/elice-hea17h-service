@@ -31,16 +31,11 @@ const KeywordContainer = styled.li`
     margin-bottom: 10px;
   }
 `;
-
-const RemoveButton = styled.button`
-  float: right;
-  color: #0cde8b;
-  border: 1px solid #0cde8b;
-  padding: 3px 5px;
-  border-radius: 15px;
+const DailyConfig = styled.p`
+  color: #FD7E14;
 `;
 
-const AddButton = styled.button`
+const RemoveButton = styled.button`
   float: right;
   color: #0cde8b;
   border: 1px solid #0cde8b;
@@ -56,20 +51,21 @@ const Keyword = styled.span`
 function History({ keywords, onRemoveKeyword, onClearKeywords}) {
   console.log('keyword', keywords);
   if (keywords.length === 0) {
-    return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>;
+    return <HistoryContainer>식단에 추가된 항목이 없습니다.</HistoryContainer>;
   }
   const navigate = useNavigate();
 
   return (
     <HistoryContainer>
       <HeaderContainer>
-        <Title>최근 검색어</Title>
+        <Title>추가 된 식단</Title>
         <RemoveText onClick={onClearKeywords}>전체삭제</RemoveText>
         <RemoveText onClick={() => navigate(`/diet`, { state: keywords })}>전체추가&nbsp;</RemoveText>
       </HeaderContainer>
       <ListContainer>
-        {keywords.map(({ id, text }) => (
+        {keywords.map(({ id, text, state }) => (
             <KeywordContainer key={id}>
+              <DailyConfig>{state}</DailyConfig>
               <Keyword>{text}</Keyword>
               <RemoveButton
                 // 눌렸을때 해야하는거라 arrow function을 사용하여 실행
@@ -80,9 +76,6 @@ function History({ keywords, onRemoveKeyword, onClearKeywords}) {
               >
                 삭제
               </RemoveButton>
-              <AddButton
-              onClick = {() => navigate(`/diet`, { state: text })}
-              >추가</AddButton>
             </KeywordContainer>
           ))}
       </ListContainer>
