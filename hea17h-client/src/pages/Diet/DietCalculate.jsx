@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
-import {blankToQuery, changeQueryText} from '../../utils/UsefulFunction';
+import {blankToQuery} from '../../utils/UsefulFunction';
 
 function DietCalculate() {
     const { state } = useLocation();
@@ -16,12 +16,12 @@ function DietCalculate() {
     // const [eveningData, setEveningData] = useState('');
 
     const [foodList, setFoodList] = useState([]);
-    const dataQuery = changeQueryText(`1 바나나 50g 시금치`);
-    const postQuery = blankToQuery(dataQuery);
+    const dataQuery = blankToQuery(`1 바나나 50g 시금치`);
+    // const postQuery = blankToQuery(dataQuery);
 
     const fetchData = async () => {
     try{
-        const {data} = await Api.get(`/foods/selected?info=${postQuery}`);
+        const {data} = await Api.get(`/foods/selected?info=${dataQuery}`);
         setFoodList(data);
         console.log(foodList);
     } catch(err) {
@@ -46,6 +46,8 @@ function DietCalculate() {
     //     setCallWords([newCallWords, ...newCallWords])
     // };
 
+    console.log(foodList);
+    
     const navigate = useNavigate();
     const savehandler = () => {
         navigate(`/diet/list`);

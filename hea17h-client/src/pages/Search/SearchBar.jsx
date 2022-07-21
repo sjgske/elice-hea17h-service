@@ -128,13 +128,14 @@ function SearchBar({ onAddKeyword }) {
 
   const fetchData = async () => {
   try{
-    const {data} = await Api.get(`/foods`);
-    const {selectedData} = await Api.get(`/foods?name=${foodName}`);
-  
-    setFoodList(data);
-    setFood(JSON.stringify(selectedData));
-    console.log(foodList);
+    const dataList = await Api.get(`/foods`);
+    const {data} = await Api.get(`/foods?name=${foodName}`);
+
+    setFoodList(dataList.data);
+    setFood(data);
+
     console.log(food);
+    console.log(foodList);
   } catch(err) {
     console.log(err);
     console.log(err.message);
