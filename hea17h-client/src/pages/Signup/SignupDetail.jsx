@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import * as Api from '../../api';
@@ -14,39 +14,42 @@ function SignupDetail() {
     const [BMI, setBMI] = useState(0);
     const [goal, setGoal] = useState(1);
     const [activeLevel, setActiveLevel] = useState(1);
-    // const [RDI, setRDI] = useState(0);
+    const [RDI, setRDI] = useState(0);
 
     const calBMI = () => {
         setBMI(((weight / height ** 2) * 10000).toFixed(2));
     };
 
-    // const calRDI = () => {
-    //     let PA;
-
-    //     switch (activeLevel) {
-    //         case '1':
-    //             PA = 1.0;
-    //             break;
-    //         case '2':
-    //             PA = 1.12;
-    //             break;
-    //         case '3':
-    //             PA = 1.27;
-    //             break;
-    //         case '4':
-    //             PA = 1.54;
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    //     console.log(PA);
-
-    //     if (gender === 'M')
-    //         setRDI(864 - 9.72 * age + PA * (14.2 * weight + 503 * height));
-    //     else if (gender === 'W')
-    //         setRDI(387 - 7.31 * age + PA * (10.9 * weight + 660.7 * height));
+    const calRDI = () => {
+        let BMR = 0;
+        if (gender === 'M')
+            BMR = 655 + ((9.6 * weight) + (1.8 * height)) - (4.7 * age);
+        else if (gender === 'W')
+            BMR = 66 + ((13.7 * weight) + (5 * height)) - (6.5 * age);
         
-    // };
+        switch (activeLevel) {
+            case 1:
+                setRDI(BMR * 1.2);
+                break;
+            case 2:
+                setRDI(BMR * 1.3);
+                break;
+            case 3:
+                setRDI(BMR * 1.5);
+                break;
+            case 4:
+                setRDI(BMR * 1.7);
+                break;
+            default:
+                setRDI(BMR * 1.2);
+                break;
+        }
+    };
+
+    useEffect(() => {
+        calBMI();
+        calRDI();
+    });
 
     const handleRegisterDetail = async (e) => {
         e.preventDefault();
@@ -64,7 +67,7 @@ function SignupDetail() {
             
             await Api.patch('/users/signUpDetail', data);
 
-            navigate('/', { replace: true });
+            navigate('/login', { replace: true });
         } catch (err) {
             console.log('상세정보 입력 실패', err);
         }
@@ -151,7 +154,7 @@ function SignupDetail() {
                     </SelectBox>
                     <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
                     <InputItem
-                        value=''
+                        value={RDI}
                         disabled
                     />
                     <CompleteButton onClick={handleRegisterDetail}>입력완료</CompleteButton>

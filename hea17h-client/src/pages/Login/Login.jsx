@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { login } from '../../slices/UserSlice';
 import * as Api from '../../api';
+// import { validateId } from '../../utils/UsefulFunction';
 
 const KAKAO_AUTH_URL = process.env.REACT_APP_KAKAO_AUTH_URL;
 const NAVER_AUTH_URL = process.env.REACT_APP_NAVER_AUTH_URL;
@@ -49,10 +50,11 @@ function Login() {
     return (
         <Container>
             <LoginContainer>
-                <h1 style={{ marginTop: '20px' }}>로그인</h1>
+                <h1 style={{ marginTop: '40px' }}>로그인</h1>
                 <InputForm>
                     <InputText>아이디</InputText>
                     <InputItem
+                        
                         onChange={e => {
                             setId(e.target.value);
                         }}
@@ -73,7 +75,6 @@ function Login() {
                     )}
                 </InputForm>
                 <SocialLoginButton>
-                    <GoogleButton>Google 계정으로 로그인</GoogleButton>
                     <a href={KAKAO_AUTH_URL}>
                         <KakaoButton>카카오 계정으로 로그인</KakaoButton>
                     </a>
@@ -116,7 +117,8 @@ const LoginContainer = styled.div`
 `;
 
 const InputForm = styled.form`
-    margin: 10px auto;
+    margin: 0 auto;
+    margin-top: 20px;
     width: 400px;
     height: 80px;
 
@@ -146,20 +148,6 @@ const WrongPassword = styled.h4`
 
 const SocialLoginButton = styled.div`
     margin: 40px auto;
-`;
-
-const GoogleButton = styled.button`
-    margin: 5px 0;
-    width: 300px;
-    height: 40px;
-
-    background-color: white;
-    border: 1px solid gray;
-
-    font-weight: 600;
-    font-size: 14px;
-
-    border-radius: 5px;
 `;
 
 const KakaoButton = styled.button`

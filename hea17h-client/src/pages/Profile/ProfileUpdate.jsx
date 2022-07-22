@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
 
-/* 
-    아이디, Gender, BMI, RDI 변경 불가
-*/
 function ProfileUpdate() {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
     const [certifyInfo, setCertifyInfo] = useState('');
+    const [BMI, setBMI] = useState(0);
+    const [RDI, setRDI] = useState(0);
     const {
         id,
         password,
@@ -20,8 +19,39 @@ function ProfileUpdate() {
         age,
         gender,
         goal,
-        activeLevel
+        activeLevel, 
+        platform
     } = userInfo;
+
+    const calBMI = () => {
+        setBMI(((weight / height ** 2) * 10000).toFixed(2));
+    };
+    
+    const calRDI = () => {
+        let BMR = 0;
+        if (gender === 'M')
+            BMR = 655 + ((9.6 * weight) + (1.8 * height)) - (4.7 * age);
+        else if (gender === 'W')
+            BMR = 66 + ((13.7 * weight) + (5 * height)) - (6.5 * age);
+        
+        switch (activeLevel) {
+            case 1:
+                setRDI(BMR * 1.2);
+                break;
+            case 2:
+                setRDI(BMR * 1.3);
+                break;
+            case 3:
+                setRDI(BMR * 1.5);
+                break;
+            case 4:
+                setRDI(BMR * 1.7);
+                break;
+            default:
+                setRDI(BMR * 1.2);
+                break;
+        }
+    };
 
     const getInfo = async () => {
         const { data } = await Api.get('/users/getUser');
@@ -39,6 +69,11 @@ function ProfileUpdate() {
         getInfo();
         getCertify();
     }, []);
+
+    useEffect(() => {
+        calBMI();
+        calRDI();
+    });
 
     const handleUserInfo = (e) => {
         setUserInfo((prevState) => ({
@@ -63,10 +98,14 @@ function ProfileUpdate() {
                 activeLevel
             };
             
-            await Api.patch('/users/updateUser', data);
+            if (password === '') {
+                alert("비밀번호를 입력해주세요.");
+            } else {
+                await Api.patch('/users/updateUser', data);
 
-            alert("회원 수정이 완료되었습니다.")
-            navigate('/', { replace: true });
+                alert("회원 수정이 완료되었습니다.")
+                navigate('/profile', { replace: true });
+            }
         } catch (err) {
             console.log('상세정보 입력 실패', err);
         }
@@ -85,11 +124,23 @@ function ProfileUpdate() {
                             <InputText>아이디</InputText>
                             <InputItem value={id || ''} disabled />
                             <InputText>비밀번호</InputText>
-                            <InputItem
-                                name='password'
-                                type='password'
-                                onChange={handleUserInfo}
-                            />
+                            {
+                                platform === 'naver' || platform === 'kakao'
+                                    ? (
+                                        <InputItem
+                                            value={password}
+                                            type='password'
+                                            disabled
+                                        />
+                                    ) :
+                                    (
+                                        <InputItem
+                                            name='password'
+                                            type='password'
+                                            onChange={handleUserInfo}
+                                        />
+                                    )
+                            }
                             <InputText>이름</InputText>
                             <InputItem
                                 name='name'
@@ -121,13 +172,13 @@ function ProfileUpdate() {
                             />
                             <InputText>성별</InputText>
                             <SelectGender>
-                                <RadioButton type="radio" checked={gender === 'M'} readOnly />
+                                <RadioButton name='gender' value='M' type="radio" checked={gender === 'M'} onChange={handleUserInfo} />
                                 <div>남자</div>
-                                <RadioButton type="radio" checked={gender === 'W'} readOnly />
+                                <RadioButton name='gender' value='W' type="radio" checked={gender === 'W'} onChange={handleUserInfo} />
                                 <div>여자</div>
                             </SelectGender>
                             <InputText>BMI(㎏/㎡)</InputText>
-                            <InputItem placeholder='(자동계산)' disabled />
+                            <InputItem value={BMI} disabled />
                             <InputText>다이어트 목표</InputText>
                             <SelectBox value={goal || ''} name='goal' onChange={handleUserInfo}>
                                 <option value="1">체중 증가</option>
@@ -142,7 +193,7 @@ function ProfileUpdate() {
                                 <option value="4">격렬한 운동(주 6~7일)</option>
                             </SelectBox>
                             <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
-                            <InputItem placeholder='(자동계산)' disabled />
+                            <InputItem value={RDI} disabled />
                             {
                                 userInfo.role === 'expert'
                                     ? (
@@ -155,6 +206,7 @@ function ProfileUpdate() {
                                         <>
                                             <InputText>전문가 인증</InputText>
                                             <InputItem color='#FD7E14' placeholder='인증되지 않은 아이디입니다.' disabled />
+                                            <GotoCertify>인증하기</GotoCertify>
                                         </>
                                     )
                             }
@@ -272,11 +324,18 @@ const UpdateButton = styled.button`
     height: 50px;
 
     color: white;
-    background-color: #3CB371;
+    background-color: #51CF66;
     border: 1px solid transparent;
     font-size: medium;
 
     border-radius: 5px;
+`;
+
+const GotoCertify = styled.button`
+    margin-left: 10px;
+
+    text-decoration: underline;
+    color: 
 `;
 
 export default ProfileUpdate;
