@@ -46,7 +46,8 @@ function Home() {
                         <br />
                         다이어트 식단을
                         <br />
-                        계산해보세요.
+                        계산해보세요
+                        <span style={{ color: '#FD7E14' }}>.</span>
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
@@ -68,7 +69,8 @@ function Home() {
                         <br />
                         식단 솔루션을
                         <br />
-                        받아보세요.
+                        받아보세요
+                        <span style={{ color: '#FD7E14' }}>.</span>
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
@@ -91,7 +93,8 @@ function Home() {
                         <br />
                         도움을 주시는
                         <br />
-                        전문가를 찾고 있습니다.
+                        전문가를 찾고 있습니다
+                        <span style={{ color: '#3cb371' }}>.</span>
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
