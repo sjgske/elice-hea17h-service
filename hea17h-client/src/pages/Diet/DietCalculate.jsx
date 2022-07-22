@@ -10,22 +10,28 @@ function DietCalculate() {
     const { state } = useLocation();
     console.log(state); // state가 배열이면 합치는 과정 거쳐야함
     
-    // const [moringData, setMoringData] = useState('');
-    // const [afternoonData, setAfternoonData] = useState('');
-    // const [eveningData, setEveningData] = useState('');
-
+    const [moringDiet, setMoringDiet] = useState({});
+    const [afternoonDiet, setAfternoonDiet] = useState({});
+    const [eveningData, setEveningData] = useState({});
     const [foodList, setFoodList] = useState([]);
+
+    const [totalCalories, setTotalCalorise] = useState('');
+    const [totalCarb, setTotalCarb] = useState('');
+    const [totalProtein, setTotalProtein] = useState('');
+    const [totalFat, setTotalFat] = useState('');
+
+    const calTotalCalories = () => {
+        foodList.map(food => food.calories);
+    }
+
     const dataQuery = blankToQuery(`100g 닭가슴살 100g 치즈 100g 포도`);
-    // const postQuery = blankToQuery(dataQuery);
 
     const fetchData = async () => {
     try{
         const {data} = await Api.get(`/foods/selected?info=${dataQuery}`);
         setFoodList(data);
-        console.log(foodList);
     } catch(err) {
         console.log(err);
-        console.log(err.message);
     }};
 
     useEffect(()=>{
@@ -35,11 +41,32 @@ function DietCalculate() {
     console.log(foodList);
     
     const navigate = useNavigate();
-    const savehandler = () => {
-        navigate(`/diet/list`);
+    
+    const handleRetryButton = () => {
+        navigate('/diet', { replace: true });
     };
-    const retryhandler = () => {
-        navigate(`/diet`);
+
+    const handleSaveButton = async (e) => {
+        try {
+            const data = {
+                dietName,
+                totalCalories,
+                totalCarb,
+                totalProtein,
+                totalFat,
+                dietFoods,
+            };
+
+            if (dietName === '') {
+                alert("식단 이름을 입력해주세요.");
+            } else {
+                await Api.post('/diets/addDiet', data);
+                alert("식단 저장을 완료했습니다.")
+                navigate('/diet/list', { replace: true });
+            }
+        } catch(err) {
+            console.log('식단 이름 입력 실패', err);
+        }
     };
 
     return(
@@ -58,6 +85,7 @@ function DietCalculate() {
                         <SearchBox>
                             <SearchInput 
                             type="search"
+                            value={dietName}
                             placeholder="식단 이름을 입력하세요"
                             />
                         </SearchBox>
@@ -130,8 +158,8 @@ function DietCalculate() {
                             </TotalFat>
                         </TotalWrapper>
                         <CalculateWrapper>
-                            <CalculateBtn onClick={savehandler}>저장하기</CalculateBtn>
-                            <RetryBtn onClick={retryhandler}>다시하기</RetryBtn>
+                            <CalculateBtn onClick={handleSaveButton}>저장하기</CalculateBtn>
+                            <RetryBtn onClick={handleRetryButton}>다시하기</RetryBtn>
                         </CalculateWrapper>
                     </Content>
                 </Header>
