@@ -10,6 +10,8 @@ function Profile() {
     const [userInfo, setUserInfo] = useState({});
     const [certifyInfo, setCertifyInfo] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [BMI, setBMI] = useState(0);
+    const [RDI, setRDI] = useState(0);
     const {
         id,
         name,
@@ -20,6 +22,36 @@ function Profile() {
         goal,
         activeLevel
     } = userInfo;
+
+    const calBMI = () => {
+        setBMI(((weight / height ** 2) * 10000).toFixed(2));
+    };
+    
+    const calRDI = () => {
+        let BMR = 0;
+        if (gender === 'M')
+            BMR = 655 + ((9.6 * weight) + (1.8 * height)) - (4.7 * age);
+        else if (gender === 'W')
+            BMR = 66 + ((13.7 * weight) + (5 * height)) - (6.5 * age);
+        
+        switch (activeLevel) {
+            case 1:
+                setRDI(BMR * 1.2);
+                break;
+            case 2:
+                setRDI(BMR * 1.3);
+                break;
+            case 3:
+                setRDI(BMR * 1.5);
+                break;
+            case 4:
+                setRDI(BMR * 1.7);
+                break;
+            default:
+                setRDI(BMR * 1.2);
+                break;
+        }
+    };
 
     const getInfo = async () => {
         const { data } = await Api.get('/users/getUser');
@@ -35,8 +67,12 @@ function Profile() {
 
     useEffect(() => {
         getInfo();
-        getCertify();
     }, []);
+
+    useEffect(() => {
+        calBMI();
+        calRDI();
+    }, [height || weight || age]);
 
     const handleUpdateButton = (e) => {
         e.preventDefault();
@@ -84,7 +120,7 @@ function Profile() {
                                 <div>여자</div>
                             </SelectGender>
                             <InputText>BMI(㎏/㎡)</InputText>
-                            <InputItem placeholder='(자동계산)' disabled />
+                            <InputItem value={BMI} disabled />
                             <InputText>다이어트 목표</InputText>
                             <SelectBox value={goal || ''} disabled >
                                 <option value="1">체중 증가</option>
@@ -99,7 +135,12 @@ function Profile() {
                                 <option value="4">격렬한 운동(주 6~7일)</option>
                             </SelectBox>
                             <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
-                            <InputItem placeholder='(자동계산)' disabled />
+                            {
+                                calRDI && <InputItem
+                                value={RDI}
+                                disabled
+                                />
+                            }
                             {
                                 userInfo.role === 'expert'
                                     ? (
@@ -117,7 +158,7 @@ function Profile() {
                             }
                             {
                                 userInfo.role === 'expert'
-                                    ? (
+                                    ? getCertify() && (
                                         <>
                                             <InputText>경력 및 자격사항</InputText>
                                             <InputItem value={certifyInfo} disabled />
@@ -231,7 +272,7 @@ const UpdateButton = styled.button`
     height: 50px;
 
     color: white;
-    background-color: #3CB371;
+    background-color: #51CF66;
     border: 1px solid transparent;
     font-size: medium;
 

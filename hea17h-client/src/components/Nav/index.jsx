@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,9 +12,22 @@ import {
     faLockOpen,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import * as Api from '../../api';
 
 function Nav() {
+    const [isExpert, setIsExpert] = useState(false);
     const token = localStorage.getItem('userToken');
+
+    const getUserRole = async () => {
+        const { data } = await Api.get('/users/getUser');
+        if (data.role === 'expert') {
+            setIsExpert(true);
+        }
+    };
+
+    useEffect(() => {
+        getUserRole();
+    }, []);
 
     return (
         <Container>
@@ -34,16 +47,17 @@ function Nav() {
                         <StyledFontAwesomeIcon icon={faList} size="xl" />
                         <SubMenu>식단 목록</SubMenu>
                     </NavLink>
-                    <NavLink to="/comment">
-                        <StyledFontAwesomeIcon icon={faComment} size="xl" />
-                        <SubMenu>코멘트</SubMenu>
-                    </NavLink>
                     {token !== null ? (
+                        <NavLink to="/comment">
+                            <StyledFontAwesomeIcon icon={faComment} size="xl" />
+                            <SubMenu>코멘트</SubMenu>
+                        </NavLink>
+                    ) : (
+                        ''
+                    )}
+                    {isExpert ? (
                         <NavLink to="/coaching">
-                            <StyledFontAwesomeIcon
-                                icon={faChalkboardUser}
-                                size="xl"
-                            />
+                            <StyledFontAwesomeIcon icon={faChalkboardUser} size="xl" />
                             <SubMenu>코칭</SubMenu>
                         </NavLink>
                     ) : (
