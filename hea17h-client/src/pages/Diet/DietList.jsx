@@ -156,7 +156,10 @@ function DietList() {
             const createdDate = new Date(el.createdAt).getTime();
             return (
                 createdDate >= new Date(startDate).getTime() &&
-                createdDate <= new Date(endDate).getTime()
+                createdDate <
+                    new Date(
+                        new Date(endDate).getTime() + 1000 * 60 * 60 * 15,
+                    ).getTime()
             );
         });
         setFiltered(filteredData);
@@ -190,7 +193,9 @@ function DietList() {
                                 type="date"
                                 id="end"
                                 value={endDate}
-                                onChange={e => setEndDate(e.target.value)}
+                                onChange={e => {
+                                    setEndDate(e.target.value);
+                                }}
                             />
                             <FontAwesomeIcon icon={faCalendarDays} />
                         </InputGroup>
