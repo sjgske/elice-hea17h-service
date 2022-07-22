@@ -16,7 +16,7 @@ async function kakaoCallback(req, res, next) {
             )
             .then(async result => {
                 if (!result) {
-                    res.status(404).redirect('http://localhost:3000/login');
+                    res.status(404).redirect(`${process.env.CLIENT_URL}/login`);
                 } else {
                     await axios
                         .get('https://kapi.kakao.com/v2/user/me', {
