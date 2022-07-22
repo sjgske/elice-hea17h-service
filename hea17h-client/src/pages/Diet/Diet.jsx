@@ -15,14 +15,12 @@ function Diet() {
     }, []);
 
     const navigate = useNavigate();
-    const handleCalculateBtn = () => {
-        navigate(`calculate`, { state: foodData });
-    };
 
     // const handleRemoveFood = (id) => {
     //     setFoodData(foodData.filter((food) => food.id !== id));
     //     console.log(state);
     // };
+    
 
     return(
         <>
@@ -74,7 +72,7 @@ function Diet() {
                             }
                         </EveningContent>
                         <CalculateWrapper>
-                            <CalculateBtn onClick={() => handleCalculateBtn}>계산하기</CalculateBtn>
+                            <CalculateBtn onClick={() => navigate(`/diet/calculate`, { state: foodData })}>계산하기</CalculateBtn>
                         </CalculateWrapper>
                     </Content>
                 </Header>
