@@ -7,7 +7,7 @@ import {
     faArrowRight,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import queryString from "query-string"
+import queryString from 'query-string';
 import Nav from '../../components/Nav';
 import TopButton from '../../components/TopButton';
 
@@ -68,6 +68,7 @@ function Home() {
                         className="flex-column-align-items"
                         onClick={handleClick}
                         trasnformNum={-20}
+                        id="expert-solution"
                     >
                         <Circle color="#fd7e14">
                             <FontAwesomeIcon icon={faArrowLeft} />
