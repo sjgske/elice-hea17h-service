@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import History from './History';
 import SearchBar from './SearchBar';
 
 function SearchPage() {
-  // string은 map을 사용 할 수 없기때문에 object 형태로 변환 시키기 위해 parsing을 해줘야함
+
+  const state = useLocation();
+  console.log(state);
+
+  // string은 map을 사용 할 수 없기때문에 object 형태로 변환 시키기 위해 parsing
   const [keywords, setKeywords] = useState(
     JSON.parse(localStorage.getItem('keywords') || '[]'),
   );
 
   // keyword에 변화가 일어날때만 랜더링
   useEffect(() => {
-    // array 타입을 string형태로 바꾸기 위해 json.stringfy를 사용한다.
+    // array 타입을 string형태로 바꾸기 위해 json.stringfy를 사용
     localStorage.setItem('keywords', JSON.stringify(keywords));
   }, [keywords]);
-
-  // state를 다루는 함수는 handle 보통 많이 붙인다.
 
   // 검색어 추가
   const handleAddKeyword = (text) => {
@@ -22,6 +25,7 @@ function SearchPage() {
     const newKeyword = {
       id: Date.now(),
       text,
+      state: state.state,
     };
     setKeywords([newKeyword, ...keywords]);
   };
@@ -31,6 +35,8 @@ function SearchPage() {
     const nextKeyword = keywords.filter((thisKeyword) => thisKeyword.id !== id);
     setKeywords(nextKeyword);
   };
+
+  // 식단 페이지에 해당 값 넘겨주기
 
   // 검색어 전체 삭제
   const handleClearKeywords = () => {
