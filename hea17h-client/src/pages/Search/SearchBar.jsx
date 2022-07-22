@@ -144,8 +144,12 @@ function SearchBar({ onAddKeyword }) {
   }};
 
   useEffect(()=>{
-    fetchData();
-  }, [keyword]);
+    const debounce = setTimeout(() => {
+      if(keyword) fetchData();
+      },200);
+      return () => {
+      clearTimeout(debounce);
+  }}, [keyword]);
 
     return httpStatusCode === 500 ? (
       <Container>

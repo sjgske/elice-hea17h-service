@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus, faX} from '@fortawesome/free-solid-svg-icons';
@@ -8,12 +8,21 @@ import Nav from '../../components/Nav';
 
 function Diet() {
     const { state } = useLocation();
-    console.log(state);
+    const [foodData, setFoodData] = useState([]);
+    
+    useEffect(() => {
+        setFoodData(state);
+    }, []);
 
     const navigate = useNavigate();
     const calculatehandler = () => {
-        navigate(`calculate`);
+        navigate(`calculate`, { state });
     };
+
+    const handleRemoveKeyword = (id) => {
+        setFoodData(foodData.filter((food) => food.id !== id));
+    };
+
     return(
         <>
         <Nav />
@@ -34,23 +43,45 @@ function Diet() {
                             <AddBtn onClick={() => navigate(`/diet/search`, { state: '아침' })}><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </MorningTitle>
                         <MorningContent>
-                            <ContentBedge><Gray>닭가슴살 100g</Gray></ContentBedge>
-                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
-                            <ContentBedge><Gray>치즈 100g</Gray></ContentBedge>
-                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
-                            <ContentBedge><Gray>포도 100g</Gray></ContentBedge>
-                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
-                            <ContentBedge><Gray>수박 100g</Gray></ContentBedge>
-                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
+                            {  foodData
+                                ? foodData.filter(food => food.state === '아침')?.map((food)=> (
+                                    <>
+                                        <ContentBedge><Gray>{food.text}</Gray></ContentBedge>
+                                        <DelBtn onClick={() => handleRemoveKeyword(food.id)}><FontAwesomeIcon icon={faX} /></DelBtn>
+                                    </>
+                                )) : null
+                            }
                         </MorningContent>
                         <AfternoonTitle>
                             <H4>점심</H4>
                             <AddBtn onClick={() => navigate(`/diet/search`, { state: '점심' })}><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </AfternoonTitle>
+                        <AfternoonContent>
+                            {  foodData
+                                ? foodData.filter(food => food.state === '점심')?.map(food => (
+
+                                    <>
+                                        <ContentBedge><Gray>{food.text}</Gray></ContentBedge>
+                                        <DelBtn key={food.id}><FontAwesomeIcon icon={faX} /></DelBtn>
+                                    </>
+                                )) : null
+                            }
+                        </AfternoonContent>
                         <EveningTitle>
                             <H4>저녁</H4>
                             <AddBtn onClick={() => navigate(`/diet/search`, { state: '저녁' })}><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </EveningTitle>
+                        <EveningContent>
+                            {  foodData
+                                ? foodData.filter(food => food.state === '저녁')?.map(food => (
+
+                                    <>
+                                        <ContentBedge key={food.id}><Gray>{food.text}</Gray></ContentBedge>
+                                        <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
+                                    </>
+                                )) : null
+                            }
+                        </EveningContent>
                         <CalculateWrapper>
                             <CalculateBtn onClick={calculatehandler}>계산하기</CalculateBtn>
                         </CalculateWrapper>
@@ -164,6 +195,19 @@ const MorningContent = styled.div`
     display: flex;
     margin-left: 2rem;
     align-items: center;
+`;
+
+const AfternoonContent = styled.div`
+    display: flex;
+    margin-left: 2rem;
+    align-items: center;
+`;
+
+const EveningContent = styled.div`
+    display: flex;
+    margin-left: 2rem;
+    align-items: center;
+    margin-bottom: 3rem;
 `;
 
 const Gray = styled.span`
