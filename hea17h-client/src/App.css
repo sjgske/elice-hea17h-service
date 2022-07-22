@@ -9,6 +9,12 @@
 html,
 .App {
     background-color: #efefef;
+    height: 100%;
+}
+
+body,
+body > #root {
+    height: 100%;
 }
 
 a {
