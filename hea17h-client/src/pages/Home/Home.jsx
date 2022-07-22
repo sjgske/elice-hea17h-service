@@ -34,10 +34,13 @@ function Home() {
     }
 
     return (
-        <div style={{ height: '100%' }}>
+        <div>
             <Nav />
             <MainContainer>
-                <Section imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411406092_main_1.jpg">
+                <Section
+                    imgPosY={-400}
+                    imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411406092_main_1.jpg"
+                >
                     <h2>
                         편리하게
                         <br />
@@ -56,7 +59,10 @@ function Home() {
                         <ColorText color="#fd7e14">계산하기</ColorText>
                     </CircleBtn>
                 </Section>
-                <Section imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411421456_main_2.jpg">
+                <Section
+                    imgPosY={-120}
+                    imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411421456_main_2.jpg"
+                >
                     <h2>
                         전문가의
                         <br />
@@ -76,7 +82,10 @@ function Home() {
                         <ColorText color="#fd7e14">솔루션 받기</ColorText>
                     </CircleBtn>
                 </Section>
-                <Section imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411448805_main_3.jpg">
+                <Section
+                    imgPosY={-40}
+                    imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411448805_main_3.jpg"
+                >
                     <h2>
                         식단 개선에
                         <br />
@@ -103,17 +112,57 @@ function Home() {
 }
 
 const Section = styled.div`
-    background-image: url(${({ imgUrl }) => imgUrl});
-    height: 35%;
+    position: relative;
+    height: 60vh;
     padding: 0 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 15px;
+
+    & > h2 {
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        opacity: 0.45;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        background: url(${({ imgUrl }) => imgUrl}) no-repeat;
+        background-position: 0 ${({ imgPosY }) => imgPosY}px;
+        background-size: 100%;
+    }
+
+    @media (max-width: 1460px) {
+        &::after {
+            background-position: center;
+        }
+    }
+
+    @media (max-width: 860px) {
+        height: 40vh;
+
+        &::after {
+            background-size: 100% auto;
+        }
+    }
+
+    @media (max-width: 580px) {
+        &::after {
+            background-size: 564px 372px;
+        }
+
+        padding: 0 50px;
+    }
 `;
 
 const CircleBtn = styled.div`
     transition: all 400ms ease;
+    z-index: 1;
 
     &:hover {
         transform: translateX(${({ trasnformNum }) => trasnformNum}px);
@@ -133,15 +182,6 @@ const MainContainer = styled.div`
             align-self: flex-end;
         }
     }
-
-    @media (max-width: 768px) {
-        & > div {
-            width: 50%;
-        }
-        & h2 {
-            font-size: 1rem;
-        }
-    }
 `;
 
 const Circle = styled.div`
@@ -149,7 +189,7 @@ const Circle = styled.div`
     width: 60px;
     height: 60px;
     margin-bottom: 0.5rem;
-    background-color: #d9d9d9;
+    background-color: white;
     border-radius: 50%;
 
     svg {
