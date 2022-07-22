@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import SearchPage from '../Search/SearchPage';
 
 
 function DietSearch() {
@@ -25,6 +26,7 @@ function DietSearch() {
                             placeholder="Search"
                             />
                     </SearchBox>
+                    <SearchPage />
                 </Header>
             </Main>
         </Container>

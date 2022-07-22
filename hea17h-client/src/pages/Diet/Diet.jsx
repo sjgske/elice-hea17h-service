@@ -1,7 +1,7 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faPlus, faX} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
@@ -10,10 +10,10 @@ function Diet() {
     const { state } = useLocation();
     console.log(state);
 
-    // const navigate = useNavigate();
-    // const calculatehandler = () => {
-    //     navigate(`calculate`);
-    // };
+    const navigate = useNavigate();
+    const calculatehandler = () => {
+        navigate(`calculate`);
+    };
     return(
         <>
         <Nav />
@@ -31,18 +31,28 @@ function Diet() {
                     <Content>
                         <MorningTitle>
                             <H4>아침</H4>
-                            <AddBtn><FontAwesomeIcon icon={faPlus} /></AddBtn>
+                            <AddBtn onClick={() => navigate(`/diet/search`, { state: '아침' })}><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </MorningTitle>
+                        <MorningContent>
+                            <ContentBedge><Gray>닭가슴살 100g</Gray></ContentBedge>
+                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
+                            <ContentBedge><Gray>치즈 100g</Gray></ContentBedge>
+                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
+                            <ContentBedge><Gray>포도 100g</Gray></ContentBedge>
+                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
+                            <ContentBedge><Gray>수박 100g</Gray></ContentBedge>
+                            <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
+                        </MorningContent>
                         <AfternoonTitle>
                             <H4>점심</H4>
-                            <AddBtn><FontAwesomeIcon icon={faPlus} /></AddBtn>
+                            <AddBtn onClick={() => navigate(`/diet/search`, { state: '점심' })}><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </AfternoonTitle>
                         <EveningTitle>
                             <H4>저녁</H4>
-                            <AddBtn><FontAwesomeIcon icon={faPlus} /></AddBtn>
+                            <AddBtn onClick={() => navigate(`/diet/search`, { state: '저녁' })}><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </EveningTitle>
                         <CalculateWrapper>
-                            <CalculateBtn>계산하기</CalculateBtn>
+                            <CalculateBtn onClick={calculatehandler}>계산하기</CalculateBtn>
                         </CalculateWrapper>
                     </Content>
                 </Header>
@@ -116,6 +126,7 @@ const H4 = styled.h4`
     margin-right: 1rem;
     font-weight: 700;
 `;
+
 const AddBtn = styled.button`
     display: inline-block;
     font-size: 2rem;
@@ -138,9 +149,8 @@ const CalculateWrapper = styled.div`
 `;
 
 const CalculateBtn = styled.button`
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: auto;
-    height: 36px;
     padding-right: 2rem;
     padding-left: 2rem;
     height: 3rem;
@@ -149,5 +159,45 @@ const CalculateBtn = styled.button`
     font-weight: 600;
     background-color: #51CF66;
 `;
+
+const MorningContent = styled.div`
+    display: flex;
+    margin-left: 2rem;
+    align-items: center;
+`;
+
+const Gray = styled.span`
+    text-align: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: #999999;
+`;
+
+const ContentBedge = styled.button`
+    display: flex;
+    font-size: 1.3rem;
+    width: auto;
+    height: auto;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    border-radius: 5px;
+    color: #000000;
+    font-weight: 500;
+    background-color: #FFFFFF;
+    margin-right: 0.5rem;
+`;
+
+const DelBtn = styled.button`
+    align-items: center;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #F03E3E;
+    margin-right: 1rem;
+`;
+
 
 export default Diet;
