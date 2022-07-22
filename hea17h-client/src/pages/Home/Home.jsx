@@ -37,13 +37,17 @@ function Home() {
         <div>
             <Nav />
             <MainContainer>
-                <div>
+                <Section
+                    imgPosY={-400}
+                    imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411406092_main_1.jpg"
+                >
                     <h2>
                         편리하게
                         <br />
                         다이어트 식단을
                         <br />
-                        계산해보세요.
+                        계산해보세요
+                        <span style={{ color: '#FD7E14' }}>.</span>
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
@@ -55,14 +59,18 @@ function Home() {
                         </Circle>
                         <ColorText color="#fd7e14">계산하기</ColorText>
                     </CircleBtn>
-                </div>
-                <div>
+                </Section>
+                <Section
+                    imgPosY={-120}
+                    imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411421456_main_2.jpg"
+                >
                     <h2>
                         전문가의
                         <br />
                         식단 솔루션을
                         <br />
-                        받아보세요.
+                        받아보세요
+                        <span style={{ color: '#FD7E14' }}>.</span>
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
@@ -75,14 +83,18 @@ function Home() {
                         </Circle>
                         <ColorText color="#fd7e14">솔루션 받기</ColorText>
                     </CircleBtn>
-                </div>
-                <div>
+                </Section>
+                <Section
+                    imgPosY={-40}
+                    imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411448805_main_3.jpg"
+                >
                     <h2>
                         식단 개선에
                         <br />
                         도움을 주시는
                         <br />
-                        전문가를 찾고 있습니다.
+                        전문가를 찾고 있습니다
+                        <span style={{ color: '#3cb371' }}>.</span>
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
@@ -95,49 +107,83 @@ function Home() {
                         </Circle>
                         <ColorText color="#3cb371">전문가 지원하기</ColorText>
                     </CircleBtn>
-                </div>
+                </Section>
                 <TopButton />
             </MainContainer>
         </div>
     );
 }
 
-const MainContainer = styled.div`
-    width: 85vw;
-    margin: 50px auto 0;
+const Section = styled.div`
+    position: relative;
+    height: 60vh;
+    padding: 0 100px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 15px;
 
-    & > div {
-        width: 25%;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        gap: 15px;
-        margin-bottom: 3rem;
+    & > h2 {
+        z-index: 1;
     }
 
-    & > div:nth-child(2) {
-        align-self: flex-end;
-        align-items: end;
+    &::after {
+        content: '';
+        position: absolute;
+        opacity: 0.45;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        background: url(${({ imgUrl }) => imgUrl}) no-repeat;
+        background-position: 0 ${({ imgPosY }) => imgPosY}px;
+        background-size: 100%;
     }
 
-    @media (max-width: 768px) {
-        & > div {
-            width: 50%;
+    @media (max-width: 1460px) {
+        &::after {
+            background-position: center;
         }
-        & h2 {
-            font-size: 1rem;
+    }
+
+    @media (max-width: 860px) {
+        height: 40vh;
+
+        &::after {
+            background-size: 100% auto;
         }
+    }
+
+    @media (max-width: 580px) {
+        &::after {
+            background-size: 564px 372px;
+        }
+
+        padding: 0 50px;
     }
 `;
 
 const CircleBtn = styled.div`
     transition: all 400ms ease;
+    z-index: 1;
 
     &:hover {
         transform: translateX(${({ trasnformNum }) => trasnformNum}px);
         cursor: pointer;
+    }
+`;
+
+const MainContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    & > ${Section}:nth-child(2) {
+        & > h2,
+        ${CircleBtn} {
+            align-self: flex-end;
+        }
     }
 `;
 
@@ -146,7 +192,7 @@ const Circle = styled.div`
     width: 60px;
     height: 60px;
     margin-bottom: 0.5rem;
-    background-color: #d9d9d9;
+    background-color: white;
     border-radius: 50%;
 
     svg {
