@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:5000';
+const apiUrl = 'http://104.199.114.23:8080';
 
 async function get(endpoint, params = '') {
     console.log(`GET 요청 ${`${apiUrl + endpoint}/${params}`}`);
