@@ -71,7 +71,6 @@ function SearchBar({ onAddKeyword }) {
   const [clickEditBtn, setClickEditBtn] = useState(false);
   const [keyword, setKeyword] = useState('');
   const [foodName, setFoodName] = useState('');
-  const [foodAmount, setFoodAmount] = useState(`100g`);
 
   const handleKeyword = (e) => {
     setKeyword(e.target.value);
@@ -85,9 +84,6 @@ function SearchBar({ onAddKeyword }) {
     }
     const foodData = e.target.value.split(' ');
     setFoodName(foodData[0]);
-    setFoodAmount(foodData[1]);
-    console.log(foodName);
-    console.log(foodAmount);
   };
 
   const handleClearKeyword = () => {
@@ -98,7 +94,7 @@ function SearchBar({ onAddKeyword }) {
   const hasKeyword = !!keyword;
 
   // keyword가 있으면 true, 없으면 false
-  console.log(!!keyword);
+  // console.log(!!keyword);
  
   const [foodList, setFoodList] = useState([]);
   const [food, setFood] = useState([]);
