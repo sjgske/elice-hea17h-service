@@ -8,7 +8,7 @@ function SignupComplete() {
 
     const handleLaterButton = (e) => {
         e.preventDefault();
-        navigate('/', { replace: true });
+        navigate('/login', { replace: true });
     };
 
     const handleGoButton = async (e) => {
