@@ -7,7 +7,7 @@ import {
     faArrowRight,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import queryString from "query-string"
+import queryString from 'query-string';
 import Nav from '../../components/Nav';
 import TopButton from '../../components/TopButton';
 
@@ -66,6 +66,7 @@ function Home() {
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
+                        id="expert-solution"
                         onClick={handleClick}
                         trasnformNum={-20}
                     >
@@ -85,6 +86,7 @@ function Home() {
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
+                        id="expert-apply"
                         onClick={handleClick}
                         trasnformNum={20}
                     >
