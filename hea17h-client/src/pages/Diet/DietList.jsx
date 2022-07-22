@@ -13,7 +13,7 @@ import DietBox from '../../components/DietInfo/DietThemeWithButton';
 import Loading from '../../components/Loading';
 import * as Api from '../../api';
 import {
-    getStringDate,
+    htmlStringDate,
     toStringDate,
     separateThousand,
 } from '../../utils/UsefulFunction';
@@ -145,6 +145,7 @@ function DietList() {
             console.log(sortedData);
             setLoading(false);
         } catch (err) {
+            setLoading(false);
             setHttpStatusCode(err.response.status);
             console.log(err);
         }
@@ -183,7 +184,7 @@ function DietList() {
                             />
                             <FontAwesomeIcon icon={faCalendarDays} />
                         </InputGroup>
-                        <span>~</span>
+                        <span aria-hidden>~</span>
                         <InputGroup>
                             <input
                                 type="date"
@@ -213,7 +214,7 @@ function DietList() {
                             <DietBox
                                 key={diet._id}
                                 id={diet._id}
-                                date={getStringDate(diet.createdAt)}
+                                date={htmlStringDate(diet.createdAt)}
                                 theme={diet.name}
                                 calorie={separateThousand(diet.totalCalories)}
                                 comment={diet.comment}

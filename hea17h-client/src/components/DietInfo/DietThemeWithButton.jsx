@@ -440,8 +440,8 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                         paddingBottom: '2rem',
                     }}
                 >
-                    <SpaceBottom>
-                        <Div className="flex-align-items">
+                    <Div>
+                        <Div className="flex-align-items margin-bottom">
                             <H4>{meal.category}</H4>
                             <Badge>
                                 <Calorie>
@@ -456,45 +456,72 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                                 </Calorie>
                             </Badge>
                         </Div>
-                        {meal.categoryFoods.map(food => (
-                            <FlexBox key={food._id}>
-                                <Badge>
-                                    <Calorie>
-                                        {food.name}
-                                        <strong> {food.count}</strong>g
-                                    </Calorie>
-                                </Badge>
-                                <Badge>
-                                    <Calorie>
-                                        칼로리
-                                        <strong> {food.foodCalories}</strong>
-                                        kcal
-                                    </Calorie>
-                                </Badge>
-                                <Badge>
-                                    <Calorie>
-                                        탄수화물
-                                        <strong> {food.foodCarb}</strong>g
-                                    </Calorie>
-                                </Badge>
-                                <Badge>
-                                    <Calorie>
-                                        단백질
-                                        <strong> {food.foodProtein}</strong>g
-                                    </Calorie>
-                                </Badge>
-                                <Badge>
-                                    <Calorie>
-                                        지방 <strong> {food.foodFat}</strong>g
-                                    </Calorie>
-                                </Badge>
-                            </FlexBox>
-                        ))}
-                    </SpaceBottom>
+                        <SpaceBottom>
+                            {meal.categoryFoods.map(food => (
+                                <Div
+                                    key={food._id}
+                                    className="flex-align-items"
+                                >
+                                    <Circle className="margin-right">
+                                        <CircleImage
+                                            src={food.image}
+                                            alt={food.name}
+                                        />
+                                    </Circle>
+
+                                    <FlexBox>
+                                        <Badge>
+                                            <Calorie>
+                                                {food.name}
+                                                <strong> {food.count}</strong>g
+                                            </Calorie>
+                                        </Badge>
+                                        <Badge>
+                                            <Calorie>
+                                                칼로리
+                                                <strong>
+                                                    {' '}
+                                                    {food.foodCalories}
+                                                </strong>
+                                                kcal
+                                            </Calorie>
+                                        </Badge>
+                                        <Badge>
+                                            <Calorie>
+                                                탄수화물
+                                                <strong>
+                                                    {' '}
+                                                    {food.foodCarb}
+                                                </strong>
+                                                g
+                                            </Calorie>
+                                        </Badge>
+                                        <Badge>
+                                            <Calorie>
+                                                단백질
+                                                <strong>
+                                                    {' '}
+                                                    {food.foodProtein}
+                                                </strong>
+                                                g
+                                            </Calorie>
+                                        </Badge>
+                                        <Badge>
+                                            <Calorie>
+                                                지방{' '}
+                                                <strong> {food.foodFat}</strong>
+                                                g
+                                            </Calorie>
+                                        </Badge>
+                                    </FlexBox>
+                                </Div>
+                            ))}
+                        </SpaceBottom>
+                    </Div>
                 </Div>
             ))}
 
-            <FlexBox style={{ marginBottom: '4rem' }}>
+            <FlexBox className="flex" style={{ marginBottom: '4rem' }}>
                 <FlexItem className="flex-align-items">
                     <H4>총 칼로리</H4>
                     <Badge>

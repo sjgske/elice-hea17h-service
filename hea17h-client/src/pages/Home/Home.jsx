@@ -69,6 +69,7 @@ function Home() {
                         id="expert-solution"
                         onClick={handleClick}
                         trasnformNum={-20}
+                        id="expert-solution"
                     >
                         <Circle color="#fd7e14">
                             <FontAwesomeIcon icon={faArrowLeft} />

@@ -10,7 +10,7 @@ export const validatePassword = password =>
     password.length >= 8 &&
     password.length <= 16;
 
-export const getStringDate = date => {
+export const htmlStringDate = date => {
     const d = new Date(date);
     return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
 };

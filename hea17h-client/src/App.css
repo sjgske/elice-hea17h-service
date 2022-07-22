@@ -66,6 +66,10 @@ li {
     margin-bottom: 2rem;
 }
 
+.margin-right {
+    margin-right: 1rem;
+}
+
 .flex {
     display: flex;
     justify-content: center;
