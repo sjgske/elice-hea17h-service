@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
-import {blankToQuery} from '../../utils/UsefulFunction';
 
 function DietCalculate() {
     const navigate = useNavigate();
@@ -26,50 +25,50 @@ function DietCalculate() {
     const afternoonData = state[1];
     const eveningData = state[2];
 
-    const getMorningData = async () => {
-        try {
-            const { data } = await Api.get(`/foods/selected?info=${morningData}`);
-            setFoods([
-                ...foods,
-                data
-            ]);
-            console.log(foods);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    // const getMorningData = async () => {
+    //     try {
+    //         const { data } = await Api.get(`/foods/selected?info=${morningData}`);
+    //         setFoods([
+    //             ...foods,
+    //             data
+    //         ]);
+    //         console.log(foods);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
-    const getAfternoonData = async () => {
-        try {
-            const { data } = await Api.get(`/foods/selected?info=${afternoonData}`);
-            setFoods([
-                ...foods,
-                data
-            ]);
-            console.log(foods);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    // const getAfternoonData = async () => {
+    //     try {
+    //         const { data } = await Api.get(`/foods/selected?info=${afternoonData}`);
+    //         setFoods([
+    //             ...foods,
+    //             data
+    //         ]);
+    //         console.log(foods);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
-    const getEveningData = async () => {
-        try {
-            const { data } = await Api.get(`/foods/selected?info=${eveningData}`);
-            setFoods([
-                ...foods,
-                data
-            ]);
-            console.log(foods);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    // const getEveningData = async () => {
+    //     try {
+    //         const { data } = await Api.get(`/foods/selected?info=${eveningData}`);
+    //         setFoods([
+    //             ...foods,
+    //             data
+    //         ]);
+    //         console.log(foods);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
-    useEffect(() => {
-        getMorningData();
-        getAfternoonData();
-        getEveningData();
-    }, []);
+    // useEffect(() => {
+    //     getMorningData();
+    //     getAfternoonData();
+    //     getEveningData();
+    // }, []);
 
     console.log(foods);
 
@@ -97,9 +96,11 @@ function DietCalculate() {
         handleCalculate();
 
         // await Api.post('/diets/addDiet', postData);
-
         // navigate(`/diet/list`);
+        alert('저장하시겠습니까?');
+        navigate(`/diet/list`);
     };
+
     const retryhandler = () => {
         navigate(`/diet`);
     };
@@ -129,104 +130,221 @@ function DietCalculate() {
 
     return(
         <>
-            <Nav />
-            <Container>
-                <H1>식단 계산</H1>
-                <Main>
-                    <Header>
-                        <Div className="margin-bottom">
-                            <H2>
-                                코칭을 받고 싶다면
-                                <br /> 내 식단 목록에 추가해 보세요
-                                <Green>.</Green>
-                            </H2>
-                            <SearchBox>
-                                <SearchInput 
-                                    type="search"
-                                    placeholder="식단 이름을 입력하세요"
-                                    onChange={(e) => {
-                                        setName(e.target.value);
-                                    }}
+        {/* <Nav /> */}
+        <Container>
+            <H1>식단 계산</H1>
+            <Main>
+                <Header>
+                    <Div className="margin-bottom">
+                        <H2>
+                            코칭을 받고 싶다면
+                            <br /> 내 식단 목록에 추가해 보세요
+                            <Green>.</Green>
+                        </H2>
+                        <SearchBox>
+                            <SearchInput 
+                            type="search"
+                            placeholder="식단 이름을 입력하세요"
+                            />
+                        </SearchBox>
+                    </Div>
+                    <Content>
+                        <MorningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src={`${process.env.PUBLIC_URL}/assets/morning.png`}
+                                    alt="아침"
                                 />
-                            </SearchBox>
-                        </Div>
-                        <Content>
-                            <MorningContent>
-                                <CircleButton>
+                            </Circle>
+                            <H5>아침</H5>
+                            </CircleButton>
+                        </MorningContent>
+                        <MorningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/oatmeal.png"
+                                    alt="오트밀"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>오트밀<Gray>40</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>27.8</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>4.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>1</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>0.6</Gray>g</ContentBedge>
+                        </MorningContent>
+                        <MorningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/bacon.png"
+                                    alt="베이컨"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>베이컨<Gray>16</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>74.6</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0.3</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>5.4</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>5.6</Gray>g</ContentBedge>
+                        </MorningContent>
+                        <MorningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/americano.png"
+                                    alt="아메리카노"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>아메리카노<Gray>473.6</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>9</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>1.6</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>0.1</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>0.2</Gray>g</ContentBedge>
+                        </MorningContent>
+                        <AfternoonTitle>
+                            <CircleButton>
                                 <Circle>
                                     <CircleImage
-                                        src={`${process.env.PUBLIC_URL}/assets/morning.png`}
-                                        alt="아침"
+                                        src={`${process.env.PUBLIC_URL}/assets/afternoon.png`}
+                                        alt="점심"
                                     />
                                 </Circle>
-                                <H5>아침</H5>
-                                </CircleButton>
-                                    <ContentBedge>s<Gray>s</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>칼로리</Bold><Gray>{mealCalories}</Gray>kcal</ContentBedge>
-                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{mealCarb}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>단백질</Bold><Gray>{mealProtein}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>지방</Bold><Gray>{mealFat}</Gray>g</ContentBedge>
-                            </MorningContent>
-                            {/* <AfternoonTitle>
-                                <CircleButton>
-                                    <Circle>
-                                        <CircleImage
-                                            src={`${process.env.PUBLIC_URL}/assets/afternoon.png`}
-                                            alt="점심"
-                                        />
-                                    </Circle>
-                                    <H5>점심</H5>
-                                </CircleButton>
-                                <ContentBedge>{state}<Gray>{state}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>칼로리</Bold><Gray>{dietFoods[1].mealCalories}</Gray>kcal</ContentBedge>
-                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{dietFoods[1].mealCarb}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>단백질</Bold><Gray>{dietFoods[1].mealProtein}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>지방</Bold><Gray>{dietFoods[1].mealFat}</Gray>g</ContentBedge>
-                            </AfternoonTitle>
-                            <EveningTitle>
-                                <CircleButton>
-                                    <Circle>
-                                        <CircleImage
-                                            src={`${process.env.PUBLIC_URL}/assets/night.png`}
-                                            alt="저녁"
-                                        />
-                                    </Circle>
-                                    <H5>저녁</H5>
-                                </CircleButton>
-                                <ContentBedge>{state}<Gray>{state}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>칼로리</Bold><Gray>{dietFoods[2].mealCalories}</Gray>kcal</ContentBedge>
-                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{dietFoods[2].mealCarb}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>단백질</Bold><Gray>{dietFoods[2].mealProtein}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>지방</Bold><Gray>{dietFoods[2].mealFat}</Gray>g</ContentBedge>
-                            </EveningTitle> */}
-                            <TotalWrapper>
-                                <TotalCal>
-                                    <H6>총 칼로리</H6>
-                                    <ContentBedge><Gray>{totalCalories}</Gray>kcal</ContentBedge>
-                                </TotalCal>
-                                <TotalCarbo>
-                                    <H6>총 탄수화물</H6>
-                                    <ContentBedge><Gray>{totalCarb}</Gray>kcal</ContentBedge>
-                                </TotalCarbo>
-                                <TotalPro>
-                                    <H6>총 단백질</H6>
-                                    <ContentBedge><Gray>{totalProtein}</Gray>kcal</ContentBedge>
-                                </TotalPro>
-                                <TotalFat>
-                                    <H6>총 지방</H6>
-                                    <ContentBedge><Gray>{totalFat}</Gray>kcal</ContentBedge>
-                                </TotalFat>
-                            </TotalWrapper>
-                            <CalculateWrapper>
-                                <CalculateBtn onClick={savehandler}>저장하기</CalculateBtn>
-                                <RetryBtn onClick={retryhandler}>다시하기</RetryBtn>
-                            </CalculateWrapper>
-                        </Content>
-                    </Header>
-                </Main>
-                <TopButton />
-            </Container>
-        </>
+                                <H5>점심</H5>
+                            </CircleButton>
+                        </AfternoonTitle>
+                        <AfternoonContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/egg.png"
+                                    alt="계란"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>계란<Gray>100</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>144.3</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>12.6</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>9.4</Gray>g</ContentBedge>
+                        </AfternoonContent>
+                        <AfternoonContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/chicken-breast.png"
+                                    alt="닭가슴살"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>닭가슴살<Gray>100</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>166.2</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>31</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>3.5</Gray>g</ContentBedge>
+                        </AfternoonContent>
+                        <AfternoonContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/milk.png"
+                                    alt="우유"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>우유<Gray>100</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>42.7</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>4.9</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>3.4</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>1</Gray>g</ContentBedge>
+                        </AfternoonContent>
+                        <EveningTitle>
+                            <CircleButton>
+                                <Circle>
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/night.png`}
+                                        alt="저녁"
+                                    />
+                                </Circle>
+                                <H5>저녁</H5>
+                            </CircleButton>
+                        </EveningTitle>
+                        <EveningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/brown-rice.png"
+                                    alt="현미밥"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>현미밥<Gray>210</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>235.8</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>50</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>4.9</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>1.8</Gray>g</ContentBedge>
+                        </EveningContent>
+                        <EveningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/beef.png"
+                                    alt="소고기"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>소고기<Gray>200</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>583.8</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>53.2</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>39.4</Gray>g</ContentBedge>
+                        </EveningContent>
+                        <EveningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/avocado.png"
+                                    alt="아보카도"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>아보카도<Gray>136</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>227.3</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>11.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>2.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>21.2</Gray>g</ContentBedge>
+                        </EveningContent>
+                        <TotalWrapper>
+                            <TotalCal>
+                                <H6>총 칼로리</H6>
+                                <ContentBedge><Gray>1,511.5</Gray>kcal</ContentBedge>
+                            </TotalCal>
+                            <TotalCarbo>
+                                <H6>총 탄수화물</H6>
+                                <ContentBedge><Gray>73.9</Gray>kcal</ContentBedge>
+                            </TotalCarbo>
+                            <TotalPro>
+                                <H6>총 단백질</H6>
+                                <ContentBedge><Gray>114.3</Gray>kcal</ContentBedge>
+                            </TotalPro>
+                            <TotalFat>
+                                <H6>총 지방</H6>
+                                <ContentBedge><Gray>82.7</Gray>kcal</ContentBedge>
+                            </TotalFat>
+                        </TotalWrapper>
+                        <CalculateWrapper>
+                            <CalculateBtn onClick={savehandler}>저장하기</CalculateBtn>
+                            <RetryBtn onClick={retryhandler}>다시하기</RetryBtn>
+                        </CalculateWrapper>
+                    </Content>
+                </Header>
+            </Main>
+            <TopButton />
+        </Container>
+    </>
     );
 };
 
@@ -311,6 +429,18 @@ const Content = styled.div`
 `;
 
 const MorningContent = styled.div`
+    display: flex;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    align-items: center;
+`;
+const AfternoonContent = styled.div`
+    display: flex;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    align-items: center;
+`;
+const EveningContent = styled.div`
     display: flex;
     margin-top: 2rem;
     margin-left: 2rem;
@@ -425,7 +555,7 @@ const ContentBedge = styled.button`
     padding-left: 0.5rem;
     border-radius: 5px;
     color: #000000;
-    font-weight: 500;
+    font-weight: 600;
     background-color: #FFFFFF;
 `;
 
