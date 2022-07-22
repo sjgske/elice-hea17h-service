@@ -11,8 +11,10 @@ function DietSearch() {
                     <Div className="margin-bottom">
                         <H2>
                             Search<Green>.</Green>
-                            <br /> 닭가슴살 200g<Orange>.</Orange>
-                            <br /> 토마토 5개<Orange>.</Orange>
+                            <H3>
+                            닭가슴살 200g<Orange>.</Orange>&nbsp;
+                            토마토 5개<Orange>.</Orange>
+                            </H3>
                         </H2>
                     </Div>
                     <SearchPage />
@@ -46,10 +48,11 @@ const Div = styled.div``;
 const H2 = styled.h2`
     font-size: 2.5rem;
     line-height: 3.8rem;
-
-    &:first-child {
-        margin-bottom: 3rem;
-    }
+`;
+const H3 = styled.h3`
+    color: #999999;
+    font-size: 1.8rem;
+    line-height: 3.8rem;
 `;
 
 const Green = styled.span`

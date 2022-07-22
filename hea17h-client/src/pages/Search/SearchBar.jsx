@@ -94,7 +94,7 @@ function SearchBar({ onAddKeyword }) {
   const hasKeyword = !!keyword;
 
   // keyword가 있으면 true, 없으면 false
-  console.log(!!keyword);
+  // console.log(!!keyword);
  
   const [foodList, setFoodList] = useState([]);
   const [food, setFood] = useState([]);
