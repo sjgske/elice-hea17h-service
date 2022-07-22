@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function ImageBadge() {
-    return <Div />;
+function ImageBadge(imgUrl) {
+    return (
+        <Div>
+            <img src={imgUrl} alt="diet-img" />
+        </Div>
+    );
 }
 
 const Div = styled.div`

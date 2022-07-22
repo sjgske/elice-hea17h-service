@@ -50,6 +50,11 @@ class DietService {
         return { status: 'success', statusCode: 200, payload: newDiet };
     }
 
+    async deleteDiet(dietId) {
+        const result = await this.dietModel.deleteDiet(dietId);
+        return { status: 'success', statusCode: 200, payload: result };
+    }
+
     // 식단에 코멘트(피드백) 추가.
     async addComment(comment, id, dietId) {
         const expertInfo = await this.certificateModel.findById(id);
@@ -58,6 +63,34 @@ class DietService {
             expertInfo._id,
             dietId,
         );
+        return { status: 'success', statusCode: 200, payload: result };
+    }
+
+    async modifyComment(dietId, commentId, content) {
+        const result = await this.dietModel.modifyComment(
+            dietId,
+            commentId,
+            content,
+        );
+        if (!result) {
+            return {
+                status: 'error',
+                statusCode: 404,
+                message: '코멘트 수정에 실패했습니다',
+            };
+        }
+        return { status: 'success', statusCode: 200, payload: result };
+    }
+
+    async deleteComment(dietId, commentId) {
+        const result = await this.dietModel.deleteComment(dietId, commentId);
+        if (!result) {
+            return {
+                status: 'error',
+                statusCode: 404,
+                message: '코멘트 삭제에 실패했습니다',
+            };
+        }
         return { status: 'success', statusCode: 200, payload: result };
     }
 }

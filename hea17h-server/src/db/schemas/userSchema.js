@@ -43,6 +43,10 @@ const UserSchema = new Schema(
             type: String,
             default: 'user',
         },
+        platform: {
+            type: String,
+            default: 'ordinary',
+        },
     },
     {
         timestamps: true,

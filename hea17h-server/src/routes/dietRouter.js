@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Router } from 'express';
-import { asyncHandler, isLoggedIn } from '../middlewares/index.js';
+import { asyncHandler, isLoggedIn, isExpert } from '../middlewares/index.js';
 import { dietService, userService } from '../services/index.js';
 
 const dietRouter = Router();
@@ -18,16 +18,8 @@ dietRouter.get(
 
 dietRouter.get(
     '/getAllDiet',
+    isExpert,
     asyncHandler(async (req, res) => {
-        const userInfo = req.tokenInfo;
-        const user = await userService.getUser(userInfo);
-        if (user.role !== 'expert') {
-            res.status(400).json({
-                status: 'error',
-                statusCode: 400,
-                message: '전문가만 이용할 수 있는 서비스입니다!',
-            });
-        }
         const result = await dietService.getAllDiet();
         res.status(200).json({
             status: 'success',
@@ -54,20 +46,45 @@ dietRouter.post(
 
 dietRouter.post(
     '/addComment',
+    isExpert,
     asyncHandler(async (req, res) => {
-        const userInfo = req.tokenInfo;
         const { comment, dietId } = req.body;
-        const user = await userService.getUser(userInfo);
-        if (user.role !== 'expert') {
-            res.status(400).json({
-                status: 'error',
-                statusCode: 400,
-                message: '전문가만 이용할 수 있는 서비스입니다!',
-            });
-        }
+        const { user } = req;
         const result = await dietService.addComment(comment, user._id, dietId);
         res.status(result.statusCode).json(result);
     }),
 );
 
+dietRouter.patch(
+    '/modifyComment',
+    isExpert,
+    asyncHandler(async (req, res) => {
+        const { dietId, commentId, content } = req.body;
+        const result = await dietService.modifyComment(
+            dietId,
+            commentId,
+            content,
+        );
+        res.status(result.statusCode).json(result);
+    }),
+);
+
+dietRouter.delete(
+    '/deleteDiet',
+    asyncHandler(async (req, res) => {
+        const { dietId } = req.body;
+        const result = await dietService.deleteDiet(dietId);
+        res.status(result.statusCode).json(result);
+    }),
+);
+
+dietRouter.delete(
+    '/deleteComment',
+    isExpert,
+    asyncHandler(async (req, res) => {
+        const { dietId, commentId } = req.body;
+        const result = await dietService.deleteComment(dietId, commentId);
+        res.status(result.statusCode).json(result);
+    }),
+);
 export default dietRouter;
