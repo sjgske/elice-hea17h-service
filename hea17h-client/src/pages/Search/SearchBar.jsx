@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import * as Api from '../../api';
 
 const horizontalCenter = css`
@@ -10,43 +11,6 @@ const horizontalCenter = css`
 `;
 
 const Container = styled.div`
-  position: relative;
-  width: 100%;
-  border-bottom: 2px solid #0bde8b;
-  background-color: #fff;
-  padding: 20px 60px;
-  box-sizing: border-box;
-`;
-
-// Link태그의 스타일을 입히는것
-// horizontalCenter 스타일 컴포넌트를 믹스인하여 속성값 전달
-// 뒤로가기 버튼
-const ArrowIcon = styled(Link)`
-  ${horizontalCenter}
-  left: 18px;
-  display: block;
-  width: 21px;
-  height: 18px;
-  background-position: -164px -343px;
-  vertical-align: top;
-  background-image: url(https://s.pstatic.net/static/www/m/uit/2020/sp_search.623c21.png);
-  background-size: 467px 442px;
-  background-repeat: no-repeat;
-`;
-
-const SearchIcon = styled.span`
-  ${horizontalCenter}
-  right: 18px;
-  width: 24px;
-  height: 24px;
-  background-position: -356px -260px;
-  display: inline-block;
-  overflow: hidden;
-  color: transparent;
-  vertical-align: middle;
-  background-image: url(https://s.pstatic.net/static/www/m/uit/2020/sp_search.623c21.png);
-  background-size: 467px 442px;
-  background-repeat: no-repeat;
 `;
 
 // 글자를 입력하면 RemoveIcon이 나오게 되고 누르면 input의 value값이 사라짐
@@ -67,15 +31,22 @@ const RemoveIcon = styled.span`
 `;
 
 const InputContainer = styled.div`
-  position: relative;
+  display: flex;
+  border-bottom: 6px solid #51CF66;
 `;
 
 const Input = styled.input`
+  font-size: 36px;
+  line-height: 48px;
+  display: block;
   width: 100%;
+  height: 100%;
+  border: 0;
   background-color: #fff;
-  font-weight: 700;
-  font-size: 20px;
-  box-sizing: border-box;
+  color: #000000;
+  outline: none;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 
   ${({ active }) =>
     active &&
@@ -84,8 +55,12 @@ const Input = styled.input`
   `}
 `;
 
-const AlertMessage = styled.p`
-  color: #F03E3E;
+const IconWrapper = styled.span`
+  color: #51cf66;
+  width: 50px;
+  height: 50px;
+  font-size: 2.5rem;
+  padding-right: 0.5rem;
 `;
 
 function SearchBar({ onAddKeyword }) {
@@ -127,7 +102,7 @@ function SearchBar({ onAddKeyword }) {
  
   const [foodList, setFoodList] = useState([]);
   const [food, setFood] = useState([]);
-  const [httpStatusCode, setHttpStatusCode] = useState(0);
+  // const [httpStatusCode, setHttpStatusCode] = useState(0);
 
   const fetchData = async () => {
   try{
@@ -138,7 +113,7 @@ function SearchBar({ onAddKeyword }) {
     console.log(foodList);
     console.log(food);
   } catch(err) {
-    setHttpStatusCode(err.response.status);
+    // setHttpStatusCode(err.response.status);
     console.log(err);
     console.log(err.message);
   }};
@@ -149,30 +124,17 @@ function SearchBar({ onAddKeyword }) {
       },200);
       return () => {
       clearTimeout(debounce);
-  }}, [keyword]);
+  };}, [keyword]);
 
-    return httpStatusCode === 500 ? (
+    return (
       <Container>
-        <ArrowIcon className="flex-column-align-items" to="/diet" />
         <InputContainer>
-        <Input
-            placeholder="검색어를 입력해주세요"
-            active={hasKeyword}
-            value={keyword}
-            onChange={handleKeyword}
-            onKeyDown={handleEnter}
-          />
-          <AlertMessage>추가 할 수 없는 항목입니다.</AlertMessage>
-          {keyword && <RemoveIcon onClick={handleClearKeyword} />}
-        </InputContainer>
-        <SearchIcon />
-      </Container>
-    ) : (
-      <Container>
-        <ArrowIcon className="flex-column-align-items" to="/diet" />
-        <InputContainer>
-        <Input
-            placeholder="검색어를 입력해주세요"
+          <IconWrapper>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </IconWrapper>
+          <Input
+            type="search"
+            placeholder="Search"
             active={hasKeyword}
             value={keyword}
             onChange={handleKeyword}
@@ -180,7 +142,6 @@ function SearchBar({ onAddKeyword }) {
           />
           {keyword && <RemoveIcon onClick={handleClearKeyword} />}
         </InputContainer>
-        <SearchIcon />
       </Container>
     );
   

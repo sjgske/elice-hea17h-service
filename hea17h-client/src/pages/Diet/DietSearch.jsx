@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import SearchPage from '../Search/SearchPage';
 
 
@@ -17,15 +15,6 @@ function DietSearch() {
                             <br /> 토마토 5개<Orange>.</Orange>
                         </H2>
                     </Div>
-                    <SearchBox>
-                        <IconWrapper>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </IconWrapper>
-                            <SearchInput 
-                            type="search"
-                            placeholder="Search"
-                            />
-                    </SearchBox>
                     <SearchPage />
                 </Header>
             </Main>
@@ -69,33 +58,6 @@ const Green = styled.span`
 
 const Orange = styled.span`
     color: #FD7E14;
-`;
-
-const SearchBox = styled.div`
-    display: flex;
-    border-bottom: 6px solid #51CF66;
-`;
-
-const IconWrapper = styled.span`
-    color: #51cf66;
-    width: 50px;
-    height: 50px;
-    font-size: 2.5rem;
-    padding-right: 0.5rem;
-`;
-
-const SearchInput = styled.input`
-    font-size: 36px;
-    line-height: 48px;
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background-color: #fff;
-    color: #000000;
-    outline: none;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
 `;
 
 export default DietSearch;

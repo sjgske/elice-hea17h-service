@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faPlus, faX} from '@fortawesome/free-solid-svg-icons';
+import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
@@ -15,13 +15,14 @@ function Diet() {
     }, []);
 
     const navigate = useNavigate();
-    const calculatehandler = () => {
-        navigate(`calculate`, { state });
+    const handleCalculateBtn = () => {
+        navigate(`calculate`, { state: foodData });
     };
 
-    const handleRemoveKeyword = (id) => {
-        setFoodData(foodData.filter((food) => food.id !== id));
-    };
+    // const handleRemoveFood = (id) => {
+    //     setFoodData(foodData.filter((food) => food.id !== id));
+    //     console.log(state);
+    // };
 
     return(
         <>
@@ -38,6 +39,7 @@ function Diet() {
                         </H2>
                     </Div>
                     <Content>
+                        {/* <EditBtn onClick={() => navigate(`/diet/search`)}><FontAwesomeIcon icon={faPen} /></EditBtn> */}
                         <MorningTitle>
                             <H4>아침</H4>
                             <AddBtn onClick={() => navigate(`/diet/search`, { state: '아침' })}><FontAwesomeIcon icon={faPlus} /></AddBtn>
@@ -45,10 +47,7 @@ function Diet() {
                         <MorningContent>
                             {  foodData
                                 ? foodData.filter(food => food.state === '아침')?.map((food)=> (
-                                    <>
                                         <ContentBedge><Gray>{food.text}</Gray></ContentBedge>
-                                        <DelBtn onClick={() => handleRemoveKeyword(food.id)}><FontAwesomeIcon icon={faX} /></DelBtn>
-                                    </>
                                 )) : null
                             }
                         </MorningContent>
@@ -59,11 +58,7 @@ function Diet() {
                         <AfternoonContent>
                             {  foodData
                                 ? foodData.filter(food => food.state === '점심')?.map(food => (
-
-                                    <>
                                         <ContentBedge><Gray>{food.text}</Gray></ContentBedge>
-                                        <DelBtn key={food.id}><FontAwesomeIcon icon={faX} /></DelBtn>
-                                    </>
                                 )) : null
                             }
                         </AfternoonContent>
@@ -74,16 +69,12 @@ function Diet() {
                         <EveningContent>
                             {  foodData
                                 ? foodData.filter(food => food.state === '저녁')?.map(food => (
-
-                                    <>
                                         <ContentBedge key={food.id}><Gray>{food.text}</Gray></ContentBedge>
-                                        <DelBtn><FontAwesomeIcon icon={faX} /></DelBtn>
-                                    </>
                                 )) : null
                             }
                         </EveningContent>
                         <CalculateWrapper>
-                            <CalculateBtn onClick={calculatehandler}>계산하기</CalculateBtn>
+                            <CalculateBtn onClick={() => handleCalculateBtn}>계산하기</CalculateBtn>
                         </CalculateWrapper>
                     </Content>
                 </Header>
@@ -169,6 +160,20 @@ const AddBtn = styled.button`
     background-color: #51CF66;
 `;
 
+// const EditBtn = styled.button`
+//     display: absolute;
+//     float: right;
+//     margin-right: 2rem;
+//     margin-top: 2rem;
+//     font-size: 1.5rem;
+//     width: 3rem;
+//     height: 3rem;
+//     border-radius: 5px;
+//     color: #FFFFFF;
+//     font-weight: 600;
+//     background-color: #FD7E14;
+// `;
+
 const Green = styled.span`
     color: #51cf66;
 `;
@@ -231,17 +236,17 @@ const ContentBedge = styled.button`
     margin-right: 0.5rem;
 `;
 
-const DelBtn = styled.button`
-    align-items: center;
-    font-size: 1.5rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 5px;
-    color: #FFFFFF;
-    font-weight: 600;
-    background-color: #F03E3E;
-    margin-right: 1rem;
-`;
+// const DelBtn = styled.button`
+//     align-items: center;
+//     font-size: 1.5rem;
+//     width: 2.5rem;
+//     height: 2.5rem;
+//     border-radius: 5px;
+//     color: #FFFFFF;
+//     font-weight: 600;
+//     background-color: #F03E3E;
+//     margin-right: 1rem;
+// `;
 
 
 export default Diet;
