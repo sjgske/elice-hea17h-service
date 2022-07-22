@@ -34,10 +34,10 @@ function Home() {
     }
 
     return (
-        <div>
+        <div style={{ height: '100%' }}>
             <Nav />
             <MainContainer>
-                <div>
+                <Section imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411406092_main_1.jpg">
                     <h2>
                         편리하게
                         <br />
@@ -55,8 +55,8 @@ function Home() {
                         </Circle>
                         <ColorText color="#fd7e14">계산하기</ColorText>
                     </CircleBtn>
-                </div>
-                <div>
+                </Section>
+                <Section imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411421456_main_2.jpg">
                     <h2>
                         전문가의
                         <br />
@@ -75,8 +75,8 @@ function Home() {
                         </Circle>
                         <ColorText color="#fd7e14">솔루션 받기</ColorText>
                     </CircleBtn>
-                </div>
-                <div>
+                </Section>
+                <Section imgUrl="https://elice-team17.s3.ap-northeast-2.amazonaws.com/test/1658411448805_main_3.jpg">
                     <h2>
                         식단 개선에
                         <br />
@@ -95,31 +95,43 @@ function Home() {
                         </Circle>
                         <ColorText color="#3cb371">전문가 지원하기</ColorText>
                     </CircleBtn>
-                </div>
+                </Section>
                 <TopButton />
             </MainContainer>
         </div>
     );
 }
 
-const MainContainer = styled.div`
-    width: 85vw;
-    margin: 50px auto 0;
+const Section = styled.div`
+    background-image: url(${({ imgUrl }) => imgUrl});
+    height: 35%;
+    padding: 0 100px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+`;
 
-    & > div {
-        width: 25%;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        gap: 15px;
-        margin-bottom: 3rem;
+const CircleBtn = styled.div`
+    transition: all 400ms ease;
+
+    &:hover {
+        transform: translateX(${({ trasnformNum }) => trasnformNum}px);
+        cursor: pointer;
     }
+`;
 
-    & > div:nth-child(2) {
-        align-self: flex-end;
-        align-items: end;
+const MainContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    & > ${Section}:nth-child(2) {
+        & > h2,
+        ${CircleBtn} {
+            align-self: flex-end;
+        }
     }
 
     @media (max-width: 768px) {
@@ -129,15 +141,6 @@ const MainContainer = styled.div`
         & h2 {
             font-size: 1rem;
         }
-    }
-`;
-
-const CircleBtn = styled.div`
-    transition: all 400ms ease;
-
-    &:hover {
-        transform: translateX(${({ trasnformNum }) => trasnformNum}px);
-        cursor: pointer;
     }
 `;
 
