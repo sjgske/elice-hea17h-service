@@ -2,11 +2,7 @@
 import { Router } from 'express';
 import is from '@sindresorhus/is';
 import { userService } from '../services/index.js';
-import {
-    isLoggedIn,
-    naverCallback,
-    kakaoCallback,
-} from '../middlewares/index.js';
+import { isLoggedIn } from '../middlewares/index.js';
 import { uploadExpert } from '../utils/index.js';
 
 const userRouter = Router();
@@ -30,22 +26,6 @@ userRouter.get('/getExpertInfo', isLoggedIn, async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-});
-
-userRouter.get('/kauth/callback', kakaoCallback, async (req, res, next) => {
-    const user = req.kakaoUser;
-    const userInfo = { id: user.id, password: process.env.KAKAO_USER_PASSWORD };
-    const result = await userService.login(userInfo);
-    console.log(result);
-    res.redirect(`${process.env.CLIENT_URL}?userToken=${result.token}`);
-});
-
-userRouter.get('/nauth/callback', naverCallback, async (req, res, next) => {
-    const user = req.naverUser;
-    const userInfo = { id: user.id, password: process.env.NAVER_USER_PASSWORD };
-    const result = await userService.login(userInfo);
-    console.log(result);
-    res.redirect(`${process.env.CLIENT_URL}?userToken=${result.token}`);
 });
 
 userRouter.patch('/updateUser', isLoggedIn, async (req, res, next) => {
@@ -123,8 +103,8 @@ userRouter.post(
 
 userRouter.delete('/deleteUser', isLoggedIn, async (req, res, next) => {
     try {
-        const { id, password } = req.body;
-        const result = await userService.deleteUser(id, password);
+        const userInfo = req.tokenInfo;
+        const result = await userService.deleteUser(userInfo.id);
         res.status(result.statusCode).json(result);
     } catch (err) {
         next(err);

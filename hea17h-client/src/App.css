@@ -6,15 +6,8 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-html,
-.App {
+body {
     background-color: #efefef;
-    height: 100%;
-}
-
-body,
-body > #root {
-    height: 100%;
 }
 
 a {
@@ -70,10 +63,6 @@ li {
 
 .margin-bottom {
     margin-bottom: 2rem;
-}
-
-.margin-right {
-    margin-right: 1rem;
 }
 
 .flex {

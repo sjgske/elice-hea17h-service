@@ -44,7 +44,6 @@ class CategoryService {
             );
         }
 
-        // eslint-disable-next-line no-underscore-dangle
         const categoryId = category._id;
         return categoryId;
     }

@@ -1,96 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import Nav from '../../components/Nav/index';
-import Resign from '../../components/Resign/Resign';
-import * as Api from '../../api';
 
 function Profile() {
-    const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState({});
-    const [certifyInfo, setCertifyInfo] = useState('');
-    const [showPopup, setShowPopup] = useState(false);
-    const [BMI, setBMI] = useState(0);
-    const [RDI, setRDI] = useState(0);
-    const {
-        id,
-        name,
-        height,
-        weight,
-        age,
-        gender,
-        goal,
-        activeLevel
-    } = userInfo;
-
-    const calBMI = () => {
-        setBMI(((weight / height ** 2) * 10000).toFixed(2));
-    };
-    
-    const calRDI = () => {
-        let BMR = 0;
-        if (gender === 'M')
-            BMR = 655 + ((9.6 * weight) + (1.8 * height)) - (4.7 * age);
-        else if (gender === 'W')
-            BMR = 66 + ((13.7 * weight) + (5 * height)) - (6.5 * age);
-        
-        switch (activeLevel) {
-            case 1:
-                setRDI(BMR * 1.2);
-                break;
-            case 2:
-                setRDI(BMR * 1.3);
-                break;
-            case 3:
-                setRDI(BMR * 1.5);
-                break;
-            case 4:
-                setRDI(BMR * 1.7);
-                break;
-            default:
-                setRDI(BMR * 1.2);
-                break;
-        }
-    };
-
-    const getInfo = async () => {
-        const { data } = await Api.get('/users/getUser');
-        
-        setUserInfo(data);
-    };
-
-    const getCertify = async () => {
-        const { data }  = await Api.get('/users/getExpertInfo');
-
-        setCertifyInfo(data.payload.certificate[0].name);
-    };
-
-    useEffect(() => {
-        getInfo();
-    }, []);
-
-    useEffect(() => {
-        calBMI();
-        calRDI();
-    }, [height || weight || age]);
-
-    const handleGoToCertify = (e) => {
-        e.preventDefault();
-        navigate('/certify', { replace: true });
-    };
-
-    const handleUpdateButton = (e) => {
-        e.preventDefault();
-
-        navigate('/profile/update', { replace: true });
-    };
-
-    const handleResignButton = (e) => {
-        e.preventDefault();
-
-        setShowPopup(!showPopup);
-    };
-
     return (
         <>
             <Nav />
@@ -101,86 +13,55 @@ function Profile() {
                         <TitleText>기본 회원정보 <span style={{color: '#999999'}}>필수</span></TitleText>
                         <InputForm>
                             <InputText>아이디</InputText>
-                            <InputItem value={id || ''} disabled />
+                            <InputItem placeholder='younghwan101' />
                             <InputText>비밀번호</InputText>
-                            <InputItem value='******' disabled />
+                            <InputItem placeholder='****' />
                             <InputText>이름</InputText>
-                            <InputItem value={name || ''} disabled />
+                            <InputItem placeholder='조영환'/>
                         </InputForm>
                     </BoxContainer>
                     <BoxContainer>
                         <TitleText>상세 회원정보 <span style={{ color: '#999999' }}>선택</span></TitleText>
                         <InputForm>
                             <InputText>키(cm)</InputText>
-                            <InputItem value={height || ''} disabled />
+                            <InputItem placeholder='180' />
                             <InputText>몸무게(kg)</InputText>
-                            <InputItem value={weight || ''} disabled />
+                            <InputItem placeholder='80' />
                             <InputText>나이</InputText>
-                            <InputItem value={age || ''} disabled />
+                            <InputItem placeholder='20' />
                             <InputText>성별</InputText>
                             <SelectGender>
-                                <RadioButton type="radio" checked={gender === 'M'} readOnly />
+                                <RadioButton type="radio" />
                                 <div>남자</div>
-                                <RadioButton type="radio" checked={gender === 'W'} readOnly />
+                                <RadioButton type="radio" />
                                 <div>여자</div>
                             </SelectGender>
                             <InputText>BMI(㎏/㎡)</InputText>
-                            <InputItem value={BMI} disabled />
+                            <InputItem placeholder='(자동계산)' />
                             <InputText>다이어트 목표</InputText>
-                            <SelectBox value={goal || ''} disabled >
-                                <option value="1">체중 증가</option>
-                                <option value="2">현재 체중 유지하기</option>
-                                <option value="3">체중 감소</option>
+                            <SelectBox>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </SelectBox>
                             <InputText>활동 정도</InputText>
-                            <SelectBox value={activeLevel || ''} disabled >
-                                <option value="1">전혀 운동하지 않음</option>
-                                <option value="2">가벼운 운동(주 1~3일)</option>
-                                <option value="3">적당한 운동(주 3~5일)</option>
-                                <option value="4">격렬한 운동(주 6~7일)</option>
+                            <SelectBox>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </SelectBox>
                             <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
-                            {
-                                calRDI && <InputItem
-                                value={RDI}
-                                disabled
-                                />
-                            }
-                            {
-                                userInfo.role === 'expert'
-                                    ? (
-                                        <>
-                                            <InputText>전문가 인증</InputText>
-                                            <InputItem color='#51CF66' placeholder='인증받은 아이디입니다.' disabled />
-                                        </>
-                                    )
-                                    : (
-                                        <>
-                                            <InputText>전문가 인증</InputText>
-                                            <InputItem style={{ marginLeft: '-40px' }} color='#FD7E14' placeholder='인증되지 않은 아이디입니다.' disabled />
-                                            <GotoCertify onClick={handleGoToCertify}>인증하기</GotoCertify>
-                                        </>
-                                    )
-                            }
-                            {
-                                userInfo.role === 'expert'
-                                    ? getCertify() && (
-                                        <>
-                                            <InputText>경력 및 자격사항</InputText>
-                                            <InputItem value={certifyInfo} disabled />
-                                        </>
-                                    )
-                                    : null
-                            }
+                            <InputItem placeholder='(자동계산)' />
+                            <InputText>전문가 인증</InputText>
+                            <InputItem style={{ color: '#51CF66' }} placeholder='인증받은 아이디입니다.' />
+                            <InputText>경력 및 자격사항</InputText>
+                            <InputItem placeholder='생활스포츠지도사 2급' />
                         </InputForm>
                     </BoxContainer>
                 </ProfileContainer>
                 <Buttons>
-                    <UpdateButton onClick={handleUpdateButton}>회원정보 수정</UpdateButton>
-                    <ResignButton onClick={handleResignButton}>회원탈퇴</ResignButton>
-                    {
-                        showPopup ? <Resign onClose={() => setShowPopup(!showPopup)} /> : null
-                    }
+                    <UpdateButton>회원정보 수정</UpdateButton>
+                    <ResignButton>회원탈퇴</ResignButton>
                 </Buttons>
             </Container>
         </>
@@ -250,11 +131,6 @@ const InputItem = styled.input`
 
     padding-left: 10px;
     margin-bottom: 1px;
-
-    ::placeholder {
-        color: ${(props) => props.color};
-        font-weight: 500;
-    }
 `;
 
 const SelectGender = styled.div`
@@ -283,7 +159,7 @@ const UpdateButton = styled.button`
     height: 50px;
 
     color: white;
-    background-color: #51CF66;
+    background-color: #3CB371;
     border: 1px solid transparent;
     font-size: medium;
 
@@ -302,14 +178,6 @@ const ResignButton = styled.button`
 
     border-radius: 5px;
     margin: 0 2%;
-`;
-
-const GotoCertify = styled.button`
-    margin-left: 10px;
-
-    text-decoration: underline;
-    color: #51CF66;
-    font-weight: 500;
 `;
 
 export default Profile;

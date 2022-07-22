@@ -7,7 +7,6 @@ const CategorySchema = new Schema(
         name: {
             type: String,
             required: true,
-            unique: true,
         },
         desc: {
             type: String,

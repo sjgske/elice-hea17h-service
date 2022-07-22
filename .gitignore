@@ -1,6 +1,3 @@
 node_modules
-.vscode
-docker-compose.yaml
 .env
 .DS_Store
-.dockerignore

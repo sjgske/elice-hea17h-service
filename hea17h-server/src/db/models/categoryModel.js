@@ -54,4 +54,5 @@ export class CategoryModel {
 }
 
 const categoryModel = new CategoryModel();
+
 export default categoryModel;

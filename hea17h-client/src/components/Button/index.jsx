@@ -15,8 +15,7 @@ function Button({ width, color, fontColor, children, onClick }) {
     );
 }
 
-const Div = styled.button`
-    display: block;
+const Div = styled.div`
     background-color: ${({ color }) => color};
     width: ${({ width }) => width};
     height: 2.5rem;
