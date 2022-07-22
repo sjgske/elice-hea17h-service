@@ -5,22 +5,38 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
+import {delCountText, changeQueryText, replaceCommas, blankToQuery} from '../../utils/UsefulFunction';
 
 function Diet() {
     const { state } = useLocation();
     const [foodData, setFoodData] = useState([]);
-    
+    // const [deliveryQuery, setDeliveryQuery ] = useState('');
+
     useEffect(() => {
         setFoodData(state);
     }, []);
 
     const navigate = useNavigate();
 
+    
+
+    const morningData = foodData.filter(food => food.state === '아침');
+    const lunchData = foodData.filter(food => food.state === '점심');
+    const nightData = foodData.filter(food => food.state === '저녁');
+    
+    const morningText = morningData.map(food => changeQueryText(delCountText(food.text)));
+    const morningQuery = blankToQuery(replaceCommas(morningText.toString()));
+    const lunchText = lunchData.map(food => changeQueryText(delCountText(food.text)));
+    const lunchQuery = blankToQuery(replaceCommas(lunchText.toString()));
+    const nightText = nightData.map(food => changeQueryText(delCountText(food.text)));
+    const nightQuery = blankToQuery(replaceCommas(nightText.toString()));
+
+    const queryInfo = [morningQuery, lunchQuery, nightQuery];
+
     // const handleRemoveFood = (id) => {
     //     setFoodData(foodData.filter((food) => food.id !== id));
     //     console.log(state);
     // };
-    
 
     return(
         <>
@@ -72,7 +88,7 @@ function Diet() {
                             }
                         </EveningContent>
                         <CalculateWrapper>
-                            <CalculateBtn onClick={() => navigate(`/diet/calculate`, { state: foodData })}>계산하기</CalculateBtn>
+                            <CalculateBtn onClick={() => navigate(`/diet/calculate`, { state: queryInfo })}>계산하기</CalculateBtn>
                         </CalculateWrapper>
                     </Content>
                 </Header>
