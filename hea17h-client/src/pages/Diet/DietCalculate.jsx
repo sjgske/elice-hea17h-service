@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,45 +8,102 @@ import * as Api from '../../api';
 import {blankToQuery} from '../../utils/UsefulFunction';
 
 function DietCalculate() {
-    const { state } = useLocation();
-    console.log(state); 
-    
-    // const [moringDiet, setMoringDiet] = useState({});
-    // const [afternoonDiet, setAfternoonDiet] = useState({});
-    // const [eveningData, setEveningData] = useState({});
-
-    
-    const [foodList, setFoodList] = useState([]);
-
-    // const [totalCalories, setTotalCalorise] = useState('');
-    // const [totalCarb, setTotalCarb] = useState('');
-    // const [totalProtein, setTotalProtein] = useState('');
-    // const [totalFat, setTotalFat] = useState('');
-
-    // const calTotalCalories = () => {
-    //     foodList.map(food => food.calories);
-    // }
-
-    const dataQuery = blankToQuery(`100g 닭가슴살 100g 치즈 100g 포도`);
-
-    const fetchData = async () => {
-    try{
-        const {data} = await Api.get(`/foods/selected?info=${dataQuery}`);
-        setFoodList(data);
-    } catch(err) {
-        console.log(err);
-    }};
-
-    useEffect(()=>{
-        fetchData();
-      }, []);
-
-    console.log(foodList);
-    
     const navigate = useNavigate();
+    const { state } = useLocation();
+    console.log(state);
+
+    const [name, setName] = useState('');
+    const [totalCalories, setTotalCaloreis] = useState('');
+    const [totalCarb, setTotalCarb] = useState('');
+    const [totalProtein, setTotalProtein] = useState('');
+    const [totalFat, setTotalFat] = useState('');
+
+    const [dietFoods, setDietFoods] = useState([]);
+    const [mainImg, setMainImg] = useState('');
+    const [foods, setFoods] = useState([]);
+
+    const morningData = blankToQuery(state[0]);
+    const afternoonData = blankToQuery(state[1]);
+    const eveningData = blankToQuery(state[2]);
+
     
-    const handleRetryButton = () => {
-        navigate('/diet', { replace: true });
+
+    const getMorningData = async () => {
+        try {
+            const { data } = await Api.get(`/foods/selected?info=${morningData}`);
+            setFoods([
+                ...foods,
+                data
+            ]);
+            console.log(foods);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const getAfternoonData = async () => {
+        try {
+            const { data } = await Api.get(`/foods/selected?info=${afternoonData}`);
+            setFoods([
+                ...foods,
+                data
+            ]);
+            console.log(foods);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const getEveningData = async () => {
+        try {
+            const { data } = await Api.get(`/foods/selected?info=${eveningData}`);
+            setFoods([
+                ...foods,
+                data
+            ]);
+            console.log(foods);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getMorningData();
+        getAfternoonData();
+        getEveningData();
+    }, []);
+
+    console.log(foods);
+
+    // const mealGram = (foodList.reduce((total, currentValue) => total + currentValue., 0)).toFixed(2);
+    const mealCalories = (foods.reduce((total, currentValue) => total + currentValue.calories, 0)).toFixed(2);
+    const mealCarb = (foods.reduce((total, currentValue) => total + currentValue.carbohydrates_total_g, 0)).toFixed(2);
+    const mealProtein = (foods.reduce((total, currentValue) => total + currentValue.protein_g, 0)).toFixed(2);
+    const mealFat = (foods.reduce((total, currentValue) => total + currentValue.fat_total_g, 0)).toFixed(2);
+
+    const handleCalculate = () => {
+        setDietFoods([{ morningData, afternoonData, eveningData }]);
+        console.log(dietFoods);
+    };
+
+    const savehandler = async () => {
+        const postData = {
+            name,
+            totalCalories,
+            totalCarb,
+            totalProtein,
+            totalFat,
+            dietFoods
+        };
+
+        handleCalculate();
+
+        // await Api.post('/diets/addDiet', postData);
+
+        // navigate(`/diet/list`);
+    };
+    const retryhandler = () => {
+        navigate(`/diet`);
     };
 
     // const handleSaveButton = async (e) => {
@@ -73,101 +131,104 @@ function DietCalculate() {
 
     return(
         <>
-        <Nav />
-        <Container>
-            <H1>식단 계산</H1>
-            <Main>
-                <Header>
-                    <Div className="margin-bottom">
-                        <H2>
-                            코칭을 받고 싶다면
-                            <br /> 내 식단 목록에 추가해 보세요
-                            <Green>.</Green>
-                        </H2>
-                        <SearchBox>
-                            <SearchInput 
-                            type="search"
-                            placeholder="식단 이름을 입력하세요"
-                            />
-                        </SearchBox>
-                    </Div>
-                    <Content>
-                        <MorningContent>
-                            <CircleButton>
-                            <Circle>
-                                <CircleImage
-                                    src={`${process.env.PUBLIC_URL}/assets/morning.png`}
-                                    alt="아침"
+            <Nav />
+            <Container>
+                <H1>식단 계산</H1>
+                <Main>
+                    <Header>
+                        <Div className="margin-bottom">
+                            <H2>
+                                코칭을 받고 싶다면
+                                <br /> 내 식단 목록에 추가해 보세요
+                                <Green>.</Green>
+                            </H2>
+                            <SearchBox>
+                                <SearchInput 
+                                    type="search"
+                                    placeholder="식단 이름을 입력하세요"
+                                    onChange={(e) => {
+                                        setName(e.target.value);
+                                    }}
                                 />
-                            </Circle>
-                            <H5>아침</H5>
-                            </CircleButton>
-                        </MorningContent>
-                        <MorningContent>
-                            <CircleButton>
-                            <Circle>
-                                <CircleImage
-                                    src={state}
-                                    alt="아침"
-                                />
-                            </Circle>
-                            </CircleButton>
+                            </SearchBox>
+                        </Div>
+                        <Content>
+                            <MorningContent>
+                                <CircleButton>
+                                <Circle>
+                                    <CircleImage
+                                        src={`${process.env.PUBLIC_URL}/assets/morning.png`}
+                                        alt="아침"
+                                    />
+                                </Circle>
+                                <H5>아침</H5>
+                                </CircleButton>
+                                    <ContentBedge>s<Gray>s</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>칼로리</Bold><Gray>{mealCalories}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{mealCarb}</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>단백질</Bold><Gray>{mealProtein}</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>지방</Bold><Gray>{mealFat}</Gray>g</ContentBedge>
+                            </MorningContent>
+                            {/* <AfternoonTitle>
+                                <CircleButton>
+                                    <Circle>
+                                        <CircleImage
+                                            src={`${process.env.PUBLIC_URL}/assets/afternoon.png`}
+                                            alt="점심"
+                                        />
+                                    </Circle>
+                                    <H5>점심</H5>
+                                </CircleButton>
                                 <ContentBedge>{state}<Gray>{state}</Gray>g</ContentBedge>
-                                <ContentBedge><Bold>칼로리</Bold><Gray>{state}</Gray>kcal</ContentBedge>
-                                <ContentBedge><Bold>탄수화물</Bold><Gray>{state}</Gray>g</ContentBedge>
-                                <ContentBedge><Bold>단백질</Bold><Gray>{state}</Gray>g</ContentBedge>
-                                <ContentBedge><Bold>지방</Bold><Gray>{state}</Gray>g</ContentBedge>
-                        </MorningContent>
-                        <AfternoonTitle>
-                            <CircleButton>
-                                <Circle>
-                                    <CircleImage
-                                        src={`${process.env.PUBLIC_URL}/assets/afternoon.png`}
-                                        alt="점심"
-                                    />
-                                </Circle>
-                                <H5>점심</H5>
-                            </CircleButton>
-                        </AfternoonTitle>
-                        <EveningTitle>
-                            <CircleButton>
-                                <Circle>
-                                    <CircleImage
-                                        src={`${process.env.PUBLIC_URL}/assets/night.png`}
-                                        alt="저녁"
-                                    />
-                                </Circle>
-                                <H5>저녁</H5>
-                            </CircleButton>
-                        </EveningTitle>
-                        <TotalWrapper>
-                            <TotalCal>
-                                <H6>총 칼로리</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
-                            </TotalCal>
-                            <TotalCarbo>
-                                <H6>총 탄수화물</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
-                            </TotalCarbo>
-                            <TotalPro>
-                                <H6>총 단백질</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
-                            </TotalPro>
-                            <TotalFat>
-                                <H6>총 지방</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
-                            </TotalFat>
-                        </TotalWrapper>
-                        <CalculateWrapper>
-                            <CalculateBtn>저장하기</CalculateBtn>
-                            <RetryBtn onClick={handleRetryButton}>다시하기</RetryBtn>
-                        </CalculateWrapper>
-                    </Content>
-                </Header>
-            </Main>
-            <TopButton />
-        </Container>
-    </>
+                                    <ContentBedge><Bold>칼로리</Bold><Gray>{dietFoods[1].mealCalories}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{dietFoods[1].mealCarb}</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>단백질</Bold><Gray>{dietFoods[1].mealProtein}</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>지방</Bold><Gray>{dietFoods[1].mealFat}</Gray>g</ContentBedge>
+                            </AfternoonTitle>
+                            <EveningTitle>
+                                <CircleButton>
+                                    <Circle>
+                                        <CircleImage
+                                            src={`${process.env.PUBLIC_URL}/assets/night.png`}
+                                            alt="저녁"
+                                        />
+                                    </Circle>
+                                    <H5>저녁</H5>
+                                </CircleButton>
+                                <ContentBedge>{state}<Gray>{state}</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>칼로리</Bold><Gray>{dietFoods[2].mealCalories}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{dietFoods[2].mealCarb}</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>단백질</Bold><Gray>{dietFoods[2].mealProtein}</Gray>g</ContentBedge>
+                                    <ContentBedge><Bold>지방</Bold><Gray>{dietFoods[2].mealFat}</Gray>g</ContentBedge>
+                            </EveningTitle> */}
+                            <TotalWrapper>
+                                <TotalCal>
+                                    <H6>총 칼로리</H6>
+                                    <ContentBedge><Gray>{totalCalories}</Gray>kcal</ContentBedge>
+                                </TotalCal>
+                                <TotalCarbo>
+                                    <H6>총 탄수화물</H6>
+                                    <ContentBedge><Gray>{totalCarb}</Gray>kcal</ContentBedge>
+                                </TotalCarbo>
+                                <TotalPro>
+                                    <H6>총 단백질</H6>
+                                    <ContentBedge><Gray>{totalProtein}</Gray>kcal</ContentBedge>
+                                </TotalPro>
+                                <TotalFat>
+                                    <H6>총 지방</H6>
+                                    <ContentBedge><Gray>{totalFat}</Gray>kcal</ContentBedge>
+                                </TotalFat>
+                            </TotalWrapper>
+                            <CalculateWrapper>
+                                <CalculateBtn onClick={savehandler}>저장하기</CalculateBtn>
+                                <RetryBtn onClick={retryhandler}>다시하기</RetryBtn>
+                            </CalculateWrapper>
+                        </Content>
+                    </Header>
+                </Main>
+                <TopButton />
+            </Container>
+        </>
     );
 };
 
