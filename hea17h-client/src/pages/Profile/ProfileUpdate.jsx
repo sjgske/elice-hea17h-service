@@ -82,6 +82,11 @@ function ProfileUpdate() {
         }));
     };
 
+    const handleGoToCertify = (e) => {
+        e.preventDefault();
+        navigate('/certify', { replace: true });
+    };
+
     const handleSaveButton = async (e) => {
         e.preventDefault();
 
@@ -205,8 +210,8 @@ function ProfileUpdate() {
                                     : (
                                         <>
                                             <InputText>전문가 인증</InputText>
-                                            <InputItem color='#FD7E14' placeholder='인증되지 않은 아이디입니다.' disabled />
-                                            <GotoCertify>인증하기</GotoCertify>
+                                            <InputItem style={{ marginLeft: '-40px' }} color='#FD7E14' placeholder='인증되지 않은 아이디입니다.' disabled />
+                                            <GotoCertify onClick={handleGoToCertify}>인증하기</GotoCertify>
                                         </>
                                     )
                             }
@@ -294,8 +299,11 @@ const InputItem = styled.input`
 
     padding-left: 10px;
     margin-bottom: 1px;
-    color: ${(props) => props.color};
 
+    ::placeholder {
+        color: ${(props) => props.color};
+        font-weight: 500;
+    }
 `;
 
 const SelectGender = styled.div`
@@ -335,7 +343,8 @@ const GotoCertify = styled.button`
     margin-left: 10px;
 
     text-decoration: underline;
-    color: 
+    color: #51CF66;
+    font-weight: 500;
 `;
 
 export default ProfileUpdate;

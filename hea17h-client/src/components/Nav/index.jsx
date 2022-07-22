@@ -47,14 +47,10 @@ function Nav() {
                         <StyledFontAwesomeIcon icon={faList} size="xl" />
                         <SubMenu>식단 목록</SubMenu>
                     </NavLink>
-                    {token !== null ? (
-                        <NavLink to="/comment">
-                            <StyledFontAwesomeIcon icon={faComment} size="xl" />
-                            <SubMenu>코멘트</SubMenu>
-                        </NavLink>
-                    ) : (
-                        ''
-                    )}
+                    <NavLink to="/comment">
+                        <StyledFontAwesomeIcon icon={faComment} size="xl" />
+                        <SubMenu>코멘트</SubMenu>
+                    </NavLink>
                     {isExpert ? (
                         <NavLink to="/coaching">
                             <StyledFontAwesomeIcon icon={faChalkboardUser} size="xl" />
