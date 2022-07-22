@@ -35,10 +35,15 @@ function Diet() {
                         </MorningTitle>
                         <AfternoonTitle>
                             <H4>점심</H4>
+                            <AddBtn><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </AfternoonTitle>
                         <EveningTitle>
                             <H4>저녁</H4>
+                            <AddBtn><FontAwesomeIcon icon={faPlus} /></AddBtn>
                         </EveningTitle>
+                        <CalculateWrapper>
+                            <CalculateBtn>계산하기</CalculateBtn>
+                        </CalculateWrapper>
                     </Content>
                 </Header>
             </Main>
@@ -88,26 +93,61 @@ const H2 = styled.h2`
         margin-bottom: 3rem;
     }
 `;
-const MorningTitle = styled.div``;
-const AfternoonTitle = styled.div``;
-const EveningTitle = styled.div``;
+const MorningTitle = styled.div`
+    display: flex;
+    padding-top: 2rem;
+    padding-left: 2rem;
+`;
+const AfternoonTitle = styled.div`
+    display: flex;
+    padding-top: 2rem;
+    padding-left: 2rem;
+`;
+const EveningTitle = styled.div`
+    display: flex;
+    padding-top: 2rem;
+    padding-left: 2rem;
+`;
 
 const H4 = styled.h4`
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     line-height: 44px;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    margin-right: 1rem;
+    font-weight: 700;
 `;
 const AddBtn = styled.button`
     display: inline-block;
-    font-size: 36px;
-    line-height: 48px;
-    width: 100%;
-    height: 100%;
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 5px;
+    color: #FFFFFF;
     font-weight: 600;
+    background-color: #51CF66;
 `;
 
 const Green = styled.span`
     color: #51cf66;
+`;
+
+const CalculateWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2rem;
+`;
+
+const CalculateBtn = styled.button`
+    font-size: 1.5rem;
+    width: auto;
+    height: 36px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    height: 3rem;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #51CF66;
 `;
 
 export default Diet;
