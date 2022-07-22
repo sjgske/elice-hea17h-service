@@ -22,11 +22,9 @@ function DietCalculate() {
     const [mainImg, setMainImg] = useState('');
     const [foods, setFoods] = useState([]);
 
-    const morningData = blankToQuery(state[0]);
-    const afternoonData = blankToQuery(state[1]);
-    const eveningData = blankToQuery(state[2]);
-
-    
+    const morningData = state[0];
+    const afternoonData = state[1];
+    const eveningData = state[2];
 
     const getMorningData = async () => {
         try {

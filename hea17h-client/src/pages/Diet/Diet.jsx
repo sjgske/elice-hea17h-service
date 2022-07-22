@@ -9,7 +9,7 @@ import {delCountText, changeQueryText, replaceCommas, blankToQuery} from '../../
 
 function Diet() {
     const { state } = useLocation();
-    const [foodData, setFoodData] = useState(['아침', '바나나', '포도']);
+    const [foodData, setFoodData] = useState([]);
     // const [queryInfo, setQueryInfo ] = useState([]);
 
     useEffect(() => {
