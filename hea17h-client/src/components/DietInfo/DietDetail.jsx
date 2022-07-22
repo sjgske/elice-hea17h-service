@@ -27,12 +27,15 @@ function DietDetail({ meal }) {
                             </Badge>
                         </div>
                         {categoryFoods.map(
-                            ({ name, count, foodCalories, _id }) => (
-                                <Badge key={_id} fontColor="#999999">
-                                    {`${name} X ${count} = ${
-                                        foodCalories * count
-                                    } kcal`}
-                                </Badge>
+                            ({ image, name, count, foodCalories, _id }) => (
+                                <div key={_id}>
+                                    <ImageBadge imgUrl={image} />
+                                    <Badge fontColor="#999999">
+                                        {`${name} X ${count} = ${
+                                            foodCalories * count
+                                        } kcal`}
+                                    </Badge>
+                                </div>
                             ),
                         )}
                     </Category>
@@ -56,6 +59,7 @@ const ImageBadgeContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
 
     & > p {
         font-weight: bold;

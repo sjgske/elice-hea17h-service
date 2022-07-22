@@ -66,6 +66,7 @@ function Home() {
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
+                        id="expert-solution"
                         onClick={handleClick}
                         trasnformNum={-20}
                         id="expert-solution"
@@ -86,6 +87,7 @@ function Home() {
                     </h2>
                     <CircleBtn
                         className="flex-column-align-items"
+                        id="expert-apply"
                         onClick={handleClick}
                         trasnformNum={20}
                     >
