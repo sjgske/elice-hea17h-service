@@ -21,7 +21,7 @@ export const changeQueryText = (params) => params
 export const delCountText = (params) => params
     .replace(/개/g,'');
 
-export const getStringDate = date => {
+export const htmlStringDate = date => {
     const d = new Date(date);
     return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
 };

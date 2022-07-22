@@ -9,7 +9,7 @@ import Button from '../../components/Button';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav';
 import * as Api from '../../api';
-import { getStringDate, separateThousand } from '../../utils/UsefulFunction';
+import { htmlStringDate, separateThousand } from '../../utils/UsefulFunction';
 
 const Container = styled.div`
     display: flex;
@@ -58,6 +58,10 @@ const H3 = styled.h3`
     margin-right: 1rem;
 `;
 
+const H4 = styled.h4`
+    font-size: 1.8rem;
+`;
+
 const Calorie = styled.span`
     font-weight: 600;
     strong {
@@ -76,7 +80,7 @@ const Orange = styled.span`
 
 const SampleImg = styled.div`
     position: absolute;
-    top: 200px;
+    top: 250px;
     right: 8vw;
     opacity: 0.5;
     z-index: 5;
@@ -127,6 +131,13 @@ const Circle = styled.div`
     }
 `;
 
+const SmallLink = styled(Link)`
+    display: block;
+    color: #999999;
+    font-size: 0.9rem;
+    text-decoration: underline;
+`;
+
 function Comment() {
     const [data, setData] = useState([]);
 
@@ -153,6 +164,8 @@ function Comment() {
                     <Header>
                         <Div className="margin-bottom">
                             <H2>
+                                회원이 되시면
+                                <br />
                                 전문가의
                                 <br /> 식단 코멘트를 받을 수 있습니다
                                 <Green>.</Green>
@@ -176,17 +189,28 @@ function Comment() {
                     </Header>
 
                     <SampleImg>
-                        {/* <h5>(예시 코멘트)</h5> */}
                         <img
                             src={`${process.env.PUBLIC_URL}/assets/comment.png`}
                             alt="예시 코멘트"
                         />
                     </SampleImg>
 
-                    {data.map(diet => (
+                    {data.length ? (
+                        <>
+                            <H4 style={{ margin: 0 }}>최근 등록한 식단</H4>
+                            <SmallLink
+                                to="/diet/list"
+                                className="margin-bottom"
+                            >
+                                더 많은 식단 보기
+                            </SmallLink>
+                        </>
+                    ) : null}
+
+                    {data.slice(0, 3).map(diet => (
                         <MainBox width="100%" color="#faf3e3" key={diet._id}>
                             <SpaceDiv>
-                                <Badge>{getStringDate(diet.createdAt)}</Badge>
+                                <Badge>{htmlStringDate(diet.createdAt)}</Badge>
                                 <H3>{diet.name}</H3>
                                 <Calorie>
                                     <strong>
