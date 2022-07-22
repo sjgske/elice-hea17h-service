@@ -69,11 +69,11 @@ const Calorie = styled.span`
     }
 `;
 
-const Green = styled.span`
+const GreenText = styled.span`
     color: #51cf66;
 `;
 
-const Orange = styled.span`
+const OrangeText = styled.span`
     color: #fd7e14;
     font-weight: 700;
 `;
@@ -164,16 +164,20 @@ function Comment() {
                     <Header>
                         <Div className="margin-bottom">
                             <H2>
-                                회원이 되시면
+                                <GreenText>
+                                    HEA<OrangeText>17</OrangeText>H.
+                                </GreenText>
+                                의 회원은
                                 <br />
                                 전문가의
                                 <br /> 식단 코멘트를 받을 수 있습니다
-                                <Green>.</Green>
+                                <GreenText>.</GreenText>
                             </H2>
                             <H2>
                                 목록이 없는 경우
                                 <br /> 다이어트 식단을
-                                <br /> 먼저 계산해보세요<Orange>.</Orange>
+                                <br /> 먼저 계산해보세요
+                                <OrangeText>.</OrangeText>
                             </H2>
                         </Div>
 
@@ -184,7 +188,7 @@ function Comment() {
                             <Circle>
                                 <FontAwesomeIcon icon={faArrowRight} />
                             </Circle>
-                            <Orange>계산해보기</Orange>
+                            <OrangeText>계산해보기</OrangeText>
                         </CircleLink>
                     </Header>
 
