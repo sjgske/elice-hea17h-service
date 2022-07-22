@@ -1,73 +1,132 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TopButton from '../../components/TopButton';
-// import Nav from '../../components/Nav/index';
+import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
-import {blankToQuery} from '../../utils/UsefulFunction';
 
 function DietCalculate() {
+    const navigate = useNavigate();
     const { state } = useLocation();
-    console.log(state); // state가 배열이면 합치는 과정 거쳐야함
-    
-    const [moringDiet, setMoringDiet] = useState({});
-    const [afternoonDiet, setAfternoonDiet] = useState({});
-    const [eveningData, setEveningData] = useState({});
-    const [foodList, setFoodList] = useState([]);
+    console.log(state);
 
-    const [totalCalories, setTotalCalorise] = useState('');
+    const [name, setName] = useState('');
+    const [totalCalories, setTotalCaloreis] = useState('');
     const [totalCarb, setTotalCarb] = useState('');
     const [totalProtein, setTotalProtein] = useState('');
     const [totalFat, setTotalFat] = useState('');
 
-    const calTotalCalories = () => {
-        foodList.map(food => food.calories);
-    }
+    const [dietFoods, setDietFoods] = useState([]);
+    const [mainImg, setMainImg] = useState('');
+    const [foods, setFoods] = useState([]);
 
-    const dataQuery = blankToQuery(`100g 닭가슴살 100g 치즈 100g 포도`);
+    const morningData = state[0];
+    const afternoonData = state[1];
+    const eveningData = state[2];
 
-    const fetchData = async () => {
-    try{
-        const {data} = await Api.get(`/foods/selected?info=${dataQuery}`);
-        setFoodList(data);
-    } catch(err) {
-        console.log(err);
-    }};
+    // const getMorningData = async () => {
+    //     try {
+    //         const { data } = await Api.get(`/foods/selected?info=${morningData}`);
+    //         setFoods([
+    //             ...foods,
+    //             data
+    //         ]);
+    //         console.log(foods);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
-    useEffect(()=>{
-        fetchData();
-      }, []);
+    // const getAfternoonData = async () => {
+    //     try {
+    //         const { data } = await Api.get(`/foods/selected?info=${afternoonData}`);
+    //         setFoods([
+    //             ...foods,
+    //             data
+    //         ]);
+    //         console.log(foods);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
-    console.log(foodList);
-    
-    const navigate = useNavigate();
-    
-    const handleRetryButton = () => {
-        navigate('/diet', { replace: true });
+    // const getEveningData = async () => {
+    //     try {
+    //         const { data } = await Api.get(`/foods/selected?info=${eveningData}`);
+    //         setFoods([
+    //             ...foods,
+    //             data
+    //         ]);
+    //         console.log(foods);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     getMorningData();
+    //     getAfternoonData();
+    //     getEveningData();
+    // }, []);
+
+    console.log(foods);
+
+    // const mealGram = (foodList.reduce((total, currentValue) => total + currentValue., 0)).toFixed(2);
+    const mealCalories = (foods.reduce((total, currentValue) => total + currentValue.calories, 0)).toFixed(2);
+    const mealCarb = (foods.reduce((total, currentValue) => total + currentValue.carbohydrates_total_g, 0)).toFixed(2);
+    const mealProtein = (foods.reduce((total, currentValue) => total + currentValue.protein_g, 0)).toFixed(2);
+    const mealFat = (foods.reduce((total, currentValue) => total + currentValue.fat_total_g, 0)).toFixed(2);
+
+    const handleCalculate = () => {
+        setDietFoods([{ morningData, afternoonData, eveningData }]);
+        console.log(dietFoods);
     };
 
-    const handleSaveButton = async (e) => {
-        try {
-            const data = {
-                dietName,
-                totalCalories,
-                totalCarb,
-                totalProtein,
-                totalFat,
-                dietFoods,
-            };
+    const savehandler = async () => {
+        const postData = {
+            name,
+            totalCalories,
+            totalCarb,
+            totalProtein,
+            totalFat,
+            dietFoods
+        };
 
-            if (dietName === '') {
-                alert("식단 이름을 입력해주세요.");
-            } else {
-                await Api.post('/diets/addDiet', data);
-                alert("식단 저장을 완료했습니다.")
-                navigate('/diet/list', { replace: true });
-            }
-        } catch(err) {
-            console.log('식단 이름 입력 실패', err);
-        }
+        handleCalculate();
+
+        // await Api.post('/diets/addDiet', postData);
+        // navigate(`/diet/list`);
+        alert('저장하시겠습니까?');
+        navigate(`/diet/list`);
     };
+
+    const retryhandler = () => {
+        navigate(`/diet`);
+    };
+
+    // const handleSaveButton = async (e) => {
+    //     try {
+    //         const data = {
+    //             dietName,
+    //             totalCalories,
+    //             totalCarb,
+    //             totalProtein,
+    //             totalFat,
+    //             dietFoods,
+    //         };
+
+    //         if (dietName === '') {
+    //             alert("식단 이름을 입력해주세요.");
+    //         } else {
+    //             await Api.post('/diets/addDiet', data);
+    //             alert("식단 저장을 완료했습니다.")
+    //             navigate('/diet/list', { replace: true });
+    //         }
+    //     } catch(err) {
+    //         console.log('식단 이름 입력 실패', err);
+    //     }
+    // };
 
     return(
         <>
@@ -85,7 +144,6 @@ function DietCalculate() {
                         <SearchBox>
                             <SearchInput 
                             type="search"
-                            value={dietName}
                             placeholder="식단 이름을 입력하세요"
                             />
                         </SearchBox>
@@ -106,16 +164,46 @@ function DietCalculate() {
                             <CircleButton>
                             <Circle>
                                 <CircleImage
-                                    src={state}
-                                    alt="아침"
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/oatmeal.png"
+                                    alt="오트밀"
                                 />
                             </Circle>
                             </CircleButton>
-                                <ContentBedge>{state}<Gray>{state}</Gray>g</ContentBedge>
-                                <ContentBedge><Bold>칼로리</Bold><Gray>{state}</Gray>kcal</ContentBedge>
-                                <ContentBedge><Bold>탄수화물</Bold><Gray>{state}</Gray>g</ContentBedge>
-                                <ContentBedge><Bold>단백질</Bold><Gray>{state}</Gray>g</ContentBedge>
-                                <ContentBedge><Bold>지방</Bold><Gray>{state}</Gray>g</ContentBedge>
+                                <ContentBedge>오트밀<Gray>40</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>27.8</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>4.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>1</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>0.6</Gray>g</ContentBedge>
+                        </MorningContent>
+                        <MorningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/bacon.png"
+                                    alt="베이컨"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>베이컨<Gray>16</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>74.6</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0.3</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>5.4</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>5.6</Gray>g</ContentBedge>
+                        </MorningContent>
+                        <MorningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/americano.png"
+                                    alt="아메리카노"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>아메리카노<Gray>473.6</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>9</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>1.6</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>0.1</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>0.2</Gray>g</ContentBedge>
                         </MorningContent>
                         <AfternoonTitle>
                             <CircleButton>
@@ -128,6 +216,51 @@ function DietCalculate() {
                                 <H5>점심</H5>
                             </CircleButton>
                         </AfternoonTitle>
+                        <AfternoonContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/egg.png"
+                                    alt="계란"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>계란<Gray>100</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>144.3</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>12.6</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>9.4</Gray>g</ContentBedge>
+                        </AfternoonContent>
+                        <AfternoonContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/chicken-breast.png"
+                                    alt="닭가슴살"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>닭가슴살<Gray>100</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>166.2</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>31</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>3.5</Gray>g</ContentBedge>
+                        </AfternoonContent>
+                        <AfternoonContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/milk.png"
+                                    alt="우유"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>우유<Gray>100</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>42.7</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>4.9</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>3.4</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>1</Gray>g</ContentBedge>
+                        </AfternoonContent>
                         <EveningTitle>
                             <CircleButton>
                                 <Circle>
@@ -139,27 +272,72 @@ function DietCalculate() {
                                 <H5>저녁</H5>
                             </CircleButton>
                         </EveningTitle>
+                        <EveningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/brown-rice.png"
+                                    alt="현미밥"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>현미밥<Gray>210</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>235.8</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>50</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>4.9</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>1.8</Gray>g</ContentBedge>
+                        </EveningContent>
+                        <EveningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/beef.png"
+                                    alt="소고기"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>소고기<Gray>200</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>583.8</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>0</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>53.2</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>39.4</Gray>g</ContentBedge>
+                        </EveningContent>
+                        <EveningContent>
+                            <CircleButton>
+                            <Circle>
+                                <CircleImage
+                                    src="https://elice-team17.s3.ap-northeast-2.amazonaws.com/foods/avocado.png"
+                                    alt="아보카도"
+                                />
+                            </Circle>
+                            </CircleButton>
+                                <ContentBedge>아보카도<Gray>136</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>칼로리</Bold><Gray>227.3</Gray>kcal</ContentBedge>
+                                <ContentBedge><Bold>탄수화물</Bold><Gray>11.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>단백질</Bold><Gray>2.7</Gray>g</ContentBedge>
+                                <ContentBedge><Bold>지방</Bold><Gray>21.2</Gray>g</ContentBedge>
+                        </EveningContent>
                         <TotalWrapper>
                             <TotalCal>
                                 <H6>총 칼로리</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
+                                <ContentBedge><Gray>1,511.5</Gray>kcal</ContentBedge>
                             </TotalCal>
                             <TotalCarbo>
                                 <H6>총 탄수화물</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
+                                <ContentBedge><Gray>73.9</Gray>kcal</ContentBedge>
                             </TotalCarbo>
                             <TotalPro>
                                 <H6>총 단백질</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
+                                <ContentBedge><Gray>114.3</Gray>kcal</ContentBedge>
                             </TotalPro>
                             <TotalFat>
                                 <H6>총 지방</H6>
-                                <ContentBedge><Gray>371.08</Gray>kcal</ContentBedge>
+                                <ContentBedge><Gray>82.7</Gray>kcal</ContentBedge>
                             </TotalFat>
                         </TotalWrapper>
                         <CalculateWrapper>
-                            <CalculateBtn onClick={handleSaveButton}>저장하기</CalculateBtn>
-                            <RetryBtn onClick={handleRetryButton}>다시하기</RetryBtn>
+                            <CalculateBtn onClick={savehandler}>저장하기</CalculateBtn>
+                            <RetryBtn onClick={retryhandler}>다시하기</RetryBtn>
                         </CalculateWrapper>
                     </Content>
                 </Header>
@@ -251,6 +429,18 @@ const Content = styled.div`
 `;
 
 const MorningContent = styled.div`
+    display: flex;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    align-items: center;
+`;
+const AfternoonContent = styled.div`
+    display: flex;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    align-items: center;
+`;
+const EveningContent = styled.div`
     display: flex;
     margin-top: 2rem;
     margin-left: 2rem;
@@ -365,7 +555,7 @@ const ContentBedge = styled.button`
     padding-left: 0.5rem;
     border-radius: 5px;
     color: #000000;
-    font-weight: 500;
+    font-weight: 600;
     background-color: #FFFFFF;
 `;
 
