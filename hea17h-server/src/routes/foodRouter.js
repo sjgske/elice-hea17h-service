@@ -38,7 +38,7 @@ foodRouter.get(
 
         // db에서 한글이름을 영문명으로 변환
         const convertedInfo = await foodService.getFoodNameEng(infoArray);
-
+        console.log('convertedInfo1', convertedInfo);
         // CalorieNinjas 외부 API에 정보 요청
         request.get(
             {
@@ -49,16 +49,18 @@ foodRouter.get(
             },
             async (error, response, body) => {
                 if (error) {
-                    res.status(400).json({
-                        status: 'Request failed:',
-                        message: error,
-                    });
+                    throw new Error('Request failed');
+                    // res.status(400).json({
+                    //     status: 'Request failed:',
+                    //     message: error,
+                    // });
                 } else if (response.statusCode !== 200) {
-                    res.status(404).json({
-                        status: 'Error:',
-                        statusCode: response.statusCode,
-                        message: body.toString('utf8'),
-                    });
+                    throw new Error('Request failed');
+                    // res.status(404).json({
+                    //     status: 'Error:',
+                    //     statusCode: response.statusCode,
+                    //     message: body.toString('utf8'),
+                    // });
                 }
                 // 돌아온 정보를 다시 한글로 변환하여 프론트로 전달
                 const foodInfo = await foodService.formatFoodInfo(body);
@@ -67,7 +69,6 @@ foodRouter.get(
         );
     }),
 );
-
 // 음식 id로 검색 후 상세 정보 가져옴
 foodRouter.get(
     '/:foodId',
