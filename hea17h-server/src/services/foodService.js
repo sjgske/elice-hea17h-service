@@ -73,11 +73,19 @@ class FoodService {
         let result = '';
 
         for (let i = 0; i < foodInfo.length; i += 1) {
-            // eslint-disable-next-line no-await-in-loop
-            const food = await this.foodModel.findByName(foodInfo[i]);
-            if (!food) {
+            // 홀수 일때는 중량으로 그냥 기록
+            if (i % 2 === 0) {
                 result += `${foodInfo[i]} `;
+
+                // 짝수 일때는 db에서 음식정보 검색 후 없으면 오류 발생
             } else {
+                const food = await this.foodModel.findByName(foodInfo[i]);
+
+                if (!food) {
+                    throw new Error(
+                        '해당 음식에 대한 정보가 없습니다. 다시 한 번 확인해 주세요.',
+                    );
+                }
                 result += `${food.nameEng} `;
             }
         }
