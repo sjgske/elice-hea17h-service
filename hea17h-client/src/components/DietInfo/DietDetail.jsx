@@ -15,6 +15,7 @@ function DietDetail({ meal }) {
         imgName = 'night';
     }
 
+    console.log(meal);
     return (
         <DietContainer key={meal._id}>
             <ImageBadgeContainer>
@@ -26,8 +27,8 @@ function DietDetail({ meal }) {
             {meal.foods.map(({ category, categoryFoods }) => {
                 let calorieByCategory = 0;
 
-                categoryFoods.forEach(({ count, foodCalories }) => {
-                    calorieByCategory += count * foodCalories;
+                categoryFoods.forEach(({ foodCalories }) => {
+                    calorieByCategory += 1 * foodCalories;
                 });
 
                 return (
@@ -39,12 +40,12 @@ function DietDetail({ meal }) {
                             </Badge>
                         </div>
                         {categoryFoods.map(
-                            ({ image, name, count, foodCalories, _id }) => (
+                            ({ image, name, foodCalories, _id }) => (
                                 <div key={_id}>
                                     <ImageBadge imgUrl={image} />
                                     <Badge fontColor="#999999">
-                                        {`${name} X ${count} = ${
-                                            foodCalories * count
+                                        {`${name} X ${1} = ${
+                                            foodCalories * 1
                                         } kcal`}
                                     </Badge>
                                 </div>
