@@ -38,7 +38,7 @@ foodRouter.get(
 
         // db에서 한글이름을 영문명으로 변환
         const convertedInfo = await foodService.getFoodNameEng(infoArray);
-        console.log('convertedInfo1', convertedInfo);
+
         // CalorieNinjas 외부 API에 정보 요청
         request.get(
             {
