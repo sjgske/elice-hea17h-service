@@ -480,7 +480,6 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                                             <Calorie>
                                                 칼로리
                                                 <strong>
-                                                    {' '}
                                                     {food.foodCalories}
                                                 </strong>
                                                 kcal
@@ -489,10 +488,7 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                                         <Badge>
                                             <Calorie>
                                                 탄수화물
-                                                <strong>
-                                                    {' '}
-                                                    {food.foodCarb}
-                                                </strong>
+                                                <strong>{food.foodCarb}</strong>
                                                 g
                                             </Calorie>
                                         </Badge>
@@ -500,7 +496,6 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                                             <Calorie>
                                                 단백질
                                                 <strong>
-                                                    {' '}
                                                     {food.foodProtein}
                                                 </strong>
                                                 g
@@ -508,7 +503,6 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
                                         </Badge>
                                         <Badge>
                                             <Calorie>
-                                                지방{' '}
                                                 <strong> {food.foodFat}</strong>
                                                 g
                                             </Calorie>
