@@ -321,7 +321,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                             <SpaceBottom style={{ position: 'relative' }}>
                                 <H3>코멘트</H3>
                                 <GreyText>
-                                    {comment[page].expert.certificate[0].name}
+                                    {comment[page].expert?.certificate[0].name}
                                     <br />
                                     전문가의 코멘트입니다.
                                     <small
@@ -335,13 +335,13 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                                 <HoverDiv className={!hover ? 'hidden' : null}>
                                     <h5>전문가 정보</h5>
                                     <span>
-                                        {comment[page].expert.certificate
+                                        {comment[page].expert?.certificate
                                             .map(el => el.name)
                                             .join(' / ')}
                                     </span>
                                     <img
                                         src={
-                                            comment[page].expert.certificate[0]
+                                            comment[page].expert?.certificate[0]
                                                 .image
                                         }
                                         alt="자격증"

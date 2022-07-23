@@ -5,10 +5,22 @@ import ImageBadge from './ImageBadge';
 import Badge from '../Badge';
 
 function DietDetail({ meal }) {
+    let imgName = '';
+
+    if (meal.mealType === '아침') {
+        imgName = 'morning';
+    } else if (meal.mealType === '점심') {
+        imgName = 'afternoon';
+    } else {
+        imgName = 'night';
+    }
+
     return (
         <DietContainer key={meal._id}>
             <ImageBadgeContainer>
-                <ImageBadge imgUrl={meal.mainImg} />
+                <ImageBadge
+                    imgUrl={`${process.env.PUBLIC_URL}/assets/${imgName}.png`}
+                />
                 <p>{meal.mealType}</p>
             </ImageBadgeContainer>
             {meal.foods.map(({ category, categoryFoods }) => {
