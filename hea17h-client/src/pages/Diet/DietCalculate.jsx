@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
-import {blankToQuery} from '../../utils/UsefulFunction';
 
 function DietCalculate() {
     const navigate = useNavigate();
@@ -85,47 +84,33 @@ function DietCalculate() {
     };
 
     const savehandler = async () => {
-        const postData = {
-            name,
-            totalCalories,
-            totalCarb,
-            totalProtein,
-            totalFat,
-            dietFoods
-        };
+        try {
+            const postData = {
+                name,
+                totalCalories,
+                totalCarb,
+                totalProtein,
+                totalFat,
+                dietFoods
+            };
 
+            if (name === '') {
+                alert("식단 이름을 입력해주세요.");
+            } else {
+                await Api.post('/diets/addDiet', postData);
+                alert("식단 저장을 완료했습니다.");
+                navigate('/diet/list');
+            }
+        } catch(err) {
+            console.log('식단 이름 입력 실패', err);
+        }
+    
         handleCalculate();
-
-        // await Api.post('/diets/addDiet', postData);
-
-        // navigate(`/diet/list`);
     };
+
     const retryhandler = () => {
         navigate(`/diet`);
     };
-
-    // const handleSaveButton = async (e) => {
-    //     try {
-    //         const data = {
-    //             dietName,
-    //             totalCalories,
-    //             totalCarb,
-    //             totalProtein,
-    //             totalFat,
-    //             dietFoods,
-    //         };
-
-    //         if (dietName === '') {
-    //             alert("식단 이름을 입력해주세요.");
-    //         } else {
-    //             await Api.post('/diets/addDiet', data);
-    //             alert("식단 저장을 완료했습니다.")
-    //             navigate('/diet/list', { replace: true });
-    //         }
-    //     } catch(err) {
-    //         console.log('식단 이름 입력 실패', err);
-    //     }
-    // };
 
     return(
         <>
@@ -161,13 +146,27 @@ function DietCalculate() {
                                 </Circle>
                                 <H5>아침</H5>
                                 </CircleButton>
-                                    <ContentBedge>s<Gray>s</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>칼로리</Bold><Gray>{mealCalories}</Gray>kcal</ContentBedge>
-                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{mealCarb}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>단백질</Bold><Gray>{mealProtein}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>지방</Bold><Gray>{mealFat}</Gray>g</ContentBedge>
                             </MorningContent>
-                            {/* <AfternoonTitle>
+                            {   morningData ?
+                                    morningData.map(food =>(
+                                        <MorningContent>
+                                        <CircleButton>
+                                        <Circle>
+                                            <CircleImage
+                                                src={`${food.image}`}
+                                                alt={`${food.name}`}
+                                            />
+                                        </Circle>
+                                        </CircleButton>
+                                            <ContentBedge>{food.name}<Gray>{food.serving_size_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>칼로리</Bold><Gray>{food.calories}</Gray>kcal</ContentBedge>
+                                            <ContentBedge><Bold>탄수화물</Bold><Gray>{food.carbohydrates_total_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>단백질</Bold><Gray>{food.protein_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>지방</Bold><Gray>{food.fat_total_g}</Gray>g</ContentBedge>
+                                        </MorningContent>
+                                    )) : null
+                            }
+                            <AfternoonTitle>
                                 <CircleButton>
                                     <Circle>
                                         <CircleImage
@@ -177,12 +176,26 @@ function DietCalculate() {
                                     </Circle>
                                     <H5>점심</H5>
                                 </CircleButton>
-                                <ContentBedge>{state}<Gray>{state}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>칼로리</Bold><Gray>{dietFoods[1].mealCalories}</Gray>kcal</ContentBedge>
-                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{dietFoods[1].mealCarb}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>단백질</Bold><Gray>{dietFoods[1].mealProtein}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>지방</Bold><Gray>{dietFoods[1].mealFat}</Gray>g</ContentBedge>
                             </AfternoonTitle>
+                            {   afternoonData ?
+                                    afternoonData.map(food =>(
+                                        <MorningContent>
+                                        <CircleButton>
+                                        <Circle>
+                                            <CircleImage
+                                                src={`${food.image}`}
+                                                alt={`${food.name}`}
+                                            />
+                                        </Circle>
+                                        </CircleButton>
+                                            <ContentBedge>{food.name}<Gray>{food.serving_size_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>칼로리</Bold><Gray>{food.calories}</Gray>kcal</ContentBedge>
+                                            <ContentBedge><Bold>탄수화물</Bold><Gray>{food.carbohydrates_total_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>단백질</Bold><Gray>{food.protein_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>지방</Bold><Gray>{food.fat_total_g}</Gray>g</ContentBedge>
+                                        </MorningContent>
+                                    )) : null
+                            }
                             <EveningTitle>
                                 <CircleButton>
                                     <Circle>
@@ -193,28 +206,42 @@ function DietCalculate() {
                                     </Circle>
                                     <H5>저녁</H5>
                                 </CircleButton>
-                                <ContentBedge>{state}<Gray>{state}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>칼로리</Bold><Gray>{dietFoods[2].mealCalories}</Gray>kcal</ContentBedge>
-                                    <ContentBedge><Bold>탄수화물</Bold><Gray>{dietFoods[2].mealCarb}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>단백질</Bold><Gray>{dietFoods[2].mealProtein}</Gray>g</ContentBedge>
-                                    <ContentBedge><Bold>지방</Bold><Gray>{dietFoods[2].mealFat}</Gray>g</ContentBedge>
-                            </EveningTitle> */}
+                            {   eveningData ?
+                                    eveningData.map(food =>(
+                                        <MorningContent>
+                                        <CircleButton>
+                                        <Circle>
+                                            <CircleImage
+                                                src={`${food.image}`}
+                                                alt={`${food.name}`}
+                                            />
+                                        </Circle>
+                                        </CircleButton>
+                                            <ContentBedge>{food.name}<Gray>{food.serving_size_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>칼로리</Bold><Gray>{food.calories}</Gray>kcal</ContentBedge>
+                                            <ContentBedge><Bold>탄수화물</Bold><Gray>{food.carbohydrates_total_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>단백질</Bold><Gray>{food.protein_g}</Gray>g</ContentBedge>
+                                            <ContentBedge><Bold>지방</Bold><Gray>{food.fat_total_g}</Gray>g</ContentBedge>
+                                        </MorningContent>
+                                    )) : null
+                            }
+                            </EveningTitle>
                             <TotalWrapper>
                                 <TotalCal>
                                     <H6>총 칼로리</H6>
-                                    <ContentBedge><Gray>{totalCalories}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{mealCalories}</Gray>kcal</ContentBedge>
                                 </TotalCal>
                                 <TotalCarbo>
                                     <H6>총 탄수화물</H6>
-                                    <ContentBedge><Gray>{totalCarb}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{mealCarb}</Gray>kcal</ContentBedge>
                                 </TotalCarbo>
                                 <TotalPro>
                                     <H6>총 단백질</H6>
-                                    <ContentBedge><Gray>{totalProtein}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{mealProtein}</Gray>kcal</ContentBedge>
                                 </TotalPro>
                                 <TotalFat>
                                     <H6>총 지방</H6>
-                                    <ContentBedge><Gray>{totalFat}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{mealFat}</Gray>kcal</ContentBedge>
                                 </TotalFat>
                             </TotalWrapper>
                             <CalculateWrapper>
