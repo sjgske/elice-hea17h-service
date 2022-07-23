@@ -64,28 +64,25 @@ function DietCalculate() {
     }, []);
 
     // 계산 로직
-    const reducer = (acc, cur) => acc + cur;
-    const morningCalories = morningfoods.map(food => food.calories).reduce(reducer).toFixed(1);
-    const afternoonCalories = afternoonfoods.map(food => food.calories).reduce(reducer).toFixed(1);
-    const eveningCalories = eveningfoods.map(food => food.calories).reduce(reducer).toFixed(1);
-    const mealCalories = morningCalories + afternoonCalories + eveningCalories;
+    const morningCalories = morningfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0);
+    const afternoonCalories = afternoonfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0);
+    const eveningCalories = eveningfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0);
+    const totalCalories = (morningCalories + afternoonCalories + eveningCalories).toFixed(1);
 
-    const morningCarbos = morningfoods.map(food => food.carbohydrates_total_g).reduce(reducer).toFixed(1);
-    const afternoonCarbos = afternoonfoods.map(food => food.carbohydrates_total_g).reduce(reducer).toFixed(1);
-    const eveningCarbos = eveningfoods.map(food => food.carbohydrates_total_g).reduce(reducer).toFixed(1);
-    const mealCarbos = morningCarbos + afternoonCarbos + eveningCarbos;
+    const morningCarbos = morningfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0);
+    const afternoonCarbos = afternoonfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0);
+    const eveningCarbos = eveningfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0);
+    const totalCarbos = (morningCarbos + afternoonCarbos + eveningCarbos).toFixed(1);
 
-    const morningProteins = morningfoods.map(food => food.protein_g).reduce(reducer).toFixed(1);
-    const afternoonProteins = afternoonfoods.map(food => food.protein_g).reduce(reducer).toFixed(1);
-    const eveningProteins = eveningfoods.map(food => food.protein_g).reduce(reducer).toFixed(1);
-    const mealProteins = morningProteins + afternoonProteins + eveningProteins;
-
-    const morningFats = morningfoods.map(food => food.fat_total_g).reduce(reducer).toFixed(1);
-    const afternoonFats = afternoonfoods.map(food => food.fat_total_g).reduce(reducer).toFixed(1);
-    const eveningFats = eveningfoods.map(food => food.fat_total_g).reduce(reducer).toFixed(1);
-    const mealFats = morningFats + afternoonFats + eveningFats;
+    const morningProteins = morningfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0);
+    const afternoonProteins = afternoonfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0);
+    const eveningProteins = eveningfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0);
+    const totalProteins = (morningProteins + afternoonProteins + eveningProteins).toFixed(1);
     
-    
+    const morningFats = morningfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0);
+    const afternoonFats = afternoonfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0);
+    const eveningFats = eveningfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0);
+    const totalFats = (morningFats + afternoonFats + eveningFats).toFixed(1);
 
     const handleCalculate = () => {
         setDietFoods([{ morningfoods, afternoonfoods, eveningfoods }]);
@@ -237,19 +234,19 @@ function DietCalculate() {
                             <TotalWrapper>
                                 <TotalCal>
                                     <H6>총 칼로리</H6>
-                                    <ContentBedge><Gray>{mealCalories}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{totalCalories}</Gray>kcal</ContentBedge>
                                 </TotalCal>
                                 <TotalCarbo>
                                     <H6>총 탄수화물</H6>
-                                    <ContentBedge><Gray>{mealCarbos}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{totalCarbos}</Gray>g</ContentBedge>
                                 </TotalCarbo>
                                 <TotalPro>
                                     <H6>총 단백질</H6>
-                                    <ContentBedge><Gray>{mealProteins}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{totalProteins}</Gray>g</ContentBedge>
                                 </TotalPro>
                                 <TotalFat>
                                     <H6>총 지방</H6>
-                                    <ContentBedge><Gray>{mealFats}</Gray>kcal</ContentBedge>
+                                    <ContentBedge><Gray>{totalFats}</Gray>g</ContentBedge>
                                 </TotalFat>
                             </TotalWrapper>
                             <CalculateWrapper>
