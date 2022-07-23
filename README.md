@@ -66,7 +66,7 @@
 <br>
 
 ### 🥕 프로젝트 자료
-- [개발 자료](url)
+- [기술 문서](https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team17/hea17h-service/-/wikis/17%ED%8C%80-hea17h-service-%EA%B8%B0%EC%88%A0%EB%AC%B8%EC%84%9C)
 - [최종 발표 PPT](https://docs.google.com/presentation/d/1_X8iHxnb_eN-TJPrqon1h_iyMeZyavbM21w7E3-WXwk/edit?usp=sharing)
 
 <br>
