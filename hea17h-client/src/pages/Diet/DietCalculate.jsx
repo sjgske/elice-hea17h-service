@@ -12,6 +12,7 @@ function DietCalculate() {
     const foodInline = state.join('');
 
     const [name, setName] = useState('');
+    const [mainImg, setMainImg] = useState('');
 
     const [dietFoods, setDietFoods] = useState([]);
 
@@ -27,6 +28,7 @@ function DietCalculate() {
         try {
             const { data } = await Api.get(`/foods/selected?info=${morningData}`);
             setMornignFoods(data);
+            setMainImg(data[0].image);
             console.log(morningfoods);
         } catch (err) {
             console.log(err);
@@ -37,6 +39,7 @@ function DietCalculate() {
         try {
             const { data } = await Api.get(`/foods/selected?info=${afternoonData}`);
             setAfternoonFoods(data);
+            setMainImg(data[0].image);
             console.log(afternoonfoods);
         } catch (err) {
             console.log(err);
@@ -47,6 +50,7 @@ function DietCalculate() {
         try {
             const { data } = await Api.get(`/foods/selected?info=${eveningData}`);
             setEveningFoods(data);
+            setMainImg(data[0].image);
             console.log(eveningfoods);
         } catch (err) {
             console.log(err);
