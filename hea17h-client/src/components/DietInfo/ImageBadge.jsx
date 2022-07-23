@@ -14,6 +14,15 @@ const Div = styled.div`
     height: 5rem;
     border-radius: 50%;
     background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > img {
+        width: 75%;
+        height: 75%;
+        object-fit: contain;
+    }
 
     @media (max-width: 768px) {
         width: 3rem;
