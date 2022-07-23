@@ -156,10 +156,7 @@ function DietList() {
             const createdDate = new Date(el.createdAt).getTime();
             return (
                 createdDate >= new Date(startDate).getTime() &&
-                createdDate <
-                    new Date(
-                        new Date(endDate).getTime() + 1000 * 60 * 60 * 15,
-                    ).getTime()
+                createdDate < new Date(endDate).getTime() + 1000 * 60 * 60 * 15
             );
         });
         setFiltered(filteredData);
