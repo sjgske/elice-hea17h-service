@@ -5,12 +5,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TopButton from '../../components/TopButton';
 import Nav from '../../components/Nav/index';
 import * as Api from '../../api';
+import Loading from '../../components/Loading';
 
 function DietCalculate() {
     const navigate = useNavigate();
     const { state } = useLocation();
     // const foodInline = state.join('');
 
+    const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const [mainImg, setMainImg] = useState('');
 
@@ -26,33 +28,42 @@ function DietCalculate() {
 
     const getMorningData = async () => {
         try {
+            setLoading(true);
             const { data } = await Api.get(`/foods/selected?info=${morningData}`);
             setMornignFoods(data);
             setMainImg(data[0].image);
             console.log(morningfoods);
+            setLoading(false);
         } catch (err) {
+            setLoading(false);
             console.log(err);
         }
     };
 
     const getAfternoonData = async () => {
         try {
+            setLoading(true);
             const { data } = await Api.get(`/foods/selected?info=${afternoonData}`);
             setAfternoonFoods(data);
             setMainImg(data[0].image);
             console.log(afternoonfoods);
+            setLoading(false);
         } catch (err) {
+            setLoading(false);
             console.log(err);
         }
     };
 
     const getEveningData = async () => {
         try {
+            setLoading(true);
             const { data } = await Api.get(`/foods/selected?info=${eveningData}`);
             setEveningFoods(data);
             setMainImg(data[0].image);
             console.log(eveningfoods);
+            setLoading(false);
         } catch (err) {
+            setLoading(false);
             console.log(err);
         }
     };
@@ -64,25 +75,25 @@ function DietCalculate() {
     }, []);
 
     // 계산 로직
-    const morningCalories = morningfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0);
-    const afternoonCalories = afternoonfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0);
-    const eveningCalories = eveningfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0);
-    const totalCalories = (morningCalories + afternoonCalories + eveningCalories).toFixed(1);
+    const morningCalories = Number(morningfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const afternoonCalories = Number(afternoonfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const eveningCalories = Number(eveningfoods.map(food => food.calories).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const totalCalories = Number((morningCalories + afternoonCalories + eveningCalories).toFixed(1));
 
-    const morningCarbos = morningfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0);
-    const afternoonCarbos = afternoonfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0);
-    const eveningCarbos = eveningfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0);
-    const totalCarbos = (morningCarbos + afternoonCarbos + eveningCarbos).toFixed(1);
+    const morningCarbos = Number(morningfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const afternoonCarbos = Number(afternoonfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const eveningCarbos = Number(eveningfoods.map(food => food.carbohydrates_total_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const totalCarbos = Number((morningCarbos + afternoonCarbos + eveningCarbos).toFixed(1));
 
-    const morningProteins = morningfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0);
-    const afternoonProteins = afternoonfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0);
-    const eveningProteins = eveningfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0);
-    const totalProteins = (morningProteins + afternoonProteins + eveningProteins).toFixed(1);
+    const morningProteins = Number(morningfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const afternoonProteins = Number(afternoonfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const eveningProteins = Number(eveningfoods.map(food => food.protein_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const totalProteins = Number((morningProteins + afternoonProteins + eveningProteins).toFixed(1));
     
-    const morningFats = morningfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0);
-    const afternoonFats = afternoonfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0);
-    const eveningFats = eveningfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0);
-    const totalFats = (morningFats + afternoonFats + eveningFats).toFixed(1);
+    const morningFats = Number(morningfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const afternoonFats = Number(afternoonfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const eveningFats = Number(eveningfoods.map(food => food.fat_total_g).reduce((acc, cur) => acc+cur, 0).toFixed(1));
+    const totalFats = Number((morningFats + afternoonFats + eveningFats).toFixed(1));
 
     const handleCalculate = () => {
         setDietFoods([{ morningfoods, afternoonfoods, eveningfoods }]);
@@ -90,27 +101,47 @@ function DietCalculate() {
     };
 
     const savehandler = async () => {
-        // try {
-        //     const postData = {
-        //         name,
-        //         totalCalories,
-        //         totalCarb,
-        //         totalProtein,
-        //         totalFat,
-        //         dietFoods
-        //     };
+        try {
+            const postData = {
+                name,
+                totalCalories,
+                totalCarb: totalCarbos,
+                totalProtein: totalProteins,
+                totalFat : totalFats,
+                dietFoods : [{
+                    mealType: "아침",
+                    mainImg: morningfoods[0].image,
+                    foods: [{
+                        category: morningfoods.category,
+                        categoryFoods: [{
+                            name: morningfoods.name, // 안들어가져서 morningfoods와 구조
+                            count: 1, // 없애기
+                            image: morningfoods.image,
+                            foodCalories: morningfoods.image,
+                            foodCarbs: morningfoods.calories,
+                            foodProtein: morningfoods.protein_g,
+                            foodFat: morningfoods.fat_total_g
+                        }]
+                    },],
+                    mealCalories: morningCalories,
+                    mealCarb: morningCarbos,
+                    mealProtein: morningProteins,
+                    mealFat: morningFats
+                },
+            ]
+            };
 
-        //     if (name === '') {
-        //         alert("식단 이름을 입력해주세요.");
-        //     } else {
-        //         await Api.post('/diets/addDiet', postData);
-        //         alert("식단 저장을 완료했습니다.");
-        //         navigate('/diet/list');
-        //     }
-        // } catch(err) {
-        //     console.log('식단 이름 입력 실패', err);
-        // }
-        // handleCalculate();
+            if (name === '') {
+                alert("식단 이름을 입력해주세요.");
+            } else {
+                await Api.post('/diets/addDiet', postData);
+                alert("식단 저장을 완료했습니다.");
+                navigate('/diet/list');
+            }
+        } catch(err) {
+            console.log('식단 이름 입력 실패', err);
+        }
+        handleCalculate();
     };
 
     const retryhandler = () => {
@@ -152,6 +183,7 @@ function DietCalculate() {
                                 <H5>아침</H5>
                                 </CircleButton>
                             </MorningContent>
+                            {loading ? <Loading /> : null}
                             {   morningfoods ?
                                     morningfoods.map(food =>(
                                         <MorningContent>
@@ -182,6 +214,7 @@ function DietCalculate() {
                                     <H5>점심</H5>
                                 </CircleButton>
                             </MorningContent>
+                            {loading ? <Loading /> : null}
                             {   afternoonfoods ?
                                     afternoonfoods.map(food =>(
                                         <MorningContent>
@@ -212,6 +245,7 @@ function DietCalculate() {
                                     <H5>저녁</H5>
                                 </CircleButton>
                             </MorningContent>
+                            {loading ? <Loading /> : null}
                             {   eveningfoods ?
                                     eveningfoods.map(food =>(
                                     <MorningContent>
