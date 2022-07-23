@@ -126,7 +126,7 @@ function Certify() {
 
         try {
             const res = await axios.post(
-                'http://localhost:5000/users/registerExpert',
+                'http://34.168.201.109:8080/users/registerExpert',
                 formData,
                 config,
             );

@@ -5,17 +5,30 @@ import ImageBadge from './ImageBadge';
 import Badge from '../Badge';
 
 function DietDetail({ meal }) {
+    let imgName = '';
+
+    if (meal.mealType === '아침') {
+        imgName = 'morning';
+    } else if (meal.mealType === '점심') {
+        imgName = 'afternoon';
+    } else {
+        imgName = 'night';
+    }
+
+    console.log(meal);
     return (
         <DietContainer key={meal._id}>
             <ImageBadgeContainer>
-                <ImageBadge imgUrl={meal.mainImg} />
+                <ImageBadge
+                    imgUrl={`${process.env.PUBLIC_URL}/assets/${imgName}.png`}
+                />
                 <p>{meal.mealType}</p>
             </ImageBadgeContainer>
             {meal.foods.map(({ category, categoryFoods }) => {
                 let calorieByCategory = 0;
 
-                categoryFoods.forEach(({ count, foodCalories }) => {
-                    calorieByCategory += count * foodCalories;
+                categoryFoods.forEach(({ foodCalories }) => {
+                    calorieByCategory += 1 * foodCalories;
                 });
 
                 return (
@@ -27,12 +40,12 @@ function DietDetail({ meal }) {
                             </Badge>
                         </div>
                         {categoryFoods.map(
-                            ({ image, name, count, foodCalories, _id }) => (
+                            ({ image, name, foodCalories, _id }) => (
                                 <div key={_id}>
                                     <ImageBadge imgUrl={image} />
                                     <Badge fontColor="#999999">
-                                        {`${name} X ${count} = ${
-                                            foodCalories * count
+                                        {`${name} X ${1} = ${
+                                            foodCalories * 1
                                         } kcal`}
                                     </Badge>
                                 </div>

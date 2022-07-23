@@ -34,12 +34,12 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
     return !clickEditBtn ? (
         <div>
             <ExpertInfo>
-                {expert.certificate.map(({ name }) => name).join(' / ')}
+                {expert?.certificate.map(({ name }) => name).join(' / ')}
             </ExpertInfo>
             <CommentBox width="100%" color="white" borderColor="#D9D9D9">
                 {comment}
             </CommentBox>
-            {expert.user === myId && (
+            {expert?.user === myId && (
                 <ButtonContainer>
                     <Button width="10rem" color="#51CF66" onClick={handleClick}>
                         수정
