@@ -25,6 +25,7 @@ class FoodService {
                 '해당 카테고리 내역이 없습니다. 다시 한 번 확인해 주세요.',
             );
         }
+        // eslint-disable-next-line no-underscore-dangle
         const categoryId = categoryInfo._id;
 
         const foods = await this.foodModel.findByCategory(categoryId);
@@ -67,16 +68,22 @@ class FoodService {
         return food;
     }
 
-    // 음식 한글 이름으로 영어 이름 찾기
+     // 음식 한글 이름으로 영어 이름 찾기
     async getFoodNameEng(foodInfo) {
         let result = '';
 
-        for (let i = 0; i < foodInfo.length; i++) {
-            let food = await this.foodModel.findByName(foodInfo[i]);
-            if (!food) {
-                result += foodInfo[i] + ' ';
+        for (let i = 0; i < foodInfo.length; i += 1) {
+            // 숫자가 있을때는 그냥 기록
+            if (/^[0-9]/.test(foodInfo[i])) {
+                result += `${foodInfo[i]} `;
+
+                // 음식 이름 문자가 있을 때는 db에서 영문이름 반환
             } else {
-                result += food.nameEng + ' ';
+                const food = await this.foodModel.findByName(foodInfo[i]);
+
+                if (food) {
+                    result += `${food.nameEng} `;
+                }
             }
         }
         return result;
@@ -87,8 +94,11 @@ class FoodService {
         const conversion = JSON.parse(foodInfo);
         const initialInfo = conversion.items;
 
-        for (let i = 0; i < initialInfo.length; i++) {
-            let food = await this.foodModel.findByNameEng(initialInfo[i].name);
+        for (let i = 0; i < initialInfo.length; i += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const food = await this.foodModel.findByNameEng(
+                initialInfo[i].name,
+            );
             initialInfo[i].name = food.name;
             initialInfo[i].category = food.category.name;
             initialInfo[i].image = food.image;

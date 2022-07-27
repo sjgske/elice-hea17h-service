@@ -1,36 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { login } from '../../slices/UserSlice';
+import * as Api from '../../api';
+// import { validateId } from '../../utils/UsefulFunction';
+
+const KAKAO_AUTH_URL = process.env.REACT_APP_KAKAO_AUTH_URL;
+const NAVER_AUTH_URL = process.env.REACT_APP_NAVER_AUTH_URL;
 
 function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [id, setId] = useState('');
+    const [password, setPassword] = useState('');
+    const [isCorrect, setIsCorrect] = useState(false);
+
+    const handleIsCorrect = () => {
+        setIsCorrect(!isCorrect);
+    };
+
+    const handleLogin = async e => {
+        e.preventDefault();
+
+        if (id === '' || password === '') {
+            alert('아이디와 비밀번호를 입력해주세요.');
+        } else {
+            try {
+                const data = { id, password };
+                const res = await Api.post('/users/login', data);
+
+                const jwtToken = res.data.token;
+                localStorage.setItem('userToken', jwtToken);
+                dispatch(login(data));
+
+                navigate('/', { replace: true });
+            } catch (err) {
+                console.log('로그인 실패', err);
+                handleIsCorrect();
+            }
+        }
+    };
+
+    const handleRegisterButton = () => {
+        navigate('/signup');
+    };
+
     return (
         <Container>
             <LoginContainer>
-                <h1 style={{ marginTop: '20px' }}>로그인</h1>
+                <h1 style={{ marginTop: '40px' }}>로그인</h1>
                 <InputForm>
                     <InputText>아이디</InputText>
-                    <InputItem />
+                    <InputItem
+                        
+                        onChange={e => {
+                            setId(e.target.value);
+                        }}
+                    />
                 </InputForm>
                 <InputForm>
                     <InputText>비밀번호</InputText>
-                    <InputItem />
+                    <InputItem
+                        type="password"
+                        onChange={e => {
+                            setPassword(e.target.value);
+                        }}
+                    />
+                    {isCorrect && (
+                        <WrongPassword>
+                            비밀번호가 일치하지 않습니다.
+                        </WrongPassword>
+                    )}
                 </InputForm>
                 <SocialLoginButton>
-                    <GoogleButton>
-                        Google 계정으로 로그인
-                    </GoogleButton>
-                    <KakaoButton>
-                        카카오 계정으로 로그인
-                    </KakaoButton>
-                    <NaverButton>
-                        네이버 계정으로 로그인
-                    </NaverButton>
+                    <a href={KAKAO_AUTH_URL}>
+                        <KakaoButton>카카오 계정으로 로그인</KakaoButton>
+                    </a>
+
+                    <a href={NAVER_AUTH_URL}>
+                        <NaverButton>네이버 계정으로 로그인</NaverButton>
+                    </a>
                 </SocialLoginButton>
-                    <LoginButton>
-                        로그인
-                    </LoginButton>
-                    <CreateIdButton>
-                        계정 생성하기
-                    </CreateIdButton>
+                <LoginButton onClick={handleLogin}>로그인</LoginButton>
+                <CreateIdButton onClick={handleRegisterButton}>
+                    계정 생성하기
+                </CreateIdButton>
             </LoginContainer>
         </Container>
     );
@@ -42,7 +98,7 @@ const Container = styled.div`
     margin: 0 auto;
     padding: 0;
     background-color: #faf3e3;
-    
+
     width: 100%;
     height: 100%;
 `;
@@ -61,7 +117,8 @@ const LoginContainer = styled.div`
 `;
 
 const InputForm = styled.form`
-    margin: 10px auto;
+    margin: 0 auto;
+    margin-top: 20px;
     width: 400px;
     height: 80px;
 
@@ -81,22 +138,16 @@ const InputItem = styled.input`
     height: 40px;
 `;
 
-const SocialLoginButton = styled.div`
-    margin: 40px auto ;
+const WrongPassword = styled.h4`
+    color: red;
+    font-weight: 400;
+
+    float: left;
+    margin-left: 50px;
 `;
 
-const GoogleButton = styled.button`
-    margin: 5px 0;
-    width: 300px;
-    height: 40px;
-
-    background-color: white;
-    border: 1px solid gray;
-
-    font-weight: 600;
-    font-size: 14px;
-
-    border-radius: 5px;
+const SocialLoginButton = styled.div`
+    margin: 40px auto;
 `;
 
 const KakaoButton = styled.button`
@@ -104,12 +155,12 @@ const KakaoButton = styled.button`
     width: 300px;
     height: 40px;
 
-    background-color: #F7E600;
+    background-color: #f7e600;
     border: 1px solid transparent;
 
     font-weight: 600;
     font-size: 14px;
-    
+
     border-radius: 5px;
 `;
 
@@ -119,12 +170,12 @@ const NaverButton = styled.button`
     height: 40px;
 
     background-color: white;
-    border: 1px solid #2DB400;
-    color: #2DB400;
+    border: 1px solid #2db400;
+    color: #2db400;
 
     font-weight: 600;
     font-size: 14px;
-    
+
     border-radius: 5px;
 `;
 

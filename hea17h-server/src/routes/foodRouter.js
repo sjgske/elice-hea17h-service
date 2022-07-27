@@ -3,7 +3,7 @@ import is from '@sindresorhus/is';
 import request from 'request';
 import { asyncHandler } from '../middlewares/index.js';
 import { foodService } from '../services/index.js';
-import { upload } from '../utils/index.js';
+import { uploadFood } from '../utils/index.js';
 
 const foodRouter = Router();
 
@@ -49,16 +49,18 @@ foodRouter.get(
             },
             async (error, response, body) => {
                 if (error) {
-                    res.status(400).json({
-                        status: 'Request failed:',
-                        message: error,
-                    });
+                    throw new Error('Request failed');
+                    // res.status(400).json({
+                    //     status: 'Request failed:',
+                    //     message: error,
+                    // });
                 } else if (response.statusCode !== 200) {
-                    res.status(404).json({
-                        status: 'Error:',
-                        statusCode: response.statusCode,
-                        message: body.toString('utf8'),
-                    });
+                    throw new Error('Request failed');
+                    // res.status(404).json({
+                    //     status: 'Error:',
+                    //     statusCode: response.statusCode,
+                    //     message: body.toString('utf8'),
+                    // });
                 }
                 // 돌아온 정보를 다시 한글로 변환하여 프론트로 전달
                 const foodInfo = await foodService.formatFoodInfo(body);
@@ -67,7 +69,6 @@ foodRouter.get(
         );
     }),
 );
-
 // 음식 id로 검색 후 상세 정보 가져옴
 foodRouter.get(
     '/:foodId',
@@ -81,7 +82,7 @@ foodRouter.get(
 // 음식 추가
 foodRouter.post(
     '/',
-    upload.single('image'),
+    uploadFood.single('image'),
     asyncHandler(async (req, res) => {
         // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
         if (is.emptyObject(req.body)) {

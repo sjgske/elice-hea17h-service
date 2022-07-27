@@ -33,7 +33,12 @@ class DietModel {
         return newDiet;
     }
 
-    //
+    async deleteDiet(dietId) {
+        const result = await this.diet.deleteOne({ _id: dietId });
+        return result;
+    }
+
+    // 댓글추가
     async addComment(comment, expertId, dietId) {
         const result = await this.diet
             .findOneAndUpdate(
@@ -43,6 +48,24 @@ class DietModel {
             )
             .populate('user', 'name gender height weight age goal activeLevel')
             .populate('comment.expert');
+        return result;
+    }
+
+    async modifyComment(dietId, commentId, content) {
+        const result = await this.diet.findOneAndUpdate(
+            { _id: dietId, 'comment._id': commentId },
+            { $set: { 'comment.$.content': content } },
+            { new: true },
+        );
+        return result;
+    }
+
+    async deleteComment(dietId, commentId) {
+        const result = await this.diet.findOneAndUpdate(
+            { _id: dietId },
+            { $pull: { comment: { _id: commentId } } },
+            { new: true },
+        );
         return result;
     }
 }

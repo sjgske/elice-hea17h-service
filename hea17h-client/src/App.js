@@ -6,6 +6,7 @@ import Signup from './pages/Signup/Signup';
 import SignupComplete from './pages/Signup/SignupComplete';
 import SignupDetail from './pages/Signup/SignupDetail';
 import Diet from './pages/Diet/Diet';
+import DietCalculate from './pages/Diet/DietCalculate';
 import DietSearch from './pages/Diet/DietSearch';
 import DietList from './pages/Diet/DietList';
 import Comment from './pages/Comment/Comment';
@@ -33,17 +34,18 @@ function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/profile/update" element={<ProfileUpdate />} />
                     <Route path="/diet" element={<Diet />} />
+                    <Route path="/diet/calculate" element={<DietCalculate />} />
                     <Route path="/diet/search" element={<DietSearch />} />
                     <Route path="/diet/list" element={<DietList />} />
                     <Route path="/comment" element={<Comment />} />
                     <Route path="/certify" element={<Certify />} />
                     <Route path="/coaching" element={<Coaching />} />
                     <Route
-                        path="/coachingWrite/:id"
+                        path="/coachingWrite/:dietId"
                         element={<CoachingWrite />}
                     />
                     <Route
-                        path="/coachingRead/:id"
+                        path="/coachingRead/:dietId"
                         element={<CoachingRead />}
                     />
                 </Routes>
