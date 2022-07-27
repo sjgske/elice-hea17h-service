@@ -6,8 +6,10 @@ import { dietService, userService } from '../services/index.js';
 const dietRouter = Router();
 dietRouter.use(isLoggedIn);
 
+// getDiet => /
+
 dietRouter.get(
-    '/getDiet',
+    '/',
     asyncHandler(async (req, res) => {
         const userInfo = req.tokenInfo;
         const user = await userService.getUser(userInfo);
@@ -16,8 +18,9 @@ dietRouter.get(
     }),
 );
 
+// getAllDiet => /all
 dietRouter.get(
-    '/getAllDiet',
+    '/all',
     isExpert,
     asyncHandler(async (req, res) => {
         const result = await dietService.getAllDiet();
@@ -29,8 +32,10 @@ dietRouter.get(
     }),
 );
 
+// addDiet => /
+
 dietRouter.post(
-    '/addDiet',
+    '/',
     asyncHandler(async (req, res) => {
         const userInfo = req.tokenInfo;
         const dietInfo = req.body;
@@ -44,8 +49,10 @@ dietRouter.post(
     }),
 );
 
+// addComment => comments
+
 dietRouter.post(
-    '/addComment',
+    '/comments',
     isExpert,
     asyncHandler(async (req, res) => {
         const { comment, dietId } = req.body;
@@ -55,8 +62,10 @@ dietRouter.post(
     }),
 );
 
+// modifyComment => comments
+
 dietRouter.patch(
-    '/modifyComment',
+    '/comments',
     isExpert,
     asyncHandler(async (req, res) => {
         const { dietId, commentId, content } = req.body;
@@ -69,8 +78,10 @@ dietRouter.patch(
     }),
 );
 
+// deleteDiet => /
+
 dietRouter.delete(
-    '/deleteDiet',
+    '/',
     asyncHandler(async (req, res) => {
         const { dietId } = req.body;
         const result = await dietService.deleteDiet(dietId);
@@ -78,8 +89,10 @@ dietRouter.delete(
     }),
 );
 
+// deleteComment => comments
+
 dietRouter.delete(
-    '/deleteComment',
+    '/comments',
     isExpert,
     asyncHandler(async (req, res) => {
         const { dietId, commentId } = req.body;
