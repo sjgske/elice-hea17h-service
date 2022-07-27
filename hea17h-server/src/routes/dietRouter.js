@@ -6,8 +6,6 @@ import { dietService, userService } from '../services/index.js';
 const dietRouter = Router();
 dietRouter.use(isLoggedIn);
 
-// getDiet => /
-
 dietRouter.get(
     '/',
     asyncHandler(async (req, res) => {
@@ -18,21 +16,14 @@ dietRouter.get(
     }),
 );
 
-// getAllDiet => /all
 dietRouter.get(
     '/all',
     isExpert,
     asyncHandler(async (req, res) => {
         const result = await dietService.getAllDiet();
-        res.status(200).json({
-            status: 'success',
-            statusCode: 200,
-            payload: result,
-        });
+        res.status(result.statusCode).json(result);
     }),
 );
-
-// addDiet => /
 
 dietRouter.post(
     '/',
@@ -41,15 +32,9 @@ dietRouter.post(
         const dietInfo = req.body;
         const user = await userService.getUser(userInfo);
         const result = await dietService.addDiet(user._id, dietInfo);
-        res.status(201).json({
-            status: 'success',
-            statusCode: 201,
-            payload: result,
-        });
+        res.status(result.statusCode).json(result);
     }),
 );
-
-// addComment => comments
 
 dietRouter.post(
     '/comments',
@@ -61,8 +46,6 @@ dietRouter.post(
         res.status(result.statusCode).json(result);
     }),
 );
-
-// modifyComment => comments
 
 dietRouter.patch(
     '/comments',
@@ -78,8 +61,6 @@ dietRouter.patch(
     }),
 );
 
-// deleteDiet => /
-
 dietRouter.delete(
     '/',
     asyncHandler(async (req, res) => {
@@ -88,8 +69,6 @@ dietRouter.delete(
         res.status(result.statusCode).json(result);
     }),
 );
-
-// deleteComment => comments
 
 dietRouter.delete(
     '/comments',

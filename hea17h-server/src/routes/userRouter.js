@@ -12,7 +12,6 @@ import { uploadExpert } from '../utils/index.js';
 
 const userRouter = Router();
 
-// /getUser => /
 userRouter.get(
     '/',
     isLoggedIn,
@@ -23,8 +22,6 @@ userRouter.get(
         res.json(foundUser);
     }),
 );
-
-// getExpertInfo => /experts
 
 userRouter.get(
     '/experts',
@@ -66,8 +63,6 @@ userRouter.get(
     }),
 );
 
-// updateUser =>  /
-
 userRouter.patch(
     '/',
     isLoggedIn,
@@ -79,8 +74,6 @@ userRouter.patch(
     }),
 );
 
-// signupDetail => auth
-
 userRouter.patch(
     '/auth',
     asyncHandler(async (req, res) => {
@@ -90,7 +83,6 @@ userRouter.patch(
     }),
 );
 
-// signup => auth
 userRouter.post(
     '/auth',
     asyncHandler(async (req, res) => {
@@ -105,7 +97,6 @@ userRouter.post(
     }),
 );
 
-// login => /
 userRouter.post(
     '/',
     asyncHandler(async (req, res) => {
@@ -115,8 +106,6 @@ userRouter.post(
         res.status(result.statusCode).json(result);
     }),
 );
-
-// registerExpert => experts
 
 userRouter.post(
     '/experts',
@@ -137,7 +126,6 @@ userRouter.post(
     }),
 );
 
-// deleteUser => /
 userRouter.delete(
     '/',
     isLoggedIn,
