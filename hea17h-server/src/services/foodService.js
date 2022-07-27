@@ -68,25 +68,22 @@ class FoodService {
         return food;
     }
 
-    // 음식 한글 이름으로 영어 이름 찾기
+     // 음식 한글 이름으로 영어 이름 찾기
     async getFoodNameEng(foodInfo) {
         let result = '';
 
         for (let i = 0; i < foodInfo.length; i += 1) {
-            // 홀수 일때는 중량으로 그냥 기록
-            if (i % 2 === 0) {
+            // 숫자가 있을때는 그냥 기록
+            if (/^[0-9]/.test(foodInfo[i])) {
                 result += `${foodInfo[i]} `;
 
-                // 짝수 일때는 db에서 음식정보 검색 후 없으면 오류 발생
+                // 음식 이름 문자가 있을 때는 db에서 영문이름 반환
             } else {
                 const food = await this.foodModel.findByName(foodInfo[i]);
 
-                if (!food) {
-                    throw new Error(
-                        '해당 음식에 대한 정보가 없습니다. 다시 한 번 확인해 주세요.',
-                    );
+                if (food) {
+                    result += `${food.nameEng} `;
                 }
-                result += `${food.nameEng} `;
             }
         }
         return result;
