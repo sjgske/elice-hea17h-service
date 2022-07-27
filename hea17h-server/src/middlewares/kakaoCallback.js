@@ -36,7 +36,6 @@ async function kakaoCallback(req, res, next) {
                                     platform: 'kakao',
                                 });
                             }
-                            console.log(addKakaoResult);
                             req.kakaoUser = addKakaoResult;
                             next();
                         });

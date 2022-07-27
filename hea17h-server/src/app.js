@@ -23,12 +23,10 @@ app.use('/categories', categoryRouter);
 app.use('/foods', foodRouter);
 app.use('/diets', dietRouter);
 
-// catch 404 and forward to error handler
 app.use((req, res, next) => {
     next(createError(404));
 });
 
-// ErrorHandler must be declared at bottom
 app.use(errorHandler);
 
 export default app;
