@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Badge({ fontColor, children }) {
-    return <Div fontColor={fontColor}>{children}</Div>;
+    return <Root fontColor={fontColor}>{children}</Root>;
 }
 
-const Div = styled.div`
+const Root = styled.div`
     background-color: white;
     padding: 0 5px;
     width: fit-content;

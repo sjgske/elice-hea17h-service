@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 function Box({ width, height, color, borderColor, className, children }) {
     return (
-        <Div
+        <Root
             width={width}
             height={height}
             color={color}
@@ -11,11 +11,11 @@ function Box({ width, height, color, borderColor, className, children }) {
             className={className}
         >
             {children}
-        </Div>
+        </Root>
     );
 }
 
-const Div = styled.div`
+const Root = styled.div`
     background-color: ${({ color }) => color};
     width: ${({ width }) => width};
     height: ${({ height }) => height};

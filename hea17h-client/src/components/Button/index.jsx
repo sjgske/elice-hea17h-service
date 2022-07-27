@@ -4,18 +4,18 @@ import { darken } from 'polished';
 
 function Button({ width, color, fontColor, children, onClick }) {
     return (
-        <Div
+        <Root
             width={width}
             color={color}
             fontColor={fontColor}
             onClick={onClick}
         >
             {children}
-        </Div>
+        </Root>
     );
 }
 
-const Div = styled.button`
+const Root = styled.button`
     display: block;
     background-color: ${({ color }) => color};
     width: ${({ width }) => width};
