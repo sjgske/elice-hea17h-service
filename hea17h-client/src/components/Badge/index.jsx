@@ -1,9 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 function Badge({ fontColor, children }) {
     return <Root fontColor={fontColor}>{children}</Root>;
 }
+
+Badge.propTypes = {
+    fontColor: PropTypes.string,
+    children: PropTypes.node.isRequired,
+};
+
+Badge.defaultProps = {
+    fontColor: 'black',
+};
 
 const Root = styled.div`
     background-color: white;
@@ -12,7 +22,7 @@ const Root = styled.div`
     height: fit-content;
     border-radius: 5px;
     font-size: 1rem;
-    color: ${({ fontColor }) => fontColor || 'black'};
+    color: ${({ fontColor }) => fontColor};
     font-weight: bold;
     text-align: center;
 

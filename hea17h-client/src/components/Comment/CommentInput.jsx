@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import * as Api from '../../api';
 import Button from '../Button';
 
@@ -62,6 +63,23 @@ function CommentInput({
         </Root>
     );
 }
+
+CommentInput.propTypes = {
+    dietId: PropTypes.string.isRequired,
+    content: PropTypes.string,
+    commentId: PropTypes.string,
+    clickEditBtn: PropTypes.bool,
+    handleClick: PropTypes.func,
+    updateComment: PropTypes.func,
+};
+
+CommentInput.defaultProps = {
+    content: '',
+    commentId: '',
+    clickEditBtn: false,
+    handleClick: null,
+    updateComment: null,
+};
 
 const Root = styled.div`
     & > textarea {
