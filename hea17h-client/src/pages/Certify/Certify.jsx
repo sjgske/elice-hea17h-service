@@ -117,13 +117,6 @@ function Certify() {
             return;
         }
 
-        // const config = {
-        //     headers: {
-        //         'content-type': 'multipart/form-data',
-        //         userToken: `${localStorage.getItem('userToken')}`,
-        //     },
-        // };
-
         const contentType = 'multipart/form-data';
 
         try {
