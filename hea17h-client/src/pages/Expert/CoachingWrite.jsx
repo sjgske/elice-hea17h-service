@@ -17,8 +17,8 @@ function CoachingWrite() {
     const { dietId } = useParams();
 
     const getData = async () => {
-        const { data } = await Api.get('/diets/getAllDiet');
-        const obj = data.payload.payload.find(diet => diet._id === dietId);
+        const { data } = await Api.get('/diets/all');
+        const obj = data.payload.find(diet => diet._id === dietId);
 
         setDietInfo(obj);
     };

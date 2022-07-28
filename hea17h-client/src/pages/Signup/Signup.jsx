@@ -12,17 +12,17 @@ function Signup() {
     const [checkPassword, setCheckPassword] = useState('');
     const [name, setName] = useState('');
 
-    const handleRegister = async (e) => {
+    const handleRegister = async e => {
         e.preventDefault();
 
         if (id === '' || password === '') {
-            alert("아이디와 비밀번호를 입력해주세요.");
+            alert('아이디와 비밀번호를 입력해주세요.');
         } else if (name === '') {
-            alert("이름을 입력해주세요.");
+            alert('이름을 입력해주세요.');
         } else {
             try {
                 const data = { id, password, name };
-                await Api.post(`/users/signUp`, data);
+                await Api.post(`/users/auth`, data);
 
                 navigate('/signup/complete', { state: id }, { replace: true });
             } catch (err) {
@@ -38,8 +38,8 @@ function Signup() {
                 <InputForm>
                     <InputText>아이디</InputText>
                     <InputItem
-                        placeholder='아이디'
-                        onChange={(e) => {
+                        placeholder="아이디"
+                        onChange={e => {
                             setId(e.target.value);
                         }}
                         value={id}
@@ -48,9 +48,9 @@ function Signup() {
                 <InputForm>
                     <InputText>비밀번호</InputText>
                     <InputItem
-                        type='password'
-                        placeholder='비밀번호'
-                        onChange={(e) => {
+                        type="password"
+                        placeholder="비밀번호"
+                        onChange={e => {
                             setPassword(e.target.value);
                         }}
                         value={password}
@@ -59,9 +59,9 @@ function Signup() {
                 <InputForm>
                     <InputText>비밀번호 확인</InputText>
                     <InputItem
-                        type='password'
-                        placeholder='비밀번호 확인'
-                        onChange={(e) => {
+                        type="password"
+                        placeholder="비밀번호 확인"
+                        onChange={e => {
                             setCheckPassword(e.target.value);
                         }}
                         value={checkPassword}
@@ -70,16 +70,14 @@ function Signup() {
                 <InputForm>
                     <InputText>이름</InputText>
                     <InputItem
-                        placeholder='이름'
-                        onChange={(e) => {
+                        placeholder="이름"
+                        onChange={e => {
                             setName(e.target.value);
                         }}
                         value={name}
                     />
                 </InputForm>
-                <SignupButton
-                    onClick={handleRegister}
-                >가입하기</SignupButton>
+                <SignupButton onClick={handleRegister}>가입하기</SignupButton>
             </SignupContainer>
         </Container>
     );
@@ -91,7 +89,7 @@ const Container = styled.div`
     margin: 0 auto;
     padding: 0;
     background-color: #faf3e3;
-    
+
     width: 100%;
     height: 100%;
 `;
@@ -117,7 +115,7 @@ const InputForm = styled.form`
 
     font-size: medium;
     display: block;
-`; 
+`;
 
 const InputText = styled.h4`
     margin-left: 45px;
@@ -141,7 +139,7 @@ const SignupButton = styled.button`
     margin: 50px 180px;
 
     color: white;
-    background-color: #FD7E14;
+    background-color: #fd7e14;
     border: 1px solid transparent;
     font-size: medium;
 

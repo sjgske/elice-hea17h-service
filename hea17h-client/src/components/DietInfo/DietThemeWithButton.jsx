@@ -412,7 +412,7 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
     const deleteDiet = async () => {
         try {
             if (window.confirm('정말 삭제하시겠습니까?')) {
-                await Api.delete('/diets/deleteDiet', {
+                await Api.delete('/diets', {
                     dietId: id,
                 });
                 window.alert('삭제되었습니다.');

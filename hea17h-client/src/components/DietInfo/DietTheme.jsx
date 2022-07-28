@@ -6,18 +6,18 @@ import TitleText from './TitleText';
 
 function DietTheme({ date, name, totalCalories, children }) {
     return (
-        <DietThemeBox width="75%" height="8rem" color="#faf3e3">
+        <Root width="75%" height="8rem" color="#faf3e3">
             <DietInfo>
                 <Badge>{date}</Badge>
                 <TitleText>{name}</TitleText>
                 <p>{totalCalories} kcal</p>
             </DietInfo>
             {children}
-        </DietThemeBox>
+        </Root>
     );
 }
 
-const DietThemeBox = styled(Box)`
+const Root = styled(Box)`
     display: flex;
     align-items: center;
     justify-content: space-between;

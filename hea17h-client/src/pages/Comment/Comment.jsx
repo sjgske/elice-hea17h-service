@@ -143,7 +143,7 @@ function Comment() {
 
     async function getDiet() {
         try {
-            const res = await Api.get('/diets/getDiet');
+            const res = await Api.get('/diets');
             const items = await res.data.payLoad.reverse();
             setData(items);
         } catch (err) {

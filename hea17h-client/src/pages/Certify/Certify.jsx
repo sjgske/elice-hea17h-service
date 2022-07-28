@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import * as Api from '../../api';
 import Button from '../../components/Button';
 
 const Container = styled.div`
@@ -117,20 +117,10 @@ function Certify() {
             return;
         }
 
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data',
-                userToken: `${localStorage.getItem('userToken')}`,
-            },
-        };
+        const contentType = 'multipart/form-data';
 
         try {
-            const res = await axios.post(
-                'http://34.168.201.109:8080/users/registerExpert',
-                formData,
-                config,
-            );
-            console.log(res);
+            await Api.post('/users/experts', formData, contentType);
             alert('자격증 등록이 완료되었습니다.');
             navigate('/');
         } catch (err) {
