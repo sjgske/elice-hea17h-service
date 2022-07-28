@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import * as Api from '../../api';
 import Button from '../../components/Button';
-import { apiUrl } from '../../api';
 
 function Certify() {
     const navigate = useNavigate();
@@ -28,15 +27,10 @@ function Certify() {
             return;
         }
 
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data',
-                userToken: `${localStorage.getItem('userToken')}`,
-            },
-        };
+        const contentType = 'multipart/form-data';
 
         try {
-            await axios.post(`${apiUrl}/users/experts/`, formData, config);
+            await Api.post('/users/experts', formData, contentType);
             alert('자격증 등록이 완료되었습니다.');
             navigate('/');
         } catch (err) {

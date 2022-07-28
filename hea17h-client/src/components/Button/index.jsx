@@ -1,27 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
+import PropTypes from 'prop-types';
 
 function Button({ width, color, fontColor, children, onClick }) {
     return (
-        <Div
+        <Root
             width={width}
             color={color}
             fontColor={fontColor}
             onClick={onClick}
         >
             {children}
-        </Div>
+        </Root>
     );
 }
 
-const Div = styled.button`
+Button.propTypes = {
+    width: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    fontColor: PropTypes.string,
+    children: PropTypes.node.isRequired,
+    onClick: PropTypes.func,
+};
+
+Button.defaultProps = {
+    fontColor: 'white',
+    onClick: null,
+};
+
+const Root = styled.button`
     display: block;
     background-color: ${({ color }) => color};
     width: ${({ width }) => width};
     height: 2.5rem;
     border-radius: 5px;
-    color: ${({ fontColor }) => fontColor || 'white'};
+    color: ${({ fontColor }) => fontColor};
     font-size: 1rem;
     font-weight: bold;
     line-height: 2.5rem;

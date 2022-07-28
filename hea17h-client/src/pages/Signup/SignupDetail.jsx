@@ -23,10 +23,10 @@ function SignupDetail() {
     const calRDI = () => {
         let BMR = 0;
         if (gender === 'M')
-            BMR = 655 + ((9.6 * weight) + (1.8 * height)) - (4.7 * age);
+            BMR = 655 + (9.6 * weight + 1.8 * height) - 4.7 * age;
         else if (gender === 'W')
-            BMR = 66 + ((13.7 * weight) + (5 * height)) - (6.5 * age);
-        
+            BMR = 66 + (13.7 * weight + 5 * height) - 6.5 * age;
+
         switch (activeLevel) {
             case 1:
                 setRDI(BMR * 1.2);
@@ -51,7 +51,7 @@ function SignupDetail() {
         calRDI();
     });
 
-    const handleRegisterDetail = async (e) => {
+    const handleRegisterDetail = async e => {
         e.preventDefault();
 
         try {
@@ -62,10 +62,10 @@ function SignupDetail() {
                 age,
                 gender,
                 goal,
-                activeLevel
+                activeLevel,
             };
-            
-            await Api.patch('/users/signUpDetail', data);
+
+            await Api.patch('/users/auth', data);
 
             navigate('/login', { replace: true });
         } catch (err) {
@@ -80,27 +80,27 @@ function SignupDetail() {
                 <InputForm>
                     <InputText>키(cm)</InputText>
                     <InputItem
-                        onChange={(e) => {
+                        onChange={e => {
                             setHeight(e.target.value);
                         }}
-                        placeholder='키'
+                        placeholder="키"
                         value={height}
                     />
                     <InputText>몸무게(kg)</InputText>
                     <InputItem
-                        onChange={(e) => {
+                        onChange={e => {
                             setWeight(e.target.value);
                         }}
-                        placeholder='몸무게'
+                        placeholder="몸무게"
                         value={weight}
                     />
                     <InputText>나이</InputText>
                     <InputItem
-                        onChange={(e) => {
+                        onChange={e => {
                             setAge(e.target.value);
                             setTimeout(calBMI, 1000);
                         }}
-                        placeholder='나이'
+                        placeholder="나이"
                         value={age}
                     />
                     <InputText>성별</InputText>
@@ -109,7 +109,7 @@ function SignupDetail() {
                             type="radio"
                             name="gender"
                             value="M"
-                            onChange={(e) => {
+                            onChange={e => {
                                 setGender(e.target.value);
                             }}
                         />
@@ -118,20 +118,17 @@ function SignupDetail() {
                             type="radio"
                             name="gender"
                             value="W"
-                            onChange={(e) => {
+                            onChange={e => {
                                 setGender(e.target.value);
                             }}
                         />
                         <div>여자</div>
                     </SelectGender>
                     <InputText>BMI(㎏/㎡)</InputText>
-                    <InputItem
-                        value={BMI}
-                        disabled
-                    />
+                    <InputItem value={BMI} disabled />
                     <InputText>다이어트 목표</InputText>
-                    <SelectBox 
-                        onChange={(e) => {
+                    <SelectBox
+                        onChange={e => {
                             setGoal(e.target.value);
                         }}
                         value={goal}
@@ -142,7 +139,7 @@ function SignupDetail() {
                     </SelectBox>
                     <InputText>활동 정도</InputText>
                     <SelectBox
-                        onChange={(e) => {
+                        onChange={e => {
                             setActiveLevel(e.target.value);
                         }}
                         value={activeLevel}
@@ -152,12 +149,16 @@ function SignupDetail() {
                         <option value="3">적당한 운동(주 3~5일)</option>
                         <option value="4">격렬한 운동(주 6~7일)</option>
                     </SelectBox>
-                    <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
-                    <InputItem
-                        value={RDI}
-                        disabled
-                    />
-                    <CompleteButton onClick={handleRegisterDetail}>입력완료</CompleteButton>
+                    <InputText>
+                        RDI(kcal){' '}
+                        <span style={{ color: '#999999' }}>
+                            *일일권장섭취량
+                        </span>
+                    </InputText>
+                    <InputItem value={RDI} disabled />
+                    <CompleteButton onClick={handleRegisterDetail}>
+                        입력완료
+                    </CompleteButton>
                 </InputForm>
             </SignupDetailContainer>
         </Container>
@@ -170,7 +171,7 @@ const Container = styled.div`
     margin: 0 auto;
     padding: 0;
     background-color: #faf3e3;
-    
+
     width: 100%;
     height: 100%;
 `;
@@ -195,7 +196,7 @@ const InputForm = styled.form`
 
     font-size: medium;
     display: block;
-`; 
+`;
 
 const InputText = styled.h5`
     margin: 10px auto;
@@ -246,12 +247,11 @@ const CompleteButton = styled.button`
     margin: 50px 30%;
 
     color: white;
-    background-color: #FD7E14;
+    background-color: #fd7e14;
     border: 1px solid transparent;
     font-size: medium;
 
     border-radius: 5px;
 `;
-
 
 export default SignupDetail;

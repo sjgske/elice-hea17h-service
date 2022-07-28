@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 function ImageBadge({ imgUrl }) {
     return (
-        <Div>
+        <Root>
             <img src={imgUrl} alt="diet-img" />
-        </Div>
+        </Root>
     );
 }
 
-const Div = styled.div`
+const Root = styled.div`
     width: 5rem;
     height: 5rem;
     border-radius: 50%;

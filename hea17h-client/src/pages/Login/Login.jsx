@@ -29,8 +29,7 @@ function Login() {
         } else {
             try {
                 const data = { id, password };
-                const res = await Api.post('/users/', data);
-
+                const res = await Api.post('/users', data);
                 const jwtToken = res.data.token;
                 localStorage.setItem('userToken', jwtToken);
                 dispatch(login(data));
