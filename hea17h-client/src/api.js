@@ -4,7 +4,6 @@ import axios from 'axios';
 const apiUrl = 'http://localhost:8080';
 
 async function get(endpoint, params = '') {
-    console.log(`GET 요청 ${`${apiUrl + endpoint}/${params}`}`);
     const url = params
         ? `${apiUrl + endpoint}/${params}`
         : `${apiUrl + endpoint}`;
@@ -17,29 +16,17 @@ async function get(endpoint, params = '') {
     });
 }
 
-async function post(endpoint, data) {
-    // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
-    // 예시: {name: "Kim"} => {"name": "Kim"}
-    const bodyData = JSON.stringify(data);
-    console.log(`POST 요청: ${apiUrl + endpoint}`);
-    console.log(`POST 요청 데이터: ${bodyData}`);
-
-    return axios.post(apiUrl + endpoint, bodyData, {
+async function post(endpoint, data, contentType) {
+    return axios.post(apiUrl + endpoint, data, {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': contentType || 'application/json',
             userToken: `${localStorage.getItem('userToken')}`,
         },
     });
 }
 
 async function patch(endpoint, data) {
-    // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
-    // 예시: {name: "Kim"} => {"name": "Kim"}
-    const bodyData = JSON.stringify(data);
-    console.log(`PATCH 요청: ${apiUrl + endpoint}`);
-    console.log(`PATCH 요청 데이터: ${bodyData}`);
-
-    return axios.patch(apiUrl + endpoint, bodyData, {
+    return axios.patch(apiUrl + endpoint, data, {
         headers: {
             'Content-Type': 'application/json',
             userToken: `${localStorage.getItem('userToken')}`,
@@ -50,12 +37,8 @@ async function patch(endpoint, data) {
 // 아래 함수명에 관해, delete 단어는 자바스크립트의 reserved 단어이기에,
 // 여기서는 우선 delete 대신 del로 쓰고 아래 export 시에 delete로 alias 함.
 async function del(endpoint, data) {
-    const bodyData = JSON.stringify(data);
-    console.log(`DELETE 요청: ${apiUrl + endpoint}`);
-    console.log(`DELETE 요청 데이터: ${bodyData}`);
-
     return axios.delete(`${apiUrl + endpoint}`, {
-        data: bodyData,
+        data,
         headers: {
             'Content-Type': 'application/json',
             userToken: `${localStorage.getItem('userToken')}`,

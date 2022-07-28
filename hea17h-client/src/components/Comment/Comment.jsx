@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { setComments } from '../../slices/CommentSlice';
 import CommentView from './CommentView';
 import Button from '../Button';
@@ -15,7 +16,7 @@ function Comment({ commentInfo, myId, dietId }) {
 
     const { comments } = useSelector(state => state.comment);
 
-    const expertsId = comments.map(({ expert }) => expert?.user);
+    const expertsId = comments.map(({ expert }) => expert.user);
 
     return (
         <Root>
@@ -39,6 +40,12 @@ function Comment({ commentInfo, myId, dietId }) {
         </Root>
     );
 }
+
+Comment.propTypes = {
+    commentInfo: PropTypes.arrayOf(PropTypes.object).isRequired,
+    myId: PropTypes.string.isRequired,
+    dietId: PropTypes.string.isRequired,
+};
 
 const Root = styled.div`
     width: 100%;

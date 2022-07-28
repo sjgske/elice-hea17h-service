@@ -136,7 +136,7 @@ function DietList() {
     const getDiet = async () => {
         try {
             setLoading(true);
-            const res = await Api.get('/diets/getDiet');
+            const res = await Api.get('/diets');
             const sortedData = await res.data.payLoad.sort(
                 (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
             );

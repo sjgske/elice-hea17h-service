@@ -17,10 +17,10 @@ function Coaching() {
     const getData = async () => {
         setLoading(true);
 
-        const { data } = await Api.get('/diets/getAllDiet');
+        const { data } = await Api.get('/diets/all');
 
         // 최신순 정렬
-        const sortedData = data.payload.payload.sort(
+        const sortedData = data.payload.sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
 
@@ -32,7 +32,6 @@ function Coaching() {
         getData();
     }, []);
 
-    console.log(dietList);
     return (
         <div>
             <Nav />

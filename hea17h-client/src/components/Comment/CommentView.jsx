@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { deleteOne } from '../../slices/CommentSlice';
 import Box from '../Box';
 import Button from '../Button';
@@ -21,7 +22,7 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
     };
 
     const deleteComment = async () => {
-        const res = await Api.delete('/diets/deleteComment', {
+        const res = await Api.delete('/diets/comments', {
             dietId,
             commentId,
         });
@@ -31,40 +32,63 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
         }
     };
 
-    return !clickEditBtn ? (
+    return (
         <div>
-            <ExpertInfo>
-                {expert?.certificate.map(({ name }) => name).join(' / ')}
-            </ExpertInfo>
-            <CommentBox width="100%" color="white" borderColor="#D9D9D9">
-                {comment}
-            </CommentBox>
-            {expert?.user === myId && (
-                <ButtonContainer>
-                    <Button width="10rem" color="#51CF66" onClick={handleClick}>
-                        수정
-                    </Button>
-                    <Button
-                        width="10rem"
-                        color="#FD7E14"
-                        onClick={deleteComment}
+            {!clickEditBtn ? (
+                <>
+                    <ExpertInfo>
+                        {expert.certificate.map(({ name }) => name).join(' / ')}
+                    </ExpertInfo>
+                    <CommentBox
+                        width="100%"
+                        color="white"
+                        borderColor="#D9D9D9"
                     >
-                        삭제
-                    </Button>
-                </ButtonContainer>
+                        {comment}
+                    </CommentBox>
+                    {expert.user === myId && (
+                        <ButtonContainer>
+                            <Button
+                                width="10rem"
+                                color="#51CF66"
+                                onClick={handleClick}
+                            >
+                                수정
+                            </Button>
+                            <Button
+                                width="10rem"
+                                color="#FD7E14"
+                                onClick={deleteComment}
+                            >
+                                삭제
+                            </Button>
+                        </ButtonContainer>
+                    )}
+                </>
+            ) : (
+                <CommentInput
+                    dietId={dietId}
+                    content={comment}
+                    commentId={commentId}
+                    clickEditBtn
+                    handleClick={handleClick}
+                    updateComment={updateComment}
+                />
             )}
         </div>
-    ) : (
-        <CommentInput
-            dietId={dietId}
-            content={comment}
-            commentId={commentId}
-            clickEditBtn
-            handleClick={handleClick}
-            updateComment={updateComment}
-        />
     );
 }
+
+CommentView.propTypes = {
+    content: PropTypes.string.isRequired,
+    expert: PropTypes.shape({
+        certificate: PropTypes.arrayOf(PropTypes.object),
+        user: PropTypes.string,
+    }).isRequired,
+    myId: PropTypes.string.isRequired,
+    dietId: PropTypes.string.isRequired,
+    commentId: PropTypes.string.isRequired,
+};
 
 const ExpertInfo = styled.div`
     color: #999999;
