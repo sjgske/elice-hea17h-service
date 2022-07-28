@@ -163,7 +163,7 @@ class UserService {
     }
 
     async validateRefreshToken(token) {
-        const result = await handleJWT.verify(token);
+        const result = await handleJWT.verify(token).then(res => res.payload);
         if (result < 0) {
             return {
                 status: 'error',
@@ -172,7 +172,7 @@ class UserService {
                     '토큰이 만료되었거나 비정상적입니다. 재로그인 해주세요',
             };
         }
-        const tokenPayloads = token.split(' ');
+        const tokenPayloads = result.split(' ');
         const userToken = await handleJWT.sign({
             id: tokenPayloads[0],
             name: tokenPayloads[1],
