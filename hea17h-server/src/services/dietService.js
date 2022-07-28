@@ -6,7 +6,6 @@ class DietService {
         this.certificateModel = certificateModel;
     }
 
-    // 전문가 전용 모든유저 식단
     async getAllDiet() {
         const allDiet = await this.dietModel.getAllDiet({});
         if (!allDiet) {
@@ -23,7 +22,6 @@ class DietService {
         };
     }
 
-    // 아이디로 내 식단 가져오기
     async getMyDiet(userId) {
         const myDiet = await this.dietModel.findByUser(userId);
         if (!myDiet.length) {

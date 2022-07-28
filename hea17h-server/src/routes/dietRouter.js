@@ -7,7 +7,7 @@ const dietRouter = Router();
 dietRouter.use(isLoggedIn);
 
 dietRouter.get(
-    '/getDiet',
+    '/',
     asyncHandler(async (req, res) => {
         const userInfo = req.tokenInfo;
         const user = await userService.getUser(userInfo);
@@ -17,35 +17,27 @@ dietRouter.get(
 );
 
 dietRouter.get(
-    '/getAllDiet',
+    '/all',
     isExpert,
     asyncHandler(async (req, res) => {
         const result = await dietService.getAllDiet();
-        res.status(200).json({
-            status: 'success',
-            statusCode: 200,
-            payload: result,
-        });
+        res.status(result.statusCode).json(result);
     }),
 );
 
 dietRouter.post(
-    '/addDiet',
+    '/',
     asyncHandler(async (req, res) => {
         const userInfo = req.tokenInfo;
         const dietInfo = req.body;
         const user = await userService.getUser(userInfo);
         const result = await dietService.addDiet(user._id, dietInfo);
-        res.status(201).json({
-            status: 'success',
-            statusCode: 201,
-            payload: result,
-        });
+        res.status(result.statusCode).json(result);
     }),
 );
 
 dietRouter.post(
-    '/addComment',
+    '/comments',
     isExpert,
     asyncHandler(async (req, res) => {
         const { comment, dietId } = req.body;
@@ -56,7 +48,7 @@ dietRouter.post(
 );
 
 dietRouter.patch(
-    '/modifyComment',
+    '/comments',
     isExpert,
     asyncHandler(async (req, res) => {
         const { dietId, commentId, content } = req.body;
@@ -70,7 +62,7 @@ dietRouter.patch(
 );
 
 dietRouter.delete(
-    '/deleteDiet',
+    '/',
     asyncHandler(async (req, res) => {
         const { dietId } = req.body;
         const result = await dietService.deleteDiet(dietId);
@@ -79,7 +71,7 @@ dietRouter.delete(
 );
 
 dietRouter.delete(
-    '/deleteComment',
+    '/comments',
     isExpert,
     asyncHandler(async (req, res) => {
         const { dietId, commentId } = req.body;

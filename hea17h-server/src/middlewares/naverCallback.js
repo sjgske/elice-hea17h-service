@@ -34,7 +34,6 @@ async function naverCallback(req, res, next) {
                 platform: 'naver',
             });
         }
-        console.log(addNaverResult);
         req.naverUser = addNaverResult;
         next();
     } catch (err) {
