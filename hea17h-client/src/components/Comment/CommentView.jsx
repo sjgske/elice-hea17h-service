@@ -23,7 +23,7 @@ function CommentView({ content, expert, myId, dietId, commentId }) {
     };
 
     const deleteComment = async () => {
-        const res = await Api.delete('/diets/deleteComment', {
+        const res = await Api.delete('/diets/comments', {
             dietId,
             commentId,
         });

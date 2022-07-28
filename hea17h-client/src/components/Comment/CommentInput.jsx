@@ -27,7 +27,7 @@ function CommentInput({
     };
 
     const addComment = async () => {
-        const res = await Api.post('/diets/addComment', {
+        const res = await Api.post('/diets/comments', {
             dietId,
             comment,
         });
@@ -38,7 +38,7 @@ function CommentInput({
     };
 
     const editComment = async () => {
-        await Api.patch('/diets/modifyComment', {
+        await Api.patch('/diets/comments', {
             dietId,
             commentId,
             content: comment,

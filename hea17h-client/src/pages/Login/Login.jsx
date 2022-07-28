@@ -29,7 +29,7 @@ function Login() {
         } else {
             try {
                 const data = { id, password };
-                const res = await Api.post('/users/login', data);
+                const res = await Api.post('/users', data);
 
                 const jwtToken = res.data.token;
                 localStorage.setItem('userToken', jwtToken);
@@ -54,7 +54,6 @@ function Login() {
                 <InputForm>
                     <InputText>아이디</InputText>
                     <InputItem
-                        
                         onChange={e => {
                             setId(e.target.value);
                         }}

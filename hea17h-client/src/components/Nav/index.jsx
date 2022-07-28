@@ -19,7 +19,7 @@ function Nav() {
     const token = localStorage.getItem('userToken');
 
     const getUserRole = async () => {
-        const { data } = await Api.get('/users/getUser');
+        const { data } = await Api.get('/users');
         if (data.role === 'expert') {
             setIsExpert(true);
         }
@@ -53,7 +53,10 @@ function Nav() {
                     </NavLink>
                     {isExpert ? (
                         <NavLink to="/coaching">
-                            <StyledFontAwesomeIcon icon={faChalkboardUser} size="xl" />
+                            <StyledFontAwesomeIcon
+                                icon={faChalkboardUser}
+                                size="xl"
+                            />
                             <SubMenu>코칭</SubMenu>
                         </NavLink>
                     ) : (

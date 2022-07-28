@@ -12,28 +12,20 @@ function Profile() {
     const [showPopup, setShowPopup] = useState(false);
     const [BMI, setBMI] = useState(0);
     const [RDI, setRDI] = useState(0);
-    const {
-        id,
-        name,
-        height,
-        weight,
-        age,
-        gender,
-        goal,
-        activeLevel
-    } = userInfo;
+    const { id, name, height, weight, age, gender, goal, activeLevel } =
+        userInfo;
 
     const calBMI = () => {
         setBMI(((weight / height ** 2) * 10000).toFixed(2));
     };
-    
+
     const calRDI = () => {
         let BMR = 0;
         if (gender === 'M')
-            BMR = 655 + ((9.6 * weight) + (1.8 * height)) - (4.7 * age);
+            BMR = 655 + (9.6 * weight + 1.8 * height) - 4.7 * age;
         else if (gender === 'W')
-            BMR = 66 + ((13.7 * weight) + (5 * height)) - (6.5 * age);
-        
+            BMR = 66 + (13.7 * weight + 5 * height) - 6.5 * age;
+
         switch (activeLevel) {
             case 1:
                 setRDI(BMR * 1.2);
@@ -54,13 +46,13 @@ function Profile() {
     };
 
     const getInfo = async () => {
-        const { data } = await Api.get('/users/getUser');
-        
+        const { data } = await Api.get('/users');
+
         setUserInfo(data);
     };
 
     const getCertify = async () => {
-        const { data }  = await Api.get('/users/getExpertInfo');
+        const { data } = await Api.get('/users/experts');
 
         setCertifyInfo(data.payload.certificate[0].name);
     };
@@ -74,18 +66,18 @@ function Profile() {
         calRDI();
     }, [height || weight || age]);
 
-    const handleGoToCertify = (e) => {
+    const handleGoToCertify = e => {
         e.preventDefault();
         navigate('/certify', { replace: true });
     };
 
-    const handleUpdateButton = (e) => {
+    const handleUpdateButton = e => {
         e.preventDefault();
 
         navigate('/profile/update', { replace: true });
     };
 
-    const handleResignButton = (e) => {
+    const handleResignButton = e => {
         e.preventDefault();
 
         setShowPopup(!showPopup);
@@ -98,18 +90,24 @@ function Profile() {
                 <Title>회원정보</Title>
                 <ProfileContainer>
                     <BoxContainer>
-                        <TitleText>기본 회원정보 <span style={{color: '#999999'}}>필수</span></TitleText>
+                        <TitleText>
+                            기본 회원정보{' '}
+                            <span style={{ color: '#999999' }}>필수</span>
+                        </TitleText>
                         <InputForm>
                             <InputText>아이디</InputText>
                             <InputItem value={id || ''} disabled />
                             <InputText>비밀번호</InputText>
-                            <InputItem value='******' disabled />
+                            <InputItem value="******" disabled />
                             <InputText>이름</InputText>
                             <InputItem value={name || ''} disabled />
                         </InputForm>
                     </BoxContainer>
                     <BoxContainer>
-                        <TitleText>상세 회원정보 <span style={{ color: '#999999' }}>선택</span></TitleText>
+                        <TitleText>
+                            상세 회원정보{' '}
+                            <span style={{ color: '#999999' }}>선택</span>
+                        </TitleText>
                         <InputForm>
                             <InputText>키(cm)</InputText>
                             <InputItem value={height || ''} disabled />
@@ -119,68 +117,90 @@ function Profile() {
                             <InputItem value={age || ''} disabled />
                             <InputText>성별</InputText>
                             <SelectGender>
-                                <RadioButton type="radio" checked={gender === 'M'} readOnly />
+                                <RadioButton
+                                    type="radio"
+                                    checked={gender === 'M'}
+                                    readOnly
+                                />
                                 <div>남자</div>
-                                <RadioButton type="radio" checked={gender === 'W'} readOnly />
+                                <RadioButton
+                                    type="radio"
+                                    checked={gender === 'W'}
+                                    readOnly
+                                />
                                 <div>여자</div>
                             </SelectGender>
                             <InputText>BMI(㎏/㎡)</InputText>
                             <InputItem value={BMI} disabled />
                             <InputText>다이어트 목표</InputText>
-                            <SelectBox value={goal || ''} disabled >
+                            <SelectBox value={goal || ''} disabled>
                                 <option value="1">체중 증가</option>
                                 <option value="2">현재 체중 유지하기</option>
                                 <option value="3">체중 감소</option>
                             </SelectBox>
                             <InputText>활동 정도</InputText>
-                            <SelectBox value={activeLevel || ''} disabled >
+                            <SelectBox value={activeLevel || ''} disabled>
                                 <option value="1">전혀 운동하지 않음</option>
                                 <option value="2">가벼운 운동(주 1~3일)</option>
                                 <option value="3">적당한 운동(주 3~5일)</option>
                                 <option value="4">격렬한 운동(주 6~7일)</option>
                             </SelectBox>
-                            <InputText>RDI(kcal)  <span style={{color: "#999999"}}>*일일권장섭취량</span></InputText>
-                            {
-                                calRDI && <InputItem
-                                value={RDI}
-                                disabled
-                                />
-                            }
-                            {
-                                userInfo.role === 'expert'
-                                    ? (
-                                        <>
-                                            <InputText>전문가 인증</InputText>
-                                            <InputItem color='#51CF66' placeholder='인증받은 아이디입니다.' disabled />
-                                        </>
-                                    )
-                                    : (
-                                        <>
-                                            <InputText>전문가 인증</InputText>
-                                            <InputItem style={{ marginLeft: '-40px' }} color='#FD7E14' placeholder='인증되지 않은 아이디입니다.' disabled />
-                                            <GotoCertify onClick={handleGoToCertify}>인증하기</GotoCertify>
-                                        </>
-                                    )
-                            }
-                            {
-                                userInfo.role === 'expert'
-                                    ? getCertify() && (
-                                        <>
-                                            <InputText>경력 및 자격사항</InputText>
-                                            <InputItem value={certifyInfo} disabled />
-                                        </>
-                                    )
-                                    : null
-                            }
+                            <InputText>
+                                RDI(kcal){' '}
+                                <span style={{ color: '#999999' }}>
+                                    *일일권장섭취량
+                                </span>
+                            </InputText>
+                            {calRDI && <InputItem value={RDI} disabled />}
+                            {userInfo.role === 'expert' ? (
+                                <>
+                                    <InputText>전문가 인증</InputText>
+                                    <InputItem
+                                        color="#51CF66"
+                                        placeholder="인증받은 아이디입니다."
+                                        disabled
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <InputText>전문가 인증</InputText>
+                                    <InputItem
+                                        style={{ marginLeft: '-40px' }}
+                                        color="#FD7E14"
+                                        placeholder="인증되지 않은 아이디입니다."
+                                        disabled
+                                    />
+                                    <GotoCertify onClick={handleGoToCertify}>
+                                        인증하기
+                                    </GotoCertify>
+                                </>
+                            )}
+                            {userInfo.role === 'expert'
+                                ? getCertify() && (
+                                      <>
+                                          <InputText>
+                                              경력 및 자격사항
+                                          </InputText>
+                                          <InputItem
+                                              value={certifyInfo}
+                                              disabled
+                                          />
+                                      </>
+                                  )
+                                : null}
                         </InputForm>
                     </BoxContainer>
                 </ProfileContainer>
                 <Buttons>
-                    <UpdateButton onClick={handleUpdateButton}>회원정보 수정</UpdateButton>
-                    <ResignButton onClick={handleResignButton}>회원탈퇴</ResignButton>
-                    {
-                        showPopup ? <Resign onClose={() => setShowPopup(!showPopup)} /> : null
-                    }
+                    <UpdateButton onClick={handleUpdateButton}>
+                        회원정보 수정
+                    </UpdateButton>
+                    <ResignButton onClick={handleResignButton}>
+                        회원탈퇴
+                    </ResignButton>
+                    {showPopup ? (
+                        <Resign onClose={() => setShowPopup(!showPopup)} />
+                    ) : null}
                 </Buttons>
             </Container>
         </>
@@ -192,8 +212,8 @@ const Container = styled.div`
     display: flex;
     margin: 0 auto;
     padding: 0;
-    background-color: #EFEFEF;
-    
+    background-color: #efefef;
+
     width: 100%;
     height: 150%;
 
@@ -233,7 +253,7 @@ const InputForm = styled.form`
 
     font-size: medium;
     display: block;
-`; 
+`;
 
 const InputText = styled.h4`
     text-align: left;
@@ -252,7 +272,7 @@ const InputItem = styled.input`
     margin-bottom: 1px;
 
     ::placeholder {
-        color: ${(props) => props.color};
+        color: ${props => props.color};
         font-weight: 500;
     }
 `;
@@ -283,7 +303,7 @@ const UpdateButton = styled.button`
     height: 50px;
 
     color: white;
-    background-color: #51CF66;
+    background-color: #51cf66;
     border: 1px solid transparent;
     font-size: medium;
 
@@ -296,7 +316,7 @@ const ResignButton = styled.button`
     height: 50px;
 
     color: white;
-    background-color: #FD7E14;
+    background-color: #fd7e14;
     border: 1px solid transparent;
     font-size: medium;
 
@@ -308,7 +328,7 @@ const GotoCertify = styled.button`
     margin-left: 10px;
 
     text-decoration: underline;
-    color: #51CF66;
+    color: #51cf66;
     font-weight: 500;
 `;
 

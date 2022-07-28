@@ -17,18 +17,17 @@ function Resign(props) {
         setIsCorrect(!isCorrect);
     };
 
-    const handleDeleteUser = async (e) => {
+    const handleDeleteUser = async e => {
         e.preventDefault();
 
         if (id === '' || password === '') {
-            alert("아이디와 비밀번호를 입력해주세요.");
-            
+            alert('아이디와 비밀번호를 입력해주세요.');
         } else {
             try {
                 const data = { id, password };
-                await Api.delete('/users/deleteUser', data);
+                await Api.delete('/users', data);
                 localStorage.removeItem('userToken');
-                alert("회원 탈퇴되었습니다. 그동안 이용해 주셔서 감사합니다.");
+                alert('회원 탈퇴되었습니다. 그동안 이용해 주셔서 감사합니다.');
                 navigate('/', { replace: true });
             } catch (err) {
                 console.log('회원 탈퇴 실패', err);
@@ -38,44 +37,40 @@ function Resign(props) {
     };
 
     return (
-        <ResignModal width='500px' height='450px'>
+        <ResignModal width="500px" height="450px">
             <Title>회원탈퇴</Title>
             <InputForm>
                 <InputText>아이디</InputText>
                 <InputItem
-                    placeholder='아이디'
-                    onChange={(e) => {
+                    placeholder="아이디"
+                    onChange={e => {
                         setId(e.target.value);
                     }}
                 />
                 <InputText>비밀번호</InputText>
                 <InputItem
-                    type='password'
-                    placeholder='비밀번호'
-                    onChange={(e) => {
+                    type="password"
+                    placeholder="비밀번호"
+                    onChange={e => {
                         setPassword(e.target.value);
                     }}
                 />
-                {
-                    isCorrect && (
-                        <WrongPassword>비밀번호가 일치하지 않습니다.</WrongPassword>
-                    )
-                }
+                {isCorrect && (
+                    <WrongPassword>비밀번호가 일치하지 않습니다.</WrongPassword>
+                )}
             </InputForm>
-            <CheckResign>회원 탈퇴 시 복구할 수 없습니다. 정말 탈퇴하시겠습니까?</CheckResign>
+            <CheckResign>
+                회원 탈퇴 시 복구할 수 없습니다. 정말 탈퇴하시겠습니까?
+            </CheckResign>
             <ResignButton onClick={handleDeleteUser}>회원탈퇴</ResignButton>
-            <IconButton
-                onClick={onClose}
-            >
+            <IconButton onClick={onClose}>
                 <FontAwesomeIcon icon={faXmark} />
             </IconButton>
         </ResignModal>
     );
-};
+}
 
-const ResignModal = styled(Modal)`
-
-`; 
+const ResignModal = styled(Modal)``;
 
 const Title = styled.h2`
     text-align: center;
@@ -87,7 +82,7 @@ const InputForm = styled.form`
 
     font-size: medium;
     display: block;
-`; 
+`;
 
 const InputText = styled.h4`
     text-align: left;
@@ -123,7 +118,7 @@ const ResignButton = styled.button`
     height: 50px;
 
     color: white;
-    background-color: #FD7E14;
+    background-color: #fd7e14;
     border: 1px solid transparent;
     font-size: large;
 
