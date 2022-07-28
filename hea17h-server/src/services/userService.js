@@ -111,13 +111,12 @@ class UserService {
             };
         }
         const tokenPayload = { id: user.id, name: user.name };
-        const userToken = await handleJWT
-            .sign(tokenPayload)
-            .then(res => res.token);
+        const userToken = await handleJWT.sign(tokenPayload);
         const loginSuccess = {
             status: 'success',
             statusCode: 200,
-            token: userToken,
+            token: userToken.token,
+            refresh: userToken.refresh,
         };
         return loginSuccess;
     }
@@ -161,6 +160,30 @@ class UserService {
             };
         }
         return { status: 'success', statusCode: 200, payload: result };
+    }
+
+    async validateRefreshToken(token) {
+        const result = await handleJWT.verify(token);
+        if (result < 0) {
+            return {
+                status: 'error',
+                statusCode: 401,
+                message:
+                    '토큰이 만료되었거나 비정상적입니다. 재로그인 해주세요',
+            };
+        }
+        const tokenPayloads = token.split(' ');
+        const userToken = await handleJWT.sign({
+            id: tokenPayloads[0],
+            name: tokenPayloads[1],
+        });
+        const returnPayload = {
+            status: 'success',
+            statusCode: 200,
+            token: userToken.token,
+            refresh: token,
+        };
+        return returnPayload;
     }
 }
 

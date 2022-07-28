@@ -74,6 +74,15 @@ userRouter.patch(
     }),
 );
 
+userRouter.get(
+    '/auth',
+    asyncHandler(async (req, res) => {
+        const refreshToken = req.get('refreshToken');
+        const isValid = await userService.validateRefreshToken(refreshToken);
+        res.json(isValid);
+    }),
+);
+
 userRouter.patch(
     '/auth',
     asyncHandler(async (req, res) => {

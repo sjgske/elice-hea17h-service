@@ -9,7 +9,14 @@ async function isLoggedIn(req, res, next) {
             message: '로그인되어 있지 않습니다!',
         });
     }
-    const tokenInfo = await handleJWT.verify(token).then(data => data);
+    const tokenInfo = await handleJWT.verify(token);
+    if (tokenInfo < 0) {
+        res.status(401).json({
+            status: 'error',
+            statusCode: 401,
+            message: tokenInfo,
+        });
+    }
     req.tokenInfo = tokenInfo;
     next();
 }
