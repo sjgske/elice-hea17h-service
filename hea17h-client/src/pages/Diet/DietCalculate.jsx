@@ -249,7 +249,7 @@ function DietCalculate() {
             if (name === '') {
                 alert('식단 이름을 입력해주세요.');
             } else {
-                await Api.post('/diets/addDiet', postData);
+                await Api.post('/diets', postData);
                 alert('식단 저장을 완료했습니다.');
                 navigate('/diet/list');
             }

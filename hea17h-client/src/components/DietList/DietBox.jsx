@@ -10,7 +10,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
     const [show, setShow] = useState(false);
     const [meal, setMeal] = useState('');
 
-    const buttonClick = mealState => {
+    const circleButtonClick = mealState => {
         setIsActive(true);
         setMeal(prev => {
             if (prev === mealState) {
@@ -58,7 +58,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                         return (
                             <CircleButton
                                 key={mealState}
-                                onClick={() => buttonClick(mealState)}
+                                onClick={() => circleButtonClick(mealState)}
                             >
                                 <Circle>
                                     <CircleImage

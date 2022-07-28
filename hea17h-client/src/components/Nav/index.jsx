@@ -19,7 +19,7 @@ function Nav() {
     const token = localStorage.getItem('userToken');
 
     const getUserRole = async () => {
-        const { data } = await Api.get('/users/');
+        const { data } = await Api.get('/users');
         if (data.role === 'expert') {
             setIsExpert(true);
         }
