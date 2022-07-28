@@ -3,6 +3,117 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { apiUrl } from '../../api';
+
+function Certify() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem('userToken')) {
+            alert('로그인 후 이용해주세요.');
+            navigate('/login');
+        }
+    });
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const name = formData.get('name');
+        const image = formData.get('image');
+
+        if (!name || !image.name) {
+            alert('정보를 모두 기입해 주세요.');
+            return;
+        }
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data',
+                userToken: `${localStorage.getItem('userToken')}`,
+            },
+        };
+
+        try {
+            await axios.post(`${apiUrl}/users/experts/`, formData, config);
+            alert('자격증 등록이 완료되었습니다.');
+            navigate('/');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    return (
+        <Container>
+            <Main className="flex-column center">
+                <Div className="margin-bottom">
+                    <H1>취득하신 자격증을 촬영하여 업로드 합니다.</H1>
+                    <P>
+                        * 자격증의 문서번호가 식별 가능하도록 이미지를
+                        첨부해주세요
+                    </P>
+                    <P>
+                        * 면허증명서의 양식은 다를 수 있습니다. 다만 예시 사진과
+                        같이 주요 내용은 같아야 합니다.
+                    </P>
+                    <P>
+                        * 여러분의 소중한 개인정보 보호를 위하여 인증에 필요한
+                        최소한의 정보를 수집하고 있습니다. 본인의 이름과 얼굴
+                        사진은 가리고 면허증을 촬영해주세요.
+                    </P>
+                </Div>
+
+                <SpaceRight className="flex margin-bottom">
+                    <Div className="flex-column">
+                        <Img
+                            src={`${process.env.PUBLIC_URL}/assets/certify1.png`}
+                            alt="생활스포츠지도사"
+                        />
+                        <Span>생활스포츠지도사</Span>
+                    </Div>
+                    <Div className="flex-column">
+                        <Img
+                            src={`${process.env.PUBLIC_URL}/assets/certify2.png`}
+                            alt="체형관리사"
+                        />
+                        <Span>체형관리사</Span>
+                    </Div>
+                    <Div className="flex-column">
+                        <Img
+                            src={`${process.env.PUBLIC_URL}/assets/certify3.png`}
+                            alt="국제필라테스자격증"
+                        />
+                        <Span>국제필라테스자격증</Span>
+                    </Div>
+                </SpaceRight>
+
+                <FormBox onSubmit={handleSubmit} className="flex-column center">
+                    <Div style={{ width: '20rem', marginBottom: '1rem' }}>
+                        <Label htmlFor="name">자격증 이름</Label>
+                        <Input
+                            type="text"
+                            name="name"
+                            placeholder="생활스포츠지도사 2급"
+                        />
+                    </Div>
+                    <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
+                        <Label htmlFor="image">
+                            자격증 파일 <GreyText>(.png, .jpeg, .jpg)</GreyText>
+                        </Label>
+                        <Input
+                            type="file"
+                            name="image"
+                            accept=".png, .jpeg, .jpg"
+                        />
+                    </Div>
+                    <Button type="submit" width="10rem" color="#51cf66">
+                        제출하기
+                    </Button>
+                </FormBox>
+            </Main>
+        </Container>
+    );
+}
 
 const Container = styled.div`
     width: 100%;
@@ -93,120 +204,5 @@ const Input = styled.input`
         overflow: hidden;
     }
 `;
-
-function Certify() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!localStorage.getItem('userToken')) {
-            alert('로그인 후 이용해주세요.');
-            navigate('/login');
-        }
-    });
-
-    const handleSubmit = async e => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-
-        const name = formData.get('name');
-        const image = formData.get('image');
-
-        if (!name || !image.name) {
-            alert('정보를 모두 기입해 주세요.');
-            return;
-        }
-
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data',
-                userToken: `${localStorage.getItem('userToken')}`,
-            },
-        };
-
-        try {
-            const res = await axios.post(
-                'http://34.168.201.109:8080/users/registerExpert',
-                formData,
-                config,
-            );
-            console.log(res);
-            alert('자격증 등록이 완료되었습니다.');
-            navigate('/');
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    return (
-        <Container>
-            <Main className="flex-column center">
-                <Div className="margin-bottom">
-                    <H1>취득하신 자격증을 촬영하여 업로드 합니다.</H1>
-                    <P>
-                        * 자격증의 문서번호가 식별 가능하도록 이미지를
-                        첨부해주세요
-                    </P>
-                    <P>
-                        * 면허증명서의 양식은 다를 수 있습니다. 다만 예시 사진과
-                        같이 주요 내용은 같아야 합니다.
-                    </P>
-                    <P>
-                        * 여러분의 소중한 개인정보 보호를 위하여 인증에 필요한
-                        최소한의 정보를 수집하고 있습니다. 본인의 이름과 얼굴
-                        사진은 가리고 면허증을 촬영해주세요.
-                    </P>
-                </Div>
-
-                <SpaceRight className="flex margin-bottom">
-                    <Div className="flex-column">
-                        <Img
-                            src={`${process.env.PUBLIC_URL}/assets/certify1.png`}
-                            alt="생활스포츠지도사"
-                        />
-                        <Span>생활스포츠지도사</Span>
-                    </Div>
-                    <Div className="flex-column">
-                        <Img
-                            src={`${process.env.PUBLIC_URL}/assets/certify2.png`}
-                            alt="체형관리사"
-                        />
-                        <Span>체형관리사</Span>
-                    </Div>
-                    <Div className="flex-column">
-                        <Img
-                            src={`${process.env.PUBLIC_URL}/assets/certify3.png`}
-                            alt="국제필라테스자격증"
-                        />
-                        <Span>국제필라테스자격증</Span>
-                    </Div>
-                </SpaceRight>
-
-                <FormBox onSubmit={handleSubmit} className="flex-column center">
-                    <Div style={{ width: '20rem', marginBottom: '1rem' }}>
-                        <Label htmlFor="name">자격증 이름</Label>
-                        <Input
-                            type="text"
-                            name="name"
-                            placeholder="생활스포츠지도사 2급"
-                        />
-                    </Div>
-                    <Div style={{ width: '20rem', marginBottom: '1.5rem' }}>
-                        <Label htmlFor="image">
-                            자격증 파일 <GreyText>(.png, .jpeg, .jpg)</GreyText>
-                        </Label>
-                        <Input
-                            type="file"
-                            name="image"
-                            accept=".png, .jpeg, .jpg"
-                        />
-                    </Div>
-                    <Button type="submit" width="10rem" color="#51cf66">
-                        제출하기
-                    </Button>
-                </FormBox>
-            </Main>
-        </Container>
-    );
-}
 
 export default Certify;
