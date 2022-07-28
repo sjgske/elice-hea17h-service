@@ -9,7 +9,6 @@ import CommentInput from './CommentInput';
 import * as Api from '../../api';
 
 function CommentView({ content, expert, myId, dietId, commentId }) {
-    console.log(content, expert, myId, dietId, commentId);
     const dispatch = useDispatch();
     const [comment, setComment] = useState(content);
     const [clickEditBtn, setClickEditBtn] = useState(false);

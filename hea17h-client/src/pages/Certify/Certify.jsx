@@ -127,8 +127,7 @@ function Certify() {
         const contentType = 'multipart/form-data';
 
         try {
-            const res = await Api.post('/users/experts', formData, contentType);
-            console.log(res);
+            await Api.post('/users/experts', formData, contentType);
             alert('자격증 등록이 완료되었습니다.');
             navigate('/');
         } catch (err) {
