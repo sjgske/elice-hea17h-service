@@ -4,96 +4,6 @@ import styled from 'styled-components';
 import * as Api from '../../api';
 import Button from '../../components/Button';
 
-const Container = styled.div`
-    width: 100%;
-    height: 100vh;
-    background-color: #f7f7f9;
-`;
-
-const Main = styled.div`
-    width: 600px;
-    height: 100%;
-    padding: 0 4rem;
-    background-color: #fff;
-
-    @media screen and (max-width: 768px) {
-        width: 80vw;
-    }
-`;
-
-const H1 = styled.h1`
-    font-weight: 700;
-    font-size: 1.7rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.05rem;
-`;
-
-const P = styled.p`
-    color: #999999;
-    font-size: 0.9rem;
-    margin: 0;
-`;
-
-const Span = styled.span`
-    font-weight: 700;
-    font-size: 0.9rem;
-`;
-
-const GreyText = styled.span`
-    font-size: 0.9rem;
-    color: #888;
-`;
-
-const Div = styled.div``;
-
-const SpaceRight = styled.div`
-    * {
-        margin-right: 1.2rem;
-    }
-
-    *:last-child {
-        margin: 0;
-    }
-`;
-
-const Img = styled.img`
-    max-height: 150px;
-    margin: 0 0 0.5rem;
-`;
-
-const FormBox = styled.form`
-    width: 90%;
-    padding: 1.5rem 0;
-    margin-bottom: 1.5rem;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-`;
-
-const Label = styled.label`
-    margin-bottom: 0.5rem;
-    display: inline-block;
-`;
-
-const Input = styled.input`
-    display: block;
-    width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    appearance: none;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-
-    &.file {
-        overflow: hidden;
-    }
-`;
-
 function Certify() {
     const navigate = useNavigate();
 
@@ -198,5 +108,95 @@ function Certify() {
         </Container>
     );
 }
+
+const Container = styled.div`
+    width: 100%;
+    height: 100vh;
+    background-color: #f7f7f9;
+`;
+
+const Main = styled.div`
+    width: 600px;
+    height: 100%;
+    padding: 0 4rem;
+    background-color: #fff;
+
+    @media screen and (max-width: 768px) {
+        width: 80vw;
+    }
+`;
+
+const H1 = styled.h1`
+    font-weight: 700;
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.05rem;
+`;
+
+const P = styled.p`
+    color: #999999;
+    font-size: 0.9rem;
+    margin: 0;
+`;
+
+const Span = styled.span`
+    font-weight: 700;
+    font-size: 0.9rem;
+`;
+
+const GreyText = styled.span`
+    font-size: 0.9rem;
+    color: #888;
+`;
+
+const Div = styled.div``;
+
+const SpaceRight = styled.div`
+    * {
+        margin-right: 1.2rem;
+    }
+
+    *:last-child {
+        margin: 0;
+    }
+`;
+
+const Img = styled.img`
+    max-height: 150px;
+    margin: 0 0 0.5rem;
+`;
+
+const FormBox = styled.form`
+    width: 90%;
+    padding: 1.5rem 0;
+    margin-bottom: 1.5rem;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+`;
+
+const Label = styled.label`
+    margin-bottom: 0.5rem;
+    display: inline-block;
+`;
+
+const Input = styled.input`
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    &.file {
+        overflow: hidden;
+    }
+`;
 
 export default Certify;

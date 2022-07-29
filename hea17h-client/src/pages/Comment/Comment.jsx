@@ -11,6 +11,117 @@ import Nav from '../../components/Nav';
 import * as Api from '../../api';
 import { htmlStringDate, separateThousand } from '../../utils/UsefulFunction';
 
+function Comment() {
+    const [data, setData] = useState([]);
+
+    async function getDiet() {
+        try {
+            const res = await Api.get('/diets/');
+            const items = await res.data.payLoad.reverse();
+            setData(items);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        getDiet();
+    }, []);
+
+    return (
+        <>
+            <Nav />
+            <Container>
+                <H1>코멘트</H1>
+                <Main>
+                    <Header>
+                        <Div className="margin-bottom">
+                            <H2>
+                                <GreenText>
+                                    HEA<OrangeText>17</OrangeText>H.
+                                </GreenText>
+                                의 회원은
+                                <br />
+                                전문가의
+                                <br /> 식단 코멘트를 받을 수 있습니다
+                                <GreenText>.</GreenText>
+                            </H2>
+                            <H2>
+                                목록이 없는 경우
+                                <br /> 다이어트 식단을
+                                <br /> 먼저 계산해보세요
+                                <OrangeText>.</OrangeText>
+                            </H2>
+                        </Div>
+
+                        <CircleLink
+                            to="/diet"
+                            className="flex-column-align-items"
+                        >
+                            <Circle>
+                                <FontAwesomeIcon icon={faArrowRight} />
+                            </Circle>
+                            <OrangeText>계산해보기</OrangeText>
+                        </CircleLink>
+                    </Header>
+
+                    <SampleImg>
+                        <img
+                            src={`${process.env.PUBLIC_URL}/assets/comment.png`}
+                            alt="예시 코멘트"
+                        />
+                    </SampleImg>
+
+                    {Array.isArray(data) && data.length ? (
+                        <>
+                            <H4 style={{ margin: 0 }}>최근 등록한 식단</H4>
+                            <SmallLink
+                                to="/diet/list"
+                                className="margin-bottom"
+                            >
+                                더 많은 식단 보기
+                            </SmallLink>
+                        </>
+                    ) : null}
+
+                    {data.slice(0, 3).map(diet => (
+                        <MainBox width="100%" color="#faf3e3" key={diet._id}>
+                            <SpaceDiv>
+                                <Badge>{htmlStringDate(diet.createdAt)}</Badge>
+                                <H3>{diet.name}</H3>
+                                <Calorie>
+                                    <strong>
+                                        {separateThousand(diet.totalCalories)}
+                                    </strong>
+                                    kcal
+                                </Calorie>
+                            </SpaceDiv>
+                            {Array.isArray(diet.comment) &&
+                            !diet.comment.length ? (
+                                <Button
+                                    width="10rem"
+                                    color="#E9ECEF"
+                                    fontColor="#999"
+                                    disabled
+                                >
+                                    코멘트 대기 중
+                                </Button>
+                            ) : (
+                                <Link to="/diet/list">
+                                    <Button width="10rem" color="#51cf66">
+                                        코멘트 보러 가기
+                                    </Button>
+                                </Link>
+                            )}
+                        </MainBox>
+                    ))}
+                </Main>
+                <TopButton />
+            </Container>
+        </>
+    );
+}
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -137,115 +248,5 @@ const SmallLink = styled(Link)`
     font-size: 0.9rem;
     text-decoration: underline;
 `;
-
-function Comment() {
-    const [data, setData] = useState([]);
-
-    async function getDiet() {
-        try {
-            const res = await Api.get('/diets');
-            const items = await res.data.payLoad.reverse();
-            setData(items);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    useEffect(() => {
-        getDiet();
-    }, []);
-
-    return (
-        <>
-            <Nav />
-            <Container>
-                <H1>코멘트</H1>
-                <Main>
-                    <Header>
-                        <Div className="margin-bottom">
-                            <H2>
-                                <GreenText>
-                                    HEA<OrangeText>17</OrangeText>H.
-                                </GreenText>
-                                의 회원은
-                                <br />
-                                전문가의
-                                <br /> 식단 코멘트를 받을 수 있습니다
-                                <GreenText>.</GreenText>
-                            </H2>
-                            <H2>
-                                목록이 없는 경우
-                                <br /> 다이어트 식단을
-                                <br /> 먼저 계산해보세요
-                                <OrangeText>.</OrangeText>
-                            </H2>
-                        </Div>
-
-                        <CircleLink
-                            to="/diet"
-                            className="flex-column-align-items"
-                        >
-                            <Circle>
-                                <FontAwesomeIcon icon={faArrowRight} />
-                            </Circle>
-                            <OrangeText>계산해보기</OrangeText>
-                        </CircleLink>
-                    </Header>
-
-                    <SampleImg>
-                        <img
-                            src={`${process.env.PUBLIC_URL}/assets/comment.png`}
-                            alt="예시 코멘트"
-                        />
-                    </SampleImg>
-
-                    {data.length ? (
-                        <>
-                            <H4 style={{ margin: 0 }}>최근 등록한 식단</H4>
-                            <SmallLink
-                                to="/diet/list"
-                                className="margin-bottom"
-                            >
-                                더 많은 식단 보기
-                            </SmallLink>
-                        </>
-                    ) : null}
-
-                    {data.slice(0, 3).map(diet => (
-                        <MainBox width="100%" color="#faf3e3" key={diet._id}>
-                            <SpaceDiv>
-                                <Badge>{htmlStringDate(diet.createdAt)}</Badge>
-                                <H3>{diet.name}</H3>
-                                <Calorie>
-                                    <strong>
-                                        {separateThousand(diet.totalCalories)}
-                                    </strong>
-                                    kcal
-                                </Calorie>
-                            </SpaceDiv>
-                            {diet.comment.length === 0 ? (
-                                <Button
-                                    width="10rem"
-                                    color="#E9ECEF"
-                                    fontColor="#999"
-                                    disabled
-                                >
-                                    코멘트 대기 중
-                                </Button>
-                            ) : (
-                                <Link to="/diet/list">
-                                    <Button width="10rem" color="#51cf66">
-                                        코멘트 보러 가기
-                                    </Button>
-                                </Link>
-                            )}
-                        </MainBox>
-                    ))}
-                </Main>
-                <TopButton />
-            </Container>
-        </>
-    );
-}
 
 export default Comment;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const apiUrl = 'http://34.168.201.109:8080';
-const apiUrl = 'http://localhost:8080';
+// export const apiUrl = 'http://34.168.201.109:8080';
+export const apiUrl = 'http://localhost:8080';
 
 async function get(endpoint, params = '') {
     const url = params
