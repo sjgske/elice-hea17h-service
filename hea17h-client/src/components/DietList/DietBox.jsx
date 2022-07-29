@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Box from '../Box';
 import Badge from '../Badge';
 import DetailBox from './DetailBox';
@@ -89,6 +90,17 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
         </>
     );
 }
+
+DietBox.propTypes = {
+    id: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
+    theme: PropTypes.string.isRequired,
+    calorie: PropTypes.number.isRequired,
+    comment: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dietFoods: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+// id, date, theme, calorie, comment, dietFoods
 
 const Container = styled(Box)`
     padding: 2rem 2.5rem;
@@ -186,4 +198,4 @@ const DietTitle = styled.h3`
     white-space: nowrap;
 `;
 
-export default DietBox;
+export default React.memo(DietBox);

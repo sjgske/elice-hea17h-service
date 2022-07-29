@@ -96,7 +96,8 @@ function Comment() {
                                     kcal
                                 </Calorie>
                             </SpaceDiv>
-                            {diet.comment.length === 0 ? (
+                            {Array.isArray(diet.comment) &&
+                            !diet.comment.length ? (
                                 <Button
                                     width="10rem"
                                     color="#E9ECEF"

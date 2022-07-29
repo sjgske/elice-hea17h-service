@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Box from '../Box';
 import Badge from '../Badge';
 import Button from '../Button';
@@ -175,6 +176,14 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
     );
 }
 
+DetailBox.propTypes = {
+    id: PropTypes.number.isRequired,
+    className: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    dietFoods: PropTypes.arrayOf(PropTypes.object).isRequired,
+    mealState: PropTypes.string.isRequired,
+};
+
 const Container = styled(Box)`
     padding: 2rem 2.5rem;
     margin: 0 auto 30px;
@@ -262,4 +271,4 @@ const FlexBox = styled.div`
 
 const FlexItem = styled.div``;
 
-export default DetailBox;
+export default React.memo(DetailBox);

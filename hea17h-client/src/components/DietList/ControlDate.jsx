@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faMagnifyingGlass,
@@ -67,6 +68,11 @@ function ControlDate({ data, setFiltered }) {
         </Search>
     );
 }
+
+ControlDate.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    setFiltered: PropTypes.func.isRequired,
+};
 
 const Search = styled.div`
     display: flex;
@@ -139,4 +145,4 @@ const H4 = styled.h4`
     margin-right: 1rem;
 `;
 
-export default ControlDate;
+export default React.memo(ControlDate);

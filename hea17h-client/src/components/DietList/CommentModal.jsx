@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faXmark,
@@ -112,6 +113,12 @@ function CommentModal({ comment, show, onClick }) {
     );
 }
 
+CommentModal.propTypes = {
+    comment: PropTypes.arrayOf(PropTypes.object).isRequired,
+    show: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
+
 const Div = styled.div``;
 
 const SpaceBottom = styled.div`
@@ -213,4 +220,4 @@ const SmallLink = styled.small`
     cursor: pointer;
 `;
 
-export default CommentModal;
+export default React.memo(CommentModal);
