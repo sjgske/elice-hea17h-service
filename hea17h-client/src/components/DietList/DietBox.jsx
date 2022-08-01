@@ -1,25 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { setMealInfo } from '../../slices/dietListSlice';
 import Box from '../Box';
 import Badge from '../Badge';
 import DetailBox from './DetailBox';
 import CommentModal from './CommentModal';
 
 function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
-    const [isActive, setIsActive] = useState(false);
-    const [show, setShow] = useState(false);
-    const [meal, setMeal] = useState('');
-
-    const circleButtonClick = mealState => {
-        setIsActive(true);
-        setMeal(prev => {
-            if (prev === mealState) {
-                setIsActive(!isActive);
-            }
-            return mealState;
-        });
-    };
+    const dispatch = useDispatch();
 
     const circleButtonList = [
         {
@@ -35,7 +25,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
         {
             mealState: 'dinner',
             imgUrl: 'night',
-            text: '밤',
+            text: '저녁',
         },
     ];
 
@@ -59,7 +49,7 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                         return (
                             <CircleButton
                                 key={mealState}
-                                onClick={() => circleButtonClick(mealState)}
+                                onClick={() => dispatch(setMealInfo(mealState))}
                             >
                                 <Circle>
                                     <CircleImage
@@ -74,33 +64,21 @@ function DietBox({ id, date, theme, calorie, comment, dietFoods }) {
                 </ButtonGroup>
             </Container>
 
-            <DetailBox
-                id={id}
-                className={!isActive ? 'hidden' : null}
-                onClick={() => setShow(true)}
-                dietFoods={dietFoods}
-                mealState={meal}
-            />
+            <DetailBox id={id} dietFoods={dietFoods} />
 
-            <CommentModal
-                comment={comment}
-                show={show}
-                onClick={() => setShow()}
-            />
+            <CommentModal comment={comment} />
         </>
     );
 }
 
 DietBox.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     theme: PropTypes.string.isRequired,
-    calorie: PropTypes.number.isRequired,
+    calorie: PropTypes.string.isRequired,
     comment: PropTypes.arrayOf(PropTypes.object).isRequired,
     dietFoods: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-
-// id, date, theme, calorie, comment, dietFoods
 
 const Container = styled(Box)`
     padding: 2rem 2.5rem;
