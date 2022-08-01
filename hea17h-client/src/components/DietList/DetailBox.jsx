@@ -1,18 +1,23 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { setModalIsOpen } from '../../slices/dietListSlice';
 import Box from '../Box';
 import Badge from '../Badge';
 import Button from '../Button';
 import * as Api from '../../api';
 
-function DetailBox({ id, className, onClick, dietFoods, mealState }) {
+function DetailBox({ id, dietFoods }) {
+    const dispatch = useDispatch();
+    const { boxIsToggle, mealInfo } = useSelector(state => state.dietList);
+
     const [breakfast, lunch, dinner] = dietFoods;
     let currentMeal;
 
-    if (mealState === 'breakfast') {
+    if (mealInfo === 'breakfast') {
         currentMeal = breakfast;
-    } else if (mealState === 'lunch') {
+    } else if (mealInfo === 'lunch') {
         currentMeal = lunch;
     } else {
         currentMeal = dinner;
@@ -56,7 +61,11 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
     ];
 
     return (
-        <Container width="60vw" color="#F5F5F5" className={className}>
+        <Container
+            width="60vw"
+            color="#F5F5F5"
+            className={!boxIsToggle ? 'hidden' : null}
+        >
             <Div className="margin-bottom">
                 <H3>{currentMeal.mealType}</H3>
             </Div>
@@ -160,7 +169,11 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
             </FlexBox>
 
             <SpaceRight className="flex">
-                <Button width="120px" color="#51CF66" onClick={onClick}>
+                <Button
+                    width="120px"
+                    color="#51CF66"
+                    onClick={() => dispatch(setModalIsOpen(true))}
+                >
                     코멘트 보기
                 </Button>
 
@@ -177,11 +190,8 @@ function DetailBox({ id, className, onClick, dietFoods, mealState }) {
 }
 
 DetailBox.propTypes = {
-    id: PropTypes.number.isRequired,
-    className: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
     dietFoods: PropTypes.arrayOf(PropTypes.object).isRequired,
-    mealState: PropTypes.string.isRequired,
 };
 
 const Container = styled(Box)`

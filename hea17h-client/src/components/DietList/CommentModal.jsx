@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,10 +8,14 @@ import {
     faAngleLeft,
     faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { setModalIsOpen } from '../../slices/dietListSlice';
 import Box from '../Box';
 import Modal from '../Modal';
 
-function CommentModal({ comment, show, onClick }) {
+function CommentModal({ comment }) {
+    const dispatch = useDispatch();
+    const { modalIsOpen } = useSelector(state => state.dietList);
+
     const [page, setPage] = useState(0);
     const [hover, setHover] = useState(false);
 
@@ -18,7 +23,7 @@ function CommentModal({ comment, show, onClick }) {
         <Modal
             width="25rem"
             height="25rem"
-            className={!show ? 'hidden' : null}
+            className={!modalIsOpen ? 'hidden' : null}
             style={{ position: 'relative' }}
         >
             {!comment.length ? (
@@ -28,7 +33,7 @@ function CommentModal({ comment, show, onClick }) {
                     </Div>
                     <IconButton
                         onClick={() => {
-                            onClick(false);
+                            dispatch(setModalIsOpen(false));
                         }}
                     >
                         <FontAwesomeIcon icon={faXmark} />
@@ -73,7 +78,7 @@ function CommentModal({ comment, show, onClick }) {
                     </CommentBox>
                     <IconButton
                         onClick={() => {
-                            onClick(false);
+                            dispatch(setModalIsOpen(false));
                         }}
                     >
                         <FontAwesomeIcon icon={faXmark} />
@@ -115,8 +120,6 @@ function CommentModal({ comment, show, onClick }) {
 
 CommentModal.propTypes = {
     comment: PropTypes.arrayOf(PropTypes.object).isRequired,
-    show: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired,
 };
 
 const Div = styled.div``;
