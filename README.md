@@ -85,15 +85,15 @@
 ## 🥕 프로젝트 자료
 - [데일리 스크럼](https://working-lunge-260.notion.site/8435015d087f421b9941b525fa102dd9)
 - [기술 문서](https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team17/hea17h-service/-/wikis/17%ED%8C%80-hea17h-service-%EA%B8%B0%EC%88%A0%EB%AC%B8%EC%84%9C)
-- [최종 발표 PPT](https://docs.google.com/presentation/d/1_X8iHxnb_eN-TJPrqon1h_iyMeZyavbM21w7E3-WXwk/edit?usp=sharing)
+- [최종 발표 PPT](https://www.dropbox.com/s/9nt4b4mfvz9r9uw/%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9CPPT_hea17h_%EB%B0%B1%EC%97%85.pdf?dl=0)
 
 <br>
 
 ## 🥕 팀원 소개
 
 | 이름   | 역할       | 구현 기능                                                                             |
-| ----  | --------  | ----------------------------------------------------------------------------------- |
-| 주지호 | 백엔드 - 팀장| 유저(일반, 전문가) API, 코멘트 & 식단 API, 네이버 / 카카오 OAuth 적용, 전반적인 팀 프로젝트 일정 진행 |
+| ------  | --------  | ----------------------------------------------------------------------------------- |
+| 주지호 | 백엔드(팀장)| 유저(일반, 전문가) API, 코멘트 & 식단 API, 네이버 / 카카오 OAuth 적용, 전반적인 팀 프로젝트 일정 진행 |
 | 신재이 | 백엔드      | 음식 & 카테고리 API, 칼로리 검색 외부 API 연동, AWS S3 이미지 업로드, GCP VM 설정 및 Docker 배포  |
 | 김단헌 | 프론트엔드   | 유저 식단 목록 페이지, 유저 코멘트 페이지, 전문가 인증 페이지, UI 서포트   |
 | 조영환 | 프론트엔드   | 식단 계산 페이지, 음식 검색 페이지, 칼로리 및 영양소 확인 페이지, 서비스 디자인 및 기획 |
